@@ -2,6 +2,7 @@ package com.example.btl;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -209,8 +210,8 @@ public class DictionaryCommandline {
         while(running) {
             // Hiển thị menu (0: Thoát, 1: Tìm kiếm tiền tố, 2: Tra cứu chính xác, 3: Show All, ...)
             System.out.println("\n----- MENU -----");
-            System.out.println("[1] Tìm kiếm (tiền tố)");
-            System.out.println("[2] Tra cứu (chính xác)");
+            System.out.println("[1] Tìm kiếm bằng tiền tố");
+            System.out.println("[2] Tra cứu chính xác từ");
             System.out.println("[3] Hiển thị toàn bộ từ điển");
             System.out.println("[4] Thêm từ mới vào từ điển");
             System.out.println("[0] Thoát");

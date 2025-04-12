@@ -160,7 +160,7 @@ public class DictionaryManagement {
      * @return Optional chứa DictionaryEntry nếu tìm thấy, Optional rỗng nếu không.
      */
     public Optional<DictionaryEntry> lookupEntry(String headword) {
-        return dictionary.findEntry(headword); // Gọi hàm đã có trong Dictionary
+        return dictionary.findEntry(headword);
     }
 
     public boolean addEntry(DictionaryEntry newEntry) {
@@ -180,7 +180,7 @@ public class DictionaryManagement {
         return true;
     }
 
-    
+
 
     // ... các hàm khác ...
     // --- Các hàm khác cần được cập nhật để làm việc với DictionaryEntry ---

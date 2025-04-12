@@ -2,10 +2,8 @@ package com.example.btl;
 
 public class Main {
     public static void main(String[] args) {
-        // Khởi tạo
         Dictionary dictionary = new Dictionary();
         DictionaryManagement dictionaryManagement = new DictionaryManagement(dictionary);
-        // Truyền scanner dùng chung nếu cần, hoặc để DictionaryCommandline tự quản lý
         DictionaryCommandline dictionaryCommandline = new DictionaryCommandline(dictionary, dictionaryManagement);
 
         System.out.println("------- Chương trình Từ điển Anh-Việt -------");
