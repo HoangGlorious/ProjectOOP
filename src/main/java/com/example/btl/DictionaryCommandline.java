@@ -226,6 +226,9 @@ public class DictionaryCommandline {
                 case "3":
                     showAllWords();
                     break;
+                case "4":
+                    addWordInteractive();
+                    break;
                 case "0":
                     running = false;
                     break;
