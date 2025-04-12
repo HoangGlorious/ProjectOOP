@@ -163,6 +163,25 @@ public class DictionaryManagement {
         return dictionary.findEntry(headword); // Gọi hàm đã có trong Dictionary
     }
 
+    public boolean addEntry(DictionaryEntry newEntry) {
+        if (newEntry == null || newEntry.getHeadword() == null || newEntry.getHeadword().trim().isEmpty()) {
+            System.err.println("Lỗi: Không thể thêm từ rỗng.");
+            return false;
+        }
+
+        // Kiểm tra xem headword đã tồn tại chưa?
+        Optional<DictionaryEntry> existingEntry = dictionary.findEntry(newEntry.getHeadword());
+        if (existingEntry.isPresent()) {
+            System.err.println("Lỗi: Từ '" + newEntry.getHeadword() + "' đã tồn tại trong từ điển.");
+            return false;
+        }
+
+        dictionary.addEntry(newEntry);
+        return true;
+    }
+
+    
+
     // ... các hàm khác ...
     // --- Các hàm khác cần được cập nhật để làm việc với DictionaryEntry ---
     // Ví dụ: dictionaryLookup, searcher,...
