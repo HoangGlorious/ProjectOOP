@@ -212,6 +212,7 @@ public class DictionaryCommandline {
             System.out.println("[1] Tìm kiếm (tiền tố)");
             System.out.println("[2] Tra cứu (chính xác)");
             System.out.println("[3] Hiển thị toàn bộ từ điển");
+            System.out.println("[4] Thêm từ mới vào từ điển");
             System.out.println("[0] Thoát");
             System.out.print("Nhập lựa chọn của bạn: ");
             String choice = scanner.nextLine();
