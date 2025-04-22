@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.btl.DictionaryController"
+            stylesheets="@style.css">
+
+    <top>
+        <HBox spacing="10" styleClass="top-bar">
+            <padding>
+                <!-- Thiết lập padding 15px cho TẤT CẢ các cạnh của HBox -->
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <TextField fx:id="searchTextField" promptText="Search a word..." HBox.hgrow="ALWAYS"/>
+            <Button text="🔍" onAction="#handleSearchButtonAction"/>
+        </HBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.3">
+            <ListView fx:id="wordListView" prefWidth="200"/>
+
+            <VBox spacing="10">
+                <padding>
+                    <!-- Thiết lập padding 10px cho TẤT CẢ các cạnh của VBox -->
+                    <Insets top="10" right="10" bottom="10" left="10"/> <!-- Sử dụng cùng giá trị X -->
+                </padding>
+                <Label text="Definition" styleClass="section-title"/>
+                <TextArea fx:id="definitionTextArea" wrapText="true" editable="false" VBox.vgrow="ALWAYS"/>
+            </VBox>
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" alignment="CENTER" styleClass="bottom-bar">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button fx:id="addButton" text="+ Add" onAction="#handleAddButtonAction"/>
+            <Button fx:id="editButton" text="✎ Edit" onAction="#handleEditButtonAction"/>
+            <Button fx:id="deleteButton" text="🗑️ Delete" onAction="#handleDeleteButtonAction"/>
+            <Button fx:id="speakButton" text="🔊 Speak" onAction="#handleSpeakButtonAction"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

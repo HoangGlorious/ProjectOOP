@@ -19,7 +19,6 @@ public class ExamplePhrase {
 
     @Override
     public String toString() {
-        // Định dạng hiển thị cơ bản
         return "= " + englishPhrase + " : " + vietnameseTranslation;
     }
 }

@@ -1,4 +1,5 @@
 package com.example.btl;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -193,6 +194,16 @@ public class DictionaryCommandline {
         // 4. Lưu vào từ điển
         if (dictionaryManagement.addEntry(newEntry)) {
             System.out.println("\n=> Đã thêm thành công từ '" + headword + "' vào từ điển!");
+
+            System.out.print("Bạn có muốn lưu thay đổi này vào file dữ liệu chính ("
+                    + DictionaryManagement.DATA_FILE_PATH + ")? (y/n): ");
+            String saveChoice = scanner.nextLine().trim().toLowerCase();
+            if (saveChoice.equals("y")) {
+                dictionaryManagement.saveDataToFile(); // Gọi hàm lưu file
+            } else {
+                System.out.println("Thay đổi chưa được lưu vào file.");
+            }
+
         } else {
             // Thông báo lỗi đã được in trong dictionaryManagement.addEntry()
             System.out.println("\n=> Thêm từ không thành công.");
@@ -206,8 +217,18 @@ public class DictionaryCommandline {
     }
 
     public void dictionaryAdvanced() {
+
+        dictionaryManagement.insertFromFile();
+
+        // In thông báo nạp
+        if (dictionary.getNumberOfEntries() > 0) {
+            System.out.println("Từ điển đã được nạp ("+ dictionary.getNumberOfEntries() + " mục).");
+        } else {
+            System.out.println("Thông báo: Từ điển trống hoặc không nạp được dữ liệu.");
+        }
+
         boolean running = true;
-        while(running) {
+        while (running) {
             // Hiển thị menu (0: Thoát, 1: Tìm kiếm tiền tố, 2: Tra cứu chính xác, 3: Show All, ...)
             System.out.println("\n----- MENU -----");
             System.out.println("[1] Tìm kiếm bằng tiền tố");
@@ -218,7 +239,7 @@ public class DictionaryCommandline {
             System.out.print("Nhập lựa chọn của bạn: ");
             String choice = scanner.nextLine();
 
-            switch(choice) {
+            switch (choice) {
                 case "1":
                     dictionarySearcherInteractive();
                     break;
@@ -232,10 +253,11 @@ public class DictionaryCommandline {
                     addWordInteractive();
                     break;
                 case "0":
+                    dictionaryManagement.saveDataToFile();
                     running = false;
                     break;
                 default:
-                    System.out.println("\nnhap lai di bozo");
+                    System.out.println("\nNhap lai di bozo");
             }
         }
         closeScanner(); // Đóng scanner khi thoát vòng lặp

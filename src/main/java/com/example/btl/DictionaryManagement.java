@@ -7,18 +7,20 @@ import com.example.btl.ExamplePhrase;
 import java.io.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.Optional;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ArrayList;
 
 
 public class DictionaryManagement {
     private final Dictionary dictionary;
-    public static final String DEFAULT_RESOURCE_PATH = "/dictionaries.txt"; // Giữ lại hoặc đổi tên file
+    private static final String USER_HOME = System.getProperty("user.home");
+    private static final String DATA_FILE_NAME = "dictionary_data.txt";
+    public static final Path DATA_FILE_PATH = Paths.get(USER_HOME, DATA_FILE_NAME);
+    public static final String DEFAULT_RESOURCE_PATH = "/dictionaries.txt";
 
     // Pattern để tách headword và pronunciation từ dòng @
     // Ví dụ: @ a b c - book /ˈeɪbiːˈsiːbʊk/
@@ -180,6 +182,38 @@ public class DictionaryManagement {
         return true;
     }
 
+    /**
+     * Lưu (ghi đè) dữ liệu từ điển hiện tại ra file dữ liệu chính bên ngoài.
+     * Dữ liệu được sắp xếp trước khi ghi.
+     */
+    public void saveDataToFile() {
+        System.out.println("\nĐang lưu dữ liệu từ điển vào file: " + DATA_FILE_PATH + "...");
+
+        List<DictionaryEntry> entries = dictionary.getAllEntries();
+        Collections.sort(entries, Comparator.comparing(DictionaryEntry::getHeadword, String.CASE_INSENSITIVE_ORDER));
+
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(DATA_FILE_PATH.toFile()), StandardCharsets.UTF_8))) { // Ghi vào DATA_FILE_PATH
+
+            for (DictionaryEntry entry : entries) {
+                // ... (Phần logic ghi các dòng @, *, -, = giữ nguyên như cũ) ...
+                writer.write("@ " + entry.getHeadword() /* ... */);
+                writer.newLine();
+                for (WordSense sense : entry.getSenses()) {
+                    writer.write("* " + sense.getPartOfSpeech());
+                    writer.newLine();
+                }
+            }
+            System.out.println("=> Đã lưu dữ liệu từ điển thành công vào file: " + DATA_FILE_PATH);
+
+        } catch (IOException e) {
+            System.err.println("Lỗi: Đã xảy ra sự cố khi lưu file dữ liệu: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Lỗi không xác định khi lưu file dữ liệu: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
 
     // ... các hàm khác ...
