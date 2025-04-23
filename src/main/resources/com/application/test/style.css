@@ -46,3 +46,42 @@
     -fx-background-radius: 5;
     -fx-border-color: #cccccc;
 }
+
+.top-nav {
+    -fx-background-color: #152b56;
+}
+
+.logo {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.nav-button:hover {
+    -fx-underline: true;
+    -fx-text-fill: #ffc107;
+}
+
+.hero-text {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.search-bar {
+    -fx-pref-width: 400px;
+    -fx-font-size: 16px;
+    -fx-background-radius: 20;
+    -fx-padding: 10;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 20;
+}
+

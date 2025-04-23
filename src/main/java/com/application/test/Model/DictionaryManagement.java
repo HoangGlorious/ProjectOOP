@@ -1,8 +1,4 @@
-package com.example.btl;
-
-import com.example.btl.DictionaryEntry;
-import com.example.btl.WordSense;
-import com.example.btl.ExamplePhrase;
+package com.application.test.Model;
 
 import java.io.*;
 import java.io.IOException;
@@ -213,6 +209,10 @@ public class DictionaryManagement {
             System.err.println("Lỗi không xác định khi lưu file dữ liệu: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public List<DictionaryEntry> getAllDictionaryEntries() {
+        return this.dictionary.getAllEntries(); // Gọi phương thức public của đối tượng Dictionary
     }
 
 

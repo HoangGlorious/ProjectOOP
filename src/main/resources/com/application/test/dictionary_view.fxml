@@ -5,17 +5,19 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.btl.DictionaryController"
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.application.test.Controller.DictionaryController"
             stylesheets="@style.css">
 
     <top>
         <HBox spacing="10" styleClass="top-bar">
             <padding>
-                <!-- Thiết lập padding 15px cho TẤT CẢ các cạnh của HBox -->
                 <Insets top="15" right="15" bottom="15" left="15"/>
             </padding>
-            <TextField fx:id="searchTextField" promptText="Search a word..." HBox.hgrow="ALWAYS"/>
+            <Button fx:id="backButton1" text="🔙 Back" onAction="#handleBackButtonAction" styleClass="nav-button"/>
+            <Label text="📚 My Dictionary" styleClass="logo"/>
+            <TextField fx:id="searchTextField" promptText="Search for a word..." HBox.hgrow="ALWAYS"/>
             <Button text="🔍" onAction="#handleSearchButtonAction"/>
+            <Region HBox.hgrow="ALWAYS"/>
         </HBox>
     </top>
 
@@ -25,8 +27,7 @@
 
             <VBox spacing="10">
                 <padding>
-                    <!-- Thiết lập padding 10px cho TẤT CẢ các cạnh của VBox -->
-                    <Insets top="10" right="10" bottom="10" left="10"/> <!-- Sử dụng cùng giá trị X -->
+                    <Insets top="10" right="10" bottom="10" left="10"/>
                 </padding>
                 <Label text="Definition" styleClass="section-title"/>
                 <TextArea fx:id="definitionTextArea" wrapText="true" editable="false" VBox.vgrow="ALWAYS"/>

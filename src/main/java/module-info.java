@@ -11,6 +11,10 @@ module com.example.btl {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens com.example.btl to javafx.fxml;
-    exports com.example.btl;
+    opens com.application.test to javafx.fxml;
+    exports com.application.test;
+    exports com.application.test.Controller;
+    opens com.application.test.Controller to javafx.fxml;
+    exports com.application.test.Model;
+    opens com.application.test.Model to javafx.fxml;
 }

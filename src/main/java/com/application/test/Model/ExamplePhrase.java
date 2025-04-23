@@ -1,4 +1,4 @@
-package com.example.btl;
+package com.application.test.Model;
 
 public class ExamplePhrase {
     private String englishPhrase;

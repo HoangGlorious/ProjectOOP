@@ -1,9 +1,7 @@
-package com.example.btl;
+package com.application.test.Controller;
 
-import com.example.btl.Dictionary;
-import com.example.btl.DictionaryManagement;
-import com.example.btl.DictionaryEntry;
-
+import com.application.test.Model.DictionaryEntry;
+import com.application.test.Model.DictionaryManagement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,61 +17,90 @@ import java.util.stream.Collectors;
 
 public class DictionaryController implements Initializable {
 
-    // Liên kết với các thành phần UI trong FXML bằng fx:id
-    @FXML private TextField searchTextField;
-    @FXML private ListView<String> wordListView; // ListView hiển thị headword (String)
-    @FXML private TextArea definitionTextArea; // Hoặc VBox/Label để hiển thị định nghĩa chi tiết
-    @FXML private Button addButton;
-    @FXML private Button editButton;
-    @FXML private Button deleteButton;
-    @FXML private Button speakButton; // Nút phát âm
+    @FXML
+    private TextField searchTextField;
+    @FXML
+    private ListView<String> wordListView;
+    @FXML
+    private TextArea definitionTextArea;
+    @FXML
+    private Button backButton1;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private Button speakButton;
 
-    private Dictionary dictionary;
     private DictionaryManagement dictionaryManagement;
-
     private ObservableList<String> wordListObservable;
+    private Runnable onGoBackToWelcome;
+
+    public void setOnGoBackToWelcome(Runnable onGoBackToWelcome) {
+        this.onGoBackToWelcome = onGoBackToWelcome;
+    }
+
+
+    /**
+     * Setter để nhận instance DictionaryManagement từ DictionaryApplication.
+     *
+     * @param dictionaryManagement Instance DictionaryManagement đã được nạp dữ liệu.
+     */
+    public void setDictionaryManagement(DictionaryManagement dictionaryManagement) {
+        this.dictionaryManagement = dictionaryManagement;
+        // Sau khi nhận được dictionaryManagement, mới nạp dữ liệu vào ListView
+        loadAndDisplayInitialData();
+    }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.dictionary = new Dictionary();
-        this.dictionaryManagement = new DictionaryManagement(this.dictionary);
+        // Không nạp dữ liệu ở đây nữa vì dictionaryManagement chưa chắc đã được set.
+        // Logic hiển thị dữ liệu ban đầu được chuyển sang loadAndDisplayInitialData().
 
-        dictionaryManagement.insertFromFile();
-
-        // --- Khởi tạo ObservableList và hiển thị lên ListView ---
-        // Lấy tất cả headword từ các entry đã nạp
-        List<String> allHeadwords = dictionary.getAllEntries().stream()
-                .map(DictionaryEntry::getHeadword)
-                .sorted(String.CASE_INSENSITIVE_ORDER) // Sắp xếp ban đầu
-                .collect(Collectors.toList());
-
-
-        wordListObservable = FXCollections.observableArrayList(allHeadwords);
-        wordListView.setItems(wordListObservable);
+        // --- Khởi tạo ObservableList ---
+        wordListObservable = FXCollections.observableArrayList();
+        wordListView.setItems(wordListObservable); // Gán ObservableList vào ListView
 
         // --- Thêm Listener khi người dùng chọn một từ trong ListView ---
         wordListView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    // newValue là headword của từ được chọn
                     if (newValue != null) {
                         displayWordDefinition(newValue);
                     } else {
-                        definitionTextArea.setText(""); // Xóa nội dung nếu không có gì được chọn
+                        definitionTextArea.setText("");
                     }
                 }
         );
 
-        // --- Thêm Listener cho TextField tìm kiếm (tìm kiếm ngay khi gõ) ---
+        // --- Thêm Listener cho TextField tìm kiếm ---
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             handleSearchTextChange(newValue);
         });
 
-        // Ban đầu có thể vô hiệu hóa các nút Sửa, Xóa, Phát âm nếu chưa có từ nào được chọn
+        // Ban đầu vô hiệu hóa các nút Sửa, Xóa, Phát âm
         updateButtonStates(null);
         wordListView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     updateButtonStates(newValue);
                 }
         );
+
+        System.out.println("DictionaryController initialized.");
+    }
+
+    private void loadAndDisplayInitialData() {
+        if (dictionaryManagement != null) {
+            System.out.println("Loading and displaying initial dictionary data...");
+            List<String> allHeadwords = dictionaryManagement.getAllDictionaryEntries().stream()
+                    .map(DictionaryEntry::getHeadword)
+                    .sorted(String.CASE_INSENSITIVE_ORDER)
+                    .collect(Collectors.toList());
+            wordListObservable.setAll(allHeadwords); // Cập nhật ObservableList
+            System.out.println("Displayed " + allHeadwords.size() + " entries.");
+        } else {
+            System.err.println("DictionaryManagement chưa được set!");
+        }
     }
 
     private void displayWordDefinition(String headword) {
@@ -107,6 +134,24 @@ public class DictionaryController implements Initializable {
     }
 
     // --- Các phương thức xử lý sự kiện từ Buttons (@FXML) ---
+
+    // *** Phương thức xử lý sự kiện khi nhấn nút Back ***
+    @FXML
+    protected void handleBackButtonAction(ActionEvent event) {
+        System.out.println("Back button clicked. Signalling to go back to Welcome View.");
+        // Khi người dùng nhấn nút "Back", gọi callback để báo hiệu cho DictionaryApplication
+        if (onGoBackToWelcome != null) {
+            try {
+                onGoBackToWelcome.run();
+            } catch (RuntimeException e) {
+                System.err.println("Lỗi khi thực hiện callback quay lại màn hình welcome: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Callback onGoBackToWelcome chưa được thiết lập!");
+        }
+    }
+
 
     @FXML
     protected void handleSearchButtonAction(ActionEvent event) {
@@ -189,7 +234,10 @@ public class DictionaryController implements Initializable {
         speakButton.setDisable(!isWordSelected);
     }
 
-
     // TODO: Implement functions for Add/Edit/Delete Dialogs, TTS integration, Game integration
+
+    public DictionaryManagement getDictionaryManagement() {
+        return dictionaryManagement;
+    }
 
 }

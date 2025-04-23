@@ -1,6 +1,5 @@
-package com.example.btl;
+package com.application.test.Model;
 
-import com.example.btl.DictionaryEntry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
