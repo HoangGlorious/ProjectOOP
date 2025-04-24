@@ -1,18 +1,25 @@
 package com.application.test.Model;
 
+import com.application.test.Model.DictionaryEntry;
+import com.application.test.Model.Trie;
+
 import java.io.*;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
 public class DictionaryManagement {
-    private final Dictionary dictionary;
+    private final Trie dictionaryTrie;
     private static final String USER_HOME = System.getProperty("user.home");
     private static final String DATA_FILE_NAME = "dictionary_data.txt";
     public static final Path DATA_FILE_PATH = Paths.get(USER_HOME, DATA_FILE_NAME);
@@ -25,15 +32,15 @@ public class DictionaryManagement {
     private static final Pattern HEADWORD_PATTERN = Pattern.compile("^@\\s*(.*?)\\s*(/.*?/)?$");
 
 
-    public DictionaryManagement(Dictionary dictionary) {
-        this.dictionary = dictionary;
+    public DictionaryManagement() {
+        this.dictionaryTrie = new Trie();
     }
 
     /**
      * Nạp dữ liệu từ điển từ file có định dạng phức tạp.
      * File được đọc theo encoding UTF-8.
      */
-    public void insertFromFile() {
+    public void loadDataFromFile() {
         DictionaryEntry currentEntry = null;
         WordSense currentSense = null;
         int lineNum = 0;
@@ -51,7 +58,6 @@ public class DictionaryManagement {
             return; // Thoát nếu không tìm thấy resource
         }
 
-        // Sử dụng try-with-resources với InputStreamReader và BufferedReader
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -66,8 +72,8 @@ public class DictionaryManagement {
                 if (line.startsWith("@")) {
                     Matcher matcher = HEADWORD_PATTERN.matcher(line);
                     if (matcher.find()) {
-                        if (currentEntry != null) {
-                            dictionary.addEntry(currentEntry);
+                        if (currentEntry != null && !currentEntry.getHeadword().isEmpty()) {
+                            dictionaryTrie.insert(currentEntry);
                             loadedEntries++;
                         }
                         String headword = matcher.group(1).trim();
@@ -100,16 +106,15 @@ public class DictionaryManagement {
                     System.err.println("Thông tin: Bỏ qua dòng " + lineNum + " không thuộc mục từ nào: \"" + line + "\"");
                     skippedLines++;
                 }
-                // --- Kết thúc phần logic xử lý dòng ---
             }
 
             // Lưu mục từ cuối cùng
-            if (currentEntry != null) {
-                dictionary.addEntry(currentEntry);
+            if (currentEntry != null && !currentEntry.getHeadword().isEmpty()) {
+                dictionaryTrie.insert(currentEntry);
                 loadedEntries++;
             }
 
-            System.out.println("-> Đã nạp thành công " + loadedEntries + " mục từ.");
+            System.out.println("-> Đã nạp thành công " + loadedEntries + " mục từ từ file dữ liệu.");
             if (skippedLines > 0) {
                 System.out.println("-> Đã bỏ qua " + skippedLines + " dòng do lỗi định dạng hoặc không xác định.");
             }
@@ -127,54 +132,63 @@ public class DictionaryManagement {
 
     /**
      * Tìm kiếm các mục từ có headword bắt đầu bằng một tiền tố cho trước (không phân biệt hoa thường).
+     * Sử dụng Trie để tìm kiếm hiệu quả.
      * Kết quả trả về được sắp xếp theo alphabet.
      *
-     * @param prefix Tiền tố cần tìm kiếm.
-     * @return Danh sách các DictionaryEntry khớp với tiền tố. Trả về danh sách rỗng nếu không tìm thấy hoặc prefix rỗng.
+     * @param prefix Tiền tố cần tìm.
+     * @return Danh sách các DictionaryEntry khớp. Trả về danh sách rỗng nếu không tìm thấy hoặc prefix rỗng.
      */
     public List<DictionaryEntry> searchEntriesByPrefix(String prefix) {
-        List<DictionaryEntry> results = new ArrayList<>();
-        if (prefix == null || prefix.trim().isEmpty()) {
-            return results; // Trả về rỗng nếu không có gì để tìm
-        }
+        List<DictionaryEntry> results = dictionaryTrie.searchByPrefix(prefix);
 
-        // Chuẩn hóa tiền tố tìm kiếm (xóa khoảng trắng thừa, chuyển về chữ thường)
-        String searchTerm = prefix.trim().toLowerCase();
-
-        // Lọc danh sách các entry
-        results = dictionary.getAllEntries() // Lấy tất cả các entry từ Dictionary
-                .stream() // Chuyển sang Stream API để xử lý
-                .filter(entry -> entry.getHeadword().toLowerCase().startsWith(searchTerm)) // Lọc những entry có headword bắt đầu bằng searchTerm
-                .sorted(Comparator.comparing(DictionaryEntry::getHeadword, String.CASE_INSENSITIVE_ORDER)) // Sắp xếp kết quả
-                .collect(Collectors.toList()); // Thu thập kết quả thành List
+        // Sắp xếp kết quả tìm kiếm theo alphabet của headword
+        Collections.sort(results, Comparator.comparing(DictionaryEntry::getHeadword, String.CASE_INSENSITIVE_ORDER));
 
         return results;
     }
 
     /**
      * Tra cứu một mục từ chính xác theo headword (không phân biệt hoa thường).
+     * Sử dụng Trie để tìm kiếm.
      *
      * @param headword Từ cần tra cứu.
-     * @return Optional chứa DictionaryEntry nếu tìm thấy, Optional rỗng nếu không.
+     * @return Optional chứa DictionaryEntry nếu tìm thấy (entry đầu tiên nếu có nhiều), Optional rỗng nếu không.
      */
     public Optional<DictionaryEntry> lookupEntry(String headword) {
-        return dictionary.findEntry(headword);
+        if (headword == null || headword.trim().isEmpty()) {
+            return Optional.empty();
+        }
+        // *** THAY ĐỔI: Gọi hàm findExact của Trie ***
+        List<DictionaryEntry> foundEntries = dictionaryTrie.findExact(headword.trim());
+
+        // Trả về Optional của entry đầu tiên nếu tìm thấy
+        if (!foundEntries.isEmpty()) {
+            return Optional.of(foundEntries.get(0)); // Giả sử chỉ cần entry đầu tiên nếu trùng headword
+        }
+        return Optional.empty();
     }
 
+    /**
+     * Thêm một mục từ mới vào Trie.
+     * Kiểm tra trùng lặp headword (không phân biệt hoa thường) trước khi thêm.
+     *
+     * @param newEntry Mục từ mới cần thêm.
+     * @return true nếu thêm thành công, false nếu từ đã tồn tại hoặc đầu vào không hợp lệ.
+     */
     public boolean addEntry(DictionaryEntry newEntry) {
         if (newEntry == null || newEntry.getHeadword() == null || newEntry.getHeadword().trim().isEmpty()) {
-            System.err.println("Lỗi: Không thể thêm từ rỗng.");
+            System.err.println("Lỗi: Không thể thêm mục từ rỗng hoặc không có headword.");
             return false;
         }
 
-        // Kiểm tra xem headword đã tồn tại chưa?
-        Optional<DictionaryEntry> existingEntry = dictionary.findEntry(newEntry.getHeadword());
+        Optional<DictionaryEntry> existingEntry = lookupEntry(newEntry.getHeadword()); // Sử dụng hàm lookup đã có/sẽ sửa
+
         if (existingEntry.isPresent()) {
             System.err.println("Lỗi: Từ '" + newEntry.getHeadword() + "' đã tồn tại trong từ điển.");
             return false;
         }
 
-        dictionary.addEntry(newEntry);
+        dictionaryTrie.insert(newEntry);
         return true;
     }
 
@@ -185,7 +199,7 @@ public class DictionaryManagement {
     public void saveDataToFile() {
         System.out.println("\nĐang lưu dữ liệu từ điển vào file: " + DATA_FILE_PATH + "...");
 
-        List<DictionaryEntry> entries = dictionary.getAllEntries();
+        List<DictionaryEntry> entries = dictionaryTrie.getAllEntries();
         Collections.sort(entries, Comparator.comparing(DictionaryEntry::getHeadword, String.CASE_INSENSITIVE_ORDER));
 
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
@@ -212,7 +226,9 @@ public class DictionaryManagement {
     }
 
     public List<DictionaryEntry> getAllDictionaryEntries() {
-        return this.dictionary.getAllEntries(); // Gọi phương thức public của đối tượng Dictionary
+        List<DictionaryEntry> allEntries = dictionaryTrie.getAllEntries();
+        Collections.sort(allEntries, Comparator.comparing(DictionaryEntry::getHeadword, String.CASE_INSENSITIVE_ORDER));
+        return allEntries;
     }
 
 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.application.test.Controller.WelcomeController"
+            stylesheets="@style.css">
+
+    <top>
+        <HBox spacing="15" alignment="CENTER_LEFT" styleClass="top-nav">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <Label text="📖 My Dictionary" styleClass="logo"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Eng-Vie" onAction="#handleEngVie" styleClass="nav-button"/>
+            <Button text="Vie-Eng" onAction="#handleVieEng" styleClass="nav-button"/>
+            <Button text="Sentence Translation" onAction="#handleSentenceTranslation" styleClass="nav-button"/>
+            <Button text="Thesaurus" onAction="#handleThesaurus" styleClass="nav-button"/>
+            <Button text="Grammar" onAction="#handleGrammar" styleClass="nav-button"/>
+            <Button text="Edit Words" onAction="#handleEditWords" styleClass="nav-button"/>
+            <Button text="Games" onAction="#handleGames" styleClass="nav-button"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="30">
+            <Label text="Make your words meaningful" styleClass="hero-text"/>
+            <HBox spacing="10" alignment="CENTER">
+                <TextField promptText="Search for a word..." styleClass="search-bar"/>
+                <Button text="🔍" onAction="#handleSearchAction"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

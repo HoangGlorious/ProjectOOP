@@ -96,7 +96,8 @@ public class DictionaryController implements Initializable {
                     .map(DictionaryEntry::getHeadword)
                     .sorted(String.CASE_INSENSITIVE_ORDER)
                     .collect(Collectors.toList());
-            wordListObservable.setAll(allHeadwords); // Cập nhật ObservableList
+
+            wordListObservable.setAll(allHeadwords);
             System.out.println("Displayed " + allHeadwords.size() + " entries.");
         } else {
             System.err.println("DictionaryManagement chưa được set!");
@@ -114,23 +115,15 @@ public class DictionaryController implements Initializable {
 
     // Hàm xử lý sự kiện khi text trong ô tìm kiếm thay đổi
     private void handleSearchTextChange(String searchText) {
-        // Gọi hàm tìm kiếm từ DictionaryManagement (cần sửa hàm searchEntriesByPrefix để trả về List<DictionaryEntry>)
-        // Hiện tại searchEntriesByPrefix trả về List<DictionaryEntry> rồi, nên chỉ cần map sang headword
-        List<DictionaryEntry> searchResults = dictionaryManagement.searchEntriesByPrefix(searchText);
+        if (dictionaryManagement == null) return; // Kiểm tra null
+
+        // *** THAY ĐỔI: Gọi hàm searchEntriesByPrefix của Management (sẽ dùng Trie) ***
+        List<DictionaryEntry> searchResults = dictionaryManagement.searchEntriesByPrefix(searchText); // <-- Vẫn gọi hàm này
         List<String> resultHeadwords = searchResults.stream()
                 .map(DictionaryEntry::getHeadword)
                 .collect(Collectors.toList());
 
-        // Cập nhật ListView
-        wordListObservable.setAll(resultHeadwords); // Xóa toàn bộ và thêm kết quả mới
-        // Sau khi cập nhật ListView, nếu chỉ có 1 kết quả, có thể tự động chọn nó
-        if (resultHeadwords.size() == 1) {
-            wordListView.getSelectionModel().selectFirst();
-        } else if (resultHeadwords.isEmpty()) {
-            definitionTextArea.setText("Không tìm thấy từ nào khớp.");
-        } else {
-            definitionTextArea.setText("Kết quả tìm kiếm..."); // Xóa nội dung chi tiết cũ
-        }
+        wordListObservable.setAll(resultHeadwords);
     }
 
     // --- Các phương thức xử lý sự kiện từ Buttons (@FXML) ---

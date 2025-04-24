@@ -2,7 +2,6 @@ package com.application.test;
 
 import com.application.test.Controller.DictionaryController;
 import com.application.test.Controller.WelcomeController;
-import com.application.test.Model.Dictionary;
 import com.application.test.Model.DictionaryManagement;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,9 +24,8 @@ public class DictionaryApplication extends Application {
         this.primaryStage = stage;
         stage.setTitle("Ứng dụng Từ điển"); // Tiêu đề chung ban đầu
 
-        this.dictionary = new Dictionary(); // Giả sử Dictionary là public class
-        this.dictionaryManagement = new DictionaryManagement(this.dictionary);
-        dictionaryManagement.insertFromFile(); // Nạp dữ liệu từ file
+        this.dictionaryManagement = new DictionaryManagement();
+        dictionaryManagement.loadDataFromFile();
 
 
         // --- Load màn hình Welcome ---
@@ -95,6 +93,4 @@ public class DictionaryApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
-
-    private Dictionary dictionary;
 }
