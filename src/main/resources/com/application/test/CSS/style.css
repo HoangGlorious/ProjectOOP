@@ -14,6 +14,17 @@
     -fx-font-weight: bold;
 }
 
+#centerPane {
+     -fx-background-image: url("/com/application/test/images/testing.png");
+     -fx-background-size: cover;
+     -fx-background-repeat: no-repeat;
+     -fx-background-position: center;
+}
+
+.top-bar, .top-nav {
+    -fx-background-color: linear-gradient(to right, #152b56, #750202);
+}
+
 .bottom-bar {
     -fx-background-color: #e0e0e0;
     -fx-padding: 10;
