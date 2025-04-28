@@ -1,17 +1,26 @@
 .root {
     -fx-font-family: "Segoe UI", sans-serif;
-    -fx-font-size: 14px;
+    -fx-font-size: 15px;
     -fx-background-color: #f9f9f9;
 }
 
-.top-bar {
-    -fx-background-color: #e0e0e0;
-    -fx-padding: 10;
+.section-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
 }
 
-.section-title {
-    -fx-font-size: 16px;
+#welcomeLabel {
+    -fx-font-size: 48px;
     -fx-font-weight: bold;
+    -fx-text-fill: linear-gradient(to right, #20b516, #d9c811);
+    -fx-font-family: "Roboto", sans-serif;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 4, 0, 0, 2);
+    -fx-background-color: transparent;
+    -fx-background-radius: 5;
+    -fx-padding: 5 10 5 10;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
 }
 
 #centerPane {
@@ -58,10 +67,6 @@
     -fx-border-color: #cccccc;
 }
 
-.top-nav {
-    -fx-background-color: #152b56;
-}
-
 .logo {
     -fx-text-fill: white;
     -fx-font-size: 22px;
@@ -88,11 +93,27 @@
 }
 
 .search-bar {
-    -fx-pref-width: 400px;
+    -fx-pref-width: 600px;
     -fx-font-size: 16px;
     -fx-background-radius: 20;
     -fx-padding: 10;
     -fx-border-color: #ddd;
     -fx-border-radius: 20;
 }
+
+.editor-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-border-color: #cccccc;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4);
+}
+
+.editor-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #152b56;
+}
+
 

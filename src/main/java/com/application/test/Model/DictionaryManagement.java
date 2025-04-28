@@ -193,6 +193,104 @@ public class DictionaryManagement {
     }
 
     /**
+     * Cập nhật một mục từ trong từ điển.
+     * Xử lý hai trường hợp: thay đổi headword và chỉ thay đổi nội dung.
+     *
+     * @param oldHeadword Headword gốc của từ cần sửa.
+     * @param updatedEntry DictionaryEntry mới chứa nội dung cập nhật.
+     * @return true nếu cập nhật thành công, false nếu không tìm thấy từ gốc hoặc từ mới đã tồn tại (khi thay đổi headword).
+     */
+    public boolean updateEntry(String oldHeadword, DictionaryEntry updatedEntry) {
+        if (oldHeadword == null || oldHeadword.trim().isEmpty() || updatedEntry == null || updatedEntry.getHeadword().trim().isEmpty()) {
+            System.err.println("Lỗi: Thông tin cập nhật không hợp lệ.");
+            return false;
+        }
+        String oldWord = oldHeadword.trim();
+        String newWord = updatedEntry.getHeadword().trim();
+
+        // 1. Tìm entry cũ để đảm bảo nó tồn tại
+        Optional<DictionaryEntry> existingOldEntry = lookupEntry(oldWord);
+        if (!existingOldEntry.isPresent()) {
+            System.err.println("Lỗi: Không tìm thấy từ '" + oldWord + "' để cập nhật.");
+            return false;
+        }
+
+        // 2. Kiểm tra xem headword có thay đổi không
+        if (!oldWord.equalsIgnoreCase(newWord)) {
+            // Case 1: Headword ĐANG thay đổi
+            System.out.println("Cập nhật: Thay đổi headword từ '" + oldWord + "' sang '" + newWord + "'.");
+
+            // Kiểm tra xem headword MỚI đã tồn tại chưa
+            Optional<DictionaryEntry> existingNewEntry = lookupEntry(newWord);
+            if (existingNewEntry.isPresent()) {
+                System.err.println("Lỗi: Từ mới '" + newWord + "' đã tồn tại. Không thể cập nhật thành từ này.");
+                return false;
+            }
+
+            // Xóa entry cũ khỏi Trie dựa trên headword cũ
+            boolean removed = dictionaryTrie.remove(oldWord);
+            if (!removed) {
+                // Trường hợp này hiếm xảy ra nếu lookupEntry đã tìm thấy từ đó
+                System.err.println("Lỗi nội bộ: Không thể xóa entry cũ '" + oldWord + "' từ Trie.");
+                return false;
+            }
+
+            // Chèn entry mới (với headword mới) vào Trie
+            dictionaryTrie.insert(updatedEntry);
+            System.out.println("=> Đã cập nhật headword và nội dung thành công.");
+            return true;
+
+        } else {
+            // Case 2: Headword KHÔNG thay đổi, chỉ sửa nội dung
+            System.out.println("Cập nhật: Chỉ sửa nội dung cho từ '" + oldWord + "'.");
+
+            // Thay thế nội dung entry trong Trie
+            boolean replaced = dictionaryTrie.replaceEntry(oldWord, updatedEntry); // Sử dụng phương thức replaceEntry của Trie
+            if (!replaced) {
+                // Trường hợp này cũng hiếm xảy ra nếu lookupEntry đã tìm thấy từ đó
+                System.err.println("Lỗi nội bộ: Không thể thay thế entry cho từ '" + oldWord + "'.");
+                return false;
+            }
+            System.out.println("=> Đã cập nhật nội dung thành công.");
+            return true;
+        }
+    }
+
+    /**
+     * Xóa một mục từ khỏi từ điển dựa trên headword.
+     *
+     * @param headword Headword của từ cần xóa.
+     * @return true nếu xóa thành công, false nếu không tìm thấy từ.
+     */
+    public boolean deleteEntry(String headword) {
+        if (headword == null || headword.trim().isEmpty()) {
+            System.err.println("Lỗi: Headword xóa không hợp lệ.");
+            return false;
+        }
+        String wordToDelete = headword.trim();
+
+        // Kiểm tra xem từ có tồn tại không trước khi xóa
+        Optional<DictionaryEntry> existingEntry = lookupEntry(wordToDelete);
+        if (!existingEntry.isPresent()) {
+            System.err.println("Lỗi: Không tìm thấy từ '" + wordToDelete + "' để xóa.");
+            return false;
+        }
+
+        // Gọi hàm xóa của Trie
+        boolean removed = dictionaryTrie.remove(wordToDelete);
+
+        if (removed) {
+            System.out.println("Đã xóa thành công từ '" + wordToDelete + "'.");
+            return true;
+        } else {
+            // Trường hợp này hiếm xảy ra nếu lookupEntry đã tìm thấy
+            System.err.println("Lỗi nội bộ: Không thể xóa từ '" + wordToDelete + "' từ Trie.");
+            return false;
+        }
+    }
+
+
+    /**
      * Lưu (ghi đè) dữ liệu từ điển hiện tại ra file dữ liệu chính bên ngoài.
      * Dữ liệu được sắp xếp trước khi ghi.
      */
