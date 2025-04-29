@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 // Lớp đại diện cho một nút trong cây Trie
 class TrieNode {
@@ -17,7 +18,6 @@ class TrieNode {
     }
 }
 
-// Lớp cài đặt cấu trúc Trie
 public class Trie {
     private final TrieNode root;
 
@@ -133,4 +133,55 @@ public class Trie {
         // Kết quả này cần được sắp xếp alphabet sau khi lấy ra
         return allEntries;
     }
+
+    /**
+     * Xóa một DictionaryEntry với headword cụ thể khỏi Trie.
+     * Nếu có nhiều entries với cùng headword, chỉ xóa những entry khớp.
+     * Không prune cây.
+     *
+     * @param headword Headword của entry cần xóa.
+     * @return true nếu tìm thấy và xóa ít nhất một entry, false nếu không tìm thấy.
+     */
+    public boolean remove(String headword) {
+        if (headword == null || headword.isEmpty()) {
+            return false;
+        }
+        String lowerWord = headword.toLowerCase();
+        TrieNode node = findNode(lowerWord);
+
+        boolean removed = false;
+        if (node != null && !node.entries.isEmpty()) {
+            // Xóa tất cả entries trong list có headword khớp (case-insensitive)
+            removed = node.entries.removeIf(entry -> entry.getHeadword().equalsIgnoreCase(headword));
+            // TODO: (Nâng cao) Thêm logic prune cây nếu node.entries rỗng và node không có con
+        }
+        return removed;
+    }
+
+    /**
+     * Thay thế DictionaryEntry cho một headword cụ thể bằng một entry mới.
+     * Được dùng khi headword không thay đổi. Xóa tất cả entries cũ khớp headword và thêm entry mới.
+     *
+     * @param headword Headword của entry cần thay thế.
+     * @param updatedEntry Entry mới chứa nội dung cập nhật.
+     * @return true nếu tìm thấy headword và thay thế thành công, false nếu không tìm thấy headword.
+     */
+    public boolean replaceEntry(String headword, DictionaryEntry updatedEntry) {
+        if (headword == null || headword.isEmpty() || updatedEntry == null || !headword.equalsIgnoreCase(updatedEntry.getHeadword())) {
+            // Headword phải khớp và entry mới không null/empty
+            return false;
+        }
+        String lowerWord = headword.toLowerCase();
+        TrieNode node = findNode(lowerWord);
+
+        if (node != null && !node.entries.isEmpty()) {
+            // Xóa tất cả entries cũ khớp headword tại nút này
+            node.entries.removeIf(entry -> entry.getHeadword().equalsIgnoreCase(headword));
+            // Thêm entry mới (đã cập nhật nội dung)
+            node.entries.add(updatedEntry);
+            return true;
+        }
+        return false; // Không tìm thấy nút cho headword
+    }
+
 }

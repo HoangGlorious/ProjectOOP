@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane fx:id="mainPane" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.test.Controller.WelcomeController">
+    <ImageView fx:id="backgroundImageView" fitHeight="640.0" fitWidth="1200.0"/>
+    <BorderPane>
+        <top>
+            <HBox alignment="CENTER_LEFT" spacing="15" styleClass="top-nav">
+                <padding>
+                    <Insets bottom="15" left="15" right="15" top="15" />
+                </padding>
+                <ImageView fx:id="icon1" fitHeight="45.0" fitWidth="45.0"/>
+                <Label styleClass="logo" text="Test Dictionary" />
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button onAction="#handleEngVie" styleClass="nav-button" text="English" />
+                <Button onAction="#handleVieEng" styleClass="nav-button" text="Vietnamese" />
+                <Button onAction="#handleSentenceTranslation" styleClass="nav-button" text="Sentence Translation" />
+                <Button onAction="#handleThesaurus" styleClass="nav-button" text="Thesaurus" />
+                <Button onAction="#handleGrammar" styleClass="nav-button" text="Grammar" />
+                <Button onAction="#handleEditWords" styleClass="nav-button" text="Edit Words" />
+                <Button onAction="#handleGames" styleClass="nav-button" text="Games" />
+            </HBox>
+        </top>
+
+        <center>
+            <VBox id="centerPane" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" spacing="10">
+                <padding>
+                    <Insets bottom="20" left="20" right="20" top="50" />
+                </padding>
+                <Label fx:id="welcomeLabel" styleClass="hero-text" text="Welcome!"/>
+                <HBox alignment="CENTER" spacing="10">
+                    <TextField fx:id="welcomeSearchTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleWelcomeSearchAction" prefHeight="45.0" prefWidth="600.0" promptText="Search for a word..." styleClass="search-bar" />
+                    <Button fx:id="welcomeSearchButton" onAction="#handleWelcomeSearchAction" text="🔍" />
+                </HBox>
+                <ListView fx:id="suggestionListView" managed="false" prefHeight="150.0" prefWidth="300.0" visible="false"/>
+            </VBox>
+        </center>
+    </BorderPane>
+</StackPane>

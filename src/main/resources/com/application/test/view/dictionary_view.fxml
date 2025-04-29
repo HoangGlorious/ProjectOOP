@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane stylesheets="@../CSS/style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.application.test.Controller.DictionaryController">
+
+    <top>
+        <HBox spacing="10" styleClass="top-bar">
+            <padding>
+                <Insets bottom="15" left="15" right="15" top="15" />
+            </padding>
+            <Button fx:id="backButton1" onAction="#handleBackButtonAction" styleClass="nav-button" text="🔙 Back" />
+            <Label styleClass="logo" text="📚 My Dictionary" />
+            <TextField fx:id="searchTextField" promptText="Search for a word..." HBox.hgrow="ALWAYS" />
+            <Button onAction="#handleSearchButtonAction" text="🔍" />
+        </HBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.3">
+            <ListView fx:id="wordListView" prefWidth="200" />
+
+            <VBox spacing="10">
+                <padding>
+                    <Insets bottom="10" left="10" right="10" top="10" />
+                </padding>
+                <Label styleClass="section-title" text="Definition" />
+                <TextArea fx:id="definitionTextArea" editable="false" wrapText="true" VBox.vgrow="ALWAYS" />
+            </VBox>
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="10" styleClass="bottom-bar">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <Button fx:id="addButton" onAction="#handleAddButtonAction" text="+ Add" />
+            <Button fx:id="editButton" onAction="#handleEditButtonAction" text="✎ Edit" />
+            <Button fx:id="deleteButton" onAction="#handleDeleteButtonAction" text="🗑️ Delete" />
+            <Button fx:id="speakButton" onAction="#handleSpeakButtonAction" text="🔊 Speak" />
+        </HBox>
+    </bottom>
+
+</BorderPane>
