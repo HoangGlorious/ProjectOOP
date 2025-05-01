@@ -171,10 +171,6 @@ public class EditWordDialogController implements Initializable, SenseContainerCo
         senses.forEach(updatedEntry::addSense);
 
         // 4. Thực hiện cập nhật trong DictionaryManagement
-        // Logic cập nhật trong DictionaryManagement (khi dùng Trie) thường là:
-        // a) Xóa entry CŨ (dựa trên originalEntry.getHeadword())
-        // b) Thêm entry MỚI (updatedEntry)
-        // Cần hàm updateEntry(String oldHeadword, DictionaryEntry updatedEntry) trong DictionaryManagement
         boolean updated = dictionaryManagement.updateEntry(originalEntry.getHeadword(), updatedEntry); // <-- Cần cài đặt hàm này
 
         if (updated) {
@@ -184,7 +180,7 @@ public class EditWordDialogController implements Initializable, SenseContainerCo
             if (onWordUpdated != null) {
                 onWordUpdated.run();
             }
-            closeDialog(); // Đóng dialog
+            closeDialog();
         } else {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể cập nhật từ '" + headword + "'.");
         }

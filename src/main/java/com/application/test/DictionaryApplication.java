@@ -113,24 +113,21 @@ public class DictionaryApplication extends Application {
             System.out.println("Đã chuyển sang màn hình từ điển.");
 
             // *** Sau khi chuyển Scene, xử lý các pending actions ***
-            if (this.pendingAddAction) { // Nếu là hành động thêm từ
+            if (this.pendingAddAction) {
                 if (this.pendingActionWord != null && !this.pendingActionWord.isEmpty()) {
-                    // Báo hiệu cho DictionaryController mở dialog thêm từ với từ khóa ban đầu
-                    dictionaryControllerInstance.initiateAddWordDialog(this.pendingActionWord); // Cần tạo hàm này trong DictionaryController
+                    Stage currentStage = (Stage) primaryStage.getScene().getWindow();
+                    dictionaryControllerInstance.initiateAddWordDialog(this.pendingActionWord, primaryStage);
                 }
-            } else if (this.pendingActionWord != null && !this.pendingActionWord.isEmpty()) { // Nếu là hành động tìm kiếm
-                // Báo hiệu cho DictionaryController thực hiện tìm kiếm
-                dictionaryControllerInstance.performSearch(this.pendingActionWord); // Hàm này đã có/sẽ sửa
             } else {
-                // Nếu không có pending action (ví dụ: chuyển từ welcome bằng nút khác không phải search)
-                // Có thể hiển thị toàn bộ từ điển hoặc để trống tùy ý
-                dictionaryControllerInstance.loadAndDisplayInitialData(); // Hiển thị toàn bộ ban đầu
+                // Nếu không phải add action, thì có thể là search hoặc chỉ chuyển màn hình
+                // Dù có pendingActionWord hay không, gọi setSearchText để cập nhật search field
+                // và trigger logic hiển thị ban đầu hoặc search/gợi ý
+                dictionaryControllerInstance.setSearchText(this.pendingActionWord != null ? this.pendingActionWord : "");
             }
 
-            // Reset pending actions sau khi xử lý
+            // Reset pending actions (đã xử lý trong setSearchText nếu text rỗng)
             this.pendingActionWord = null;
             this.pendingAddAction = false;
-
 
         } catch (IOException e) {
             System.err.println("Lỗi khi load màn hình từ điển: " + e.getMessage());

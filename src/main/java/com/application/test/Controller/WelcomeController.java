@@ -42,7 +42,6 @@ public class WelcomeController implements Initializable {
     private Consumer<String> onAddWordInitiated; // Callback khi người dùng muốn thêm từ (từ thông báo lỗi)
     private DictionaryManagement dictionaryManagement;
 
-    // *** Setter mới cho callbacks ***
     public void setOnSearchInitiated(Consumer<String> onSearchInitiated) {
         this.onSearchInitiated = onSearchInitiated;
     }
@@ -106,7 +105,7 @@ public class WelcomeController implements Initializable {
         if (!suggestionHeadwords.isEmpty()) {
             suggestionListView.setVisible(true);
             suggestionListView.setManaged(true);
-            suggestionListView.setMaxHeight(suggestionHeadwords.size() * 24);
+            suggestionListView.setMaxHeight(suggestionHeadwords.size() * 8);
         } else {
             suggestionListView.setVisible(false);
             suggestionListView.setManaged(false);
@@ -198,7 +197,7 @@ public class WelcomeController implements Initializable {
         }
     }
 
-    private void showAlert(Alert.AlertType type, String title, String message) {
+    protected void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
