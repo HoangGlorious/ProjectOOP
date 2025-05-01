@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Optional;
 import java.util.function.Consumer; // Import Consumer
+import java.util.regex.Pattern;
 
 public class EditWordDialogController implements Initializable, SenseContainerController {
     @FXML private TextField headwordField;
@@ -29,6 +30,8 @@ public class EditWordDialogController implements Initializable, SenseContainerCo
     private DictionaryManagement dictionaryManagement;
     private Runnable onWordUpdated; // Callback khi sửa thành công
     private DictionaryEntry originalEntry; // Lưu trữ entry gốc đang được sửa
+    private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
+
 
     // List tạm để lưu trữ dữ liệu của các senses đang chỉnh sửa
     private List<WordSenseInputGroup> senseInputGroups; // Sử dụng lại lớp helper
@@ -135,7 +138,7 @@ public class EditWordDialogController implements Initializable, SenseContainerCo
             return;
         }
         // Kiểm tra ký tự đặc biệt
-        // if (INVALID_CHARACTERS_PATTERN.matcher(headword).find()) { /* ... */ return; }
+        if (INVALID_CHARACTERS_PATTERN.matcher(headword).find()) { /* ... */ return; }
 
 
         if (dictionaryManagement == null) { /* ... */ return; }

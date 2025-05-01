@@ -76,7 +76,7 @@ public class WelcomeController implements Initializable {
         suggestionListView.setFocusTraversable(false);
     }
 
-    private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s]");
+    private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
     /**
      * Hiển thị danh sách gợi ý dựa trên tiền tố trong search text field.
      * @param prefix Tiền tố để tìm gợi ý.

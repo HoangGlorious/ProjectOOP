@@ -24,11 +24,6 @@ public class DictionaryManagement {
     private static final String DATA_FILE_NAME = "dictionary_data.txt";
     public static final Path DATA_FILE_PATH = Paths.get(USER_HOME, DATA_FILE_NAME);
     public static final String DEFAULT_RESOURCE_PATH = "/dictionaries.txt";
-
-    // Pattern để tách headword và pronunciation từ dòng @
-    // Ví dụ: @ a b c - book /ˈeɪbiːˈsiːbʊk/
-    // Group 1: headword (a b c - book)
-    // Group 2: pronunciation (/ˈeɪbiːˈsiːbʊk/)
     private static final Pattern HEADWORD_PATTERN = Pattern.compile("^@\\s*(.*?)\\s*(/.*?/)?$");
 
 
@@ -36,27 +31,15 @@ public class DictionaryManagement {
         this.dictionaryTrie = new Trie();
     }
 
-    /**
-     * Nạp dữ liệu từ điển từ file có định dạng phức tạp.
-     * File được đọc theo encoding UTF-8.
-     */
-    public void loadDataFromFile() {
+    /** Helper function for the main data import function. */
+    private void loadDataFromStream(InputStream is, String sourceName) {
         DictionaryEntry currentEntry = null;
         WordSense currentSense = null;
         int lineNum = 0;
         int loadedEntries = 0;
         int skippedLines = 0;
 
-        System.out.println("Đang nạp dữ liệu từ resource: " + DEFAULT_RESOURCE_PATH + "...");
-
-        // Lấy InputStream từ classpath resource
-        InputStream is = DictionaryManagement.class.getResourceAsStream(DEFAULT_RESOURCE_PATH);
-
-        if (is == null) {
-            System.err.println("Lỗi: Không tìm thấy resource '" + DEFAULT_RESOURCE_PATH + "' trong classpath.");
-            System.err.println("Hãy chắc chắn file tồn tại trong 'src/main/resources' và đường dẫn là chính xác.");
-            return; // Thoát nếu không tìm thấy resource
-        }
+        System.out.println("Đang nạp dữ liệu từ: " + sourceName + "...");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             String line;
@@ -64,11 +47,8 @@ public class DictionaryManagement {
                 lineNum++;
                 line = line.trim();
 
-                if (line.isEmpty()) {
-                    continue;
-                }
+                if (line.isEmpty()) continue;
 
-                // --- Phần logic xử lý dòng (giữ nguyên như trước) ---
                 if (line.startsWith("@")) {
                     Matcher matcher = HEADWORD_PATTERN.matcher(line);
                     if (matcher.find()) {
@@ -108,25 +88,46 @@ public class DictionaryManagement {
                 }
             }
 
-            // Lưu mục từ cuối cùng
             if (currentEntry != null && !currentEntry.getHeadword().isEmpty()) {
                 dictionaryTrie.insert(currentEntry);
                 loadedEntries++;
             }
 
-            System.out.println("-> Đã nạp thành công " + loadedEntries + " mục từ từ file dữ liệu.");
+            System.out.println("-> Đã nạp thành công " + loadedEntries + " mục từ từ " + sourceName + ".");
             if (skippedLines > 0) {
                 System.out.println("-> Đã bỏ qua " + skippedLines + " dòng do lỗi định dạng hoặc không xác định.");
             }
 
         } catch (IOException e) {
-            // IOException có thể xảy ra khi đọc từ BufferedReader
-            System.err.println("Lỗi: Đã xảy ra sự cố khi đọc resource: " + e.getMessage());
+            System.err.println("Lỗi: Đã xảy ra sự cố khi đọc " + sourceName + ": " + e.getMessage());
             e.printStackTrace();
         } catch (Exception e) {
-            // Bắt các lỗi không mong muốn khác
-            System.err.println("Lỗi không xác định khi nạp resource: " + e.getMessage());
+            System.err.println("Lỗi không xác định khi nạp " + sourceName + ": " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Nạp dữ liệu từ điển từ file có định dạng phức tạp.
+     * File được đọc theo encoding UTF-8.
+     */
+    public void loadDataFromFile() {
+        InputStream resourceStream = DictionaryManagement.class.getResourceAsStream(DEFAULT_RESOURCE_PATH);
+        if (resourceStream != null) {
+            loadDataFromStream(resourceStream, "resource: " + DEFAULT_RESOURCE_PATH);
+        } else {
+            System.err.println("Lỗi: Không tìm thấy resource '" + DEFAULT_RESOURCE_PATH + "' trong classpath.");
+        }
+
+        // Load from user data file if exists
+        if (Files.exists(DATA_FILE_PATH)) {
+            try (InputStream userFileStream = Files.newInputStream(DATA_FILE_PATH)) {
+                loadDataFromStream(userFileStream, "user data file: " + DATA_FILE_PATH);
+            } catch (IOException e) {
+                System.err.println("Lỗi: Không thể mở file dữ liệu người dùng: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 
@@ -295,23 +296,46 @@ public class DictionaryManagement {
      * Dữ liệu được sắp xếp trước khi ghi.
      */
     public void saveDataToFile() {
-        System.out.println("\nĐang lưu dữ liệu từ điển vào file: " + DATA_FILE_PATH + "...");
+        System.out.println("Đang lưu dữ liệu từ điển vào file: " + DATA_FILE_PATH + "...");
 
         List<DictionaryEntry> entries = dictionaryTrie.getAllEntries();
         Collections.sort(entries, Comparator.comparing(DictionaryEntry::getHeadword, String.CASE_INSENSITIVE_ORDER));
 
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(DATA_FILE_PATH.toFile()), StandardCharsets.UTF_8))) { // Ghi vào DATA_FILE_PATH
+                new FileOutputStream(DATA_FILE_PATH.toFile()), StandardCharsets.UTF_8))) {
 
             for (DictionaryEntry entry : entries) {
-                // ... (Phần logic ghi các dòng @, *, -, = giữ nguyên như cũ) ...
-                writer.write("@ " + entry.getHeadword() /* ... */);
+                // Write headword and pronunciation (if available)
+                String headwordLine = "@ " + entry.getHeadword();
+                if (entry.getPronunciation() != null && !entry.getPronunciation().isEmpty()) {
+                    headwordLine += " /" + entry.getPronunciation() + "/";
+                }
+                writer.write(headwordLine);
                 writer.newLine();
+
                 for (WordSense sense : entry.getSenses()) {
+                    // Write part of speech
                     writer.write("* " + sense.getPartOfSpeech());
                     writer.newLine();
+
+                    // Write definitions
+                    for (String definition : sense.getDefinitions()) {
+                        writer.write("- " + definition);
+                        writer.newLine();
+                    }
+
+                    // Write example phrases
+                    for (ExamplePhrase example : sense.getExamples()) {
+                        String exampleLine = "= " + example.getEnglish();
+                        if (example.getVietnamese() != null && !example.getVietnamese().isEmpty()) {
+                            exampleLine += " + " + example.getVietnamese();
+                        }
+                        writer.write(exampleLine);
+                        writer.newLine();
+                    }
                 }
             }
+
             System.out.println("=> Đã lưu dữ liệu từ điển thành công vào file: " + DATA_FILE_PATH);
 
         } catch (IOException e) {
@@ -323,14 +347,11 @@ public class DictionaryManagement {
         }
     }
 
+
     public List<DictionaryEntry> getAllDictionaryEntries() {
         List<DictionaryEntry> allEntries = dictionaryTrie.getAllEntries();
         Collections.sort(allEntries, Comparator.comparing(DictionaryEntry::getHeadword, String.CASE_INSENSITIVE_ORDER));
         return allEntries;
     }
 
-
-    // ... các hàm khác ...
-    // --- Các hàm khác cần được cập nhật để làm việc với DictionaryEntry ---
-    // Ví dụ: dictionaryLookup, searcher,...
 }

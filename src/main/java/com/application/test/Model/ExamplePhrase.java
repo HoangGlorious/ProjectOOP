@@ -9,11 +9,11 @@ public class ExamplePhrase {
         this.vietnameseTranslation = vietnameseTranslation != null ? vietnameseTranslation.trim() : "";
     }
 
-    public String getEnglishPhrase() {
+    public String getEnglish() {
         return englishPhrase;
     }
 
-    public String getVietnameseTranslation() {
+    public String getVietnamese() {
         return vietnameseTranslation;
     }
 
