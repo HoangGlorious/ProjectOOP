@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 
 public class AddWordDialogController implements Initializable, SenseContainerController {
-    private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s]");
+    private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
     @FXML private TextField headwordField;
     @FXML private TextField pronunciationField;
     @FXML private VBox sensesContainer; // Container để chứa các UI cho từng Sense
@@ -55,10 +55,6 @@ public class AddWordDialogController implements Initializable, SenseContainerCon
     // Setter cho từ khóa ban đầu
     public void setInitialWord(String initialWord) {
         this.initialWord = initialWord;
-        if (headwordField != null && initialWord != null) {
-            headwordField.setText(initialWord);
-            headwordField.setDisable(true); // Không cho sửa headword nếu được truyền từ Welcome
-        }
     }
 
     @Override

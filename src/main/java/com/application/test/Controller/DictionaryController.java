@@ -233,7 +233,7 @@ public class DictionaryController implements Initializable {
         }
     }
 
-    private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s]");
+    private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
 
     public void loadAndDisplayInitialData() {
         if (dictionaryManagement != null) {

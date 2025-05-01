@@ -228,8 +228,8 @@ public class WordSenseInputGroup {
             // Cần sửa handleAddExample để nhận initial data
             // handleAddExample(example.getEnglishPhrase(), example.getVietnameseTranslation());
             // Tạm thời, tạo lại logic thêm example ở đây:
-            TextField engField = new TextField(); engField.setText(example.getEnglishPhrase()); engField.setPromptText("Ví dụ tiếng Anh");
-            TextField vieField = new TextField(); vieField.setText(example.getVietnameseTranslation()); vieField.setPromptText("Nghĩa tiếng Việt");
+            TextField engField = new TextField(); engField.setText(example.getEnglish()); engField.setPromptText("Ví dụ tiếng Anh");
+            TextField vieField = new TextField(); vieField.setText(example.getVietnamese()); vieField.setPromptText("Nghĩa tiếng Việt");
             Button removeExButton = new Button("-");
             removeExButton.setOnAction(event -> removeExampleInputGroup(engField));
             HBox exampleBox = new HBox(5, engField, new Label("+"), vieField, removeExButton);
