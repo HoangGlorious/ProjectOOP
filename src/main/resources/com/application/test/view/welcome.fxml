@@ -41,7 +41,7 @@
                 <Label fx:id="welcomeLabel" styleClass="hero-text" text="Welcome!"/>
                 <HBox alignment="CENTER" spacing="10">
                     <TextField fx:id="welcomeSearchTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#handleWelcomeSearchAction" prefHeight="45.0" prefWidth="600.0" promptText="Search for a word..." styleClass="search-bar" />
-                    <Button fx:id="welcomeSearchButton" onAction="#handleWelcomeSearchAction" text="🔍" />
+                    <Button fx:id="welcomeSearchButton" styleClass="WsearchButton" onAction="#handleWelcomeSearchAction"  text="🔍" />
                 </HBox>
                 <ListView fx:id="suggestionListView" managed="false" prefHeight="150.0" prefWidth="300.0" visible="false"/>
             </VBox>

@@ -10,6 +10,7 @@ module com.example.btl {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.desktop;
 
     opens com.application.test to javafx.fxml;
     exports com.application.test;
