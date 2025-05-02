@@ -1,8 +1,10 @@
 package com.application.test.Controller;
 
-import com.application.test.Model.DictionaryManagement;
 import com.application.test.Model.DictionaryEntry;
+import com.application.test.Model.GeneralManagement;
+import com.application.test.Model.DictionarySource;
 
+import javafx.scene.control.ComboBox;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
@@ -40,7 +42,7 @@ public class WelcomeController implements Initializable {
     // Callbacks để báo hiệu cho DictionaryApplication
     private Consumer<String> onSearchInitiated; // Callback khi người dùng tìm kiếm từ tồn tại
     private Consumer<String> onAddWordInitiated; // Callback khi người dùng muốn thêm từ (từ thông báo lỗi)
-    private DictionaryManagement dictionaryManagement;
+    private GeneralManagement dictionaryManagement;
 
     public void setOnSearchInitiated(Consumer<String> onSearchInitiated) {
         this.onSearchInitiated = onSearchInitiated;
@@ -50,9 +52,8 @@ public class WelcomeController implements Initializable {
         this.onAddWordInitiated = onAddWordInitiated;
     }
 
-    public void setDictionaryManagement(DictionaryManagement dictionaryManagement) {
+    public void setDictionaryManagement(GeneralManagement dictionaryManagement) {
         this.dictionaryManagement = dictionaryManagement;
-        System.out.println("DictionaryManagement set in WelcomeController.");
     }
 
     @Override
@@ -74,9 +75,26 @@ public class WelcomeController implements Initializable {
             }
         });
         suggestionListView.setFocusTraversable(false);
+        // TODO: Khởi tạo UI chọn nguồn (ví dụ ComboBox) với danh sách từ dictionaryManager.getAvailableSourceDisplayNames()
+        // TODO: Đặt listener cho ComboBox để gọi dictionaryManager.setActiveSource()
     }
 
-    private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
+    public void resetView() {
+        System.out.println("Resetting Welcome scene UI...");
+        // Clear the search bar text
+        if (welcomeSearchTextField != null) {
+            welcomeSearchTextField.clear();
+        }
+
+        // Hide and clear the suggestion list
+        if (suggestionListView != null) {
+            suggestionListView.setVisible(false);
+            suggestionListView.setManaged(false);
+            suggestionListView.getItems().clear(); // Clear items in the suggestion list
+        }
+    }
+
+
     /**
      * Hiển thị danh sách gợi ý dựa trên tiền tố trong search text field.
      * @param prefix Tiền tố để tìm gợi ý.
@@ -89,8 +107,8 @@ public class WelcomeController implements Initializable {
             return;
         }
 
-        // Lấy danh sách gợi ý từ DictionaryManagement (sẽ dùng Trie)
-        List<DictionaryEntry> suggestions = dictionaryManagement.searchEntriesByPrefix(prefix);
+        DictionarySource activeSource = this.dictionaryManagement.getActiveSource();
+        List<DictionaryEntry> suggestions = activeSource.searchEntriesByPrefix(prefix);
 
         // Chuyển List<DictionaryEntry> thành List<String> (chỉ headword)
         List<String> suggestionHeadwords = suggestions.stream()
@@ -117,51 +135,18 @@ public class WelcomeController implements Initializable {
     @FXML
     protected void handleWelcomeSearchAction(ActionEvent event) {
         String searchTerm = welcomeSearchTextField.getText().trim();
-        System.out.println("Search action triggered on Welcome screen for: '" + searchTerm + "'");
+        if (dictionaryManagement == null) { /* ... lỗi ... */ return; }
 
-        // Ẩn gợi ý khi thực hiện tìm kiếm
-        suggestionListView.setVisible(false);
-        suggestionListView.setManaged(false);
+        // *** Lấy nguồn từ điển đang hoạt động và lookup trên nguồn đó ***
+        DictionarySource activeSource = dictionaryManagement.getActiveSource();
+        Optional<DictionaryEntry> foundEntry = activeSource.lookupEntry(searchTerm);
 
-
-        // 1. Validation: Kiểm tra thanh tìm kiếm trống
-        if (searchTerm.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Tìm kiếm trống", "Vui lòng gõ một từ vào thanh tìm kiếm.");
-            return; // Dừng xử lý
-        }
-
-        // 2. Validation: Kiểm tra ký tự đặc biệt/số
-        if (INVALID_CHARACTERS_PATTERN.matcher(searchTerm).find()) {
-            showAlert(Alert.AlertType.WARNING, "Input không hợp lệ", "Từ tìm kiếm không được chứa ký tự đặc biệt.");
-            return; // Dừng xử lý
-        }
-
-
-        // 3. Thực hiện Tra cứu chính xác trong DictionaryManagement
-        if (dictionaryManagement == null) {
-            System.err.println("DictionaryManagement chưa được set! Không thể tìm kiếm.");
-            showAlert(Alert.AlertType.ERROR, "Lỗi hệ thống", "Chức năng từ điển chưa sẵn sàng.");
-            return; // Dừng xử lý
-        }
-
-        Optional<DictionaryEntry> foundEntry = dictionaryManagement.lookupEntry(searchTerm);
-
-        // 4. Xử lý kết quả Tra cứu
         if (foundEntry.isPresent()) {
-            System.out.println("Từ '" + searchTerm + "' được tìm thấy. Chuyển màn hình.");
             // Báo hiệu cho DictionaryApplication để chuyển sang màn hình từ điển và hiển thị từ này
-            if (onSearchInitiated != null) {
-                onSearchInitiated.accept(searchTerm); // Truyền từ khóa tìm kiếm qua callback
-            } else {
-                System.err.println("Callback onSearchInitiated chưa được thiết lập!");
-                // Tùy chọn: Chuyển màn hình dictionary view mà không hiển thị từ cụ thể
-                // if (onGoToDictionary != null) { onGoToDictionary.run(); }
-            }
-
+            if (onSearchInitiated != null) { onSearchInitiated.accept(searchTerm); } else { /* ... lỗi ... */ }
         } else {
-            System.out.println("Từ '" + searchTerm + "' không tìm thấy.");
             // Hiển thị thông báo không tìm thấy và hỏi thêm từ
-            showNotFoundAlertWithAddOption(searchTerm);
+            showNotFoundAlertWithAddOption(searchTerm); // Hàm này gọi onAddWordInitiated
         }
     }
 
@@ -211,18 +196,18 @@ public class WelcomeController implements Initializable {
     // Hoặc nếu chúng vẫn dẫn đến màn hình từ điển (như Vie-Eng), bạn có thể gọi onGoToDictionary.run()
     @FXML
     protected void handleEngVie(ActionEvent event) {
-        System.out.println("Navigating to English-Vietnamese...");
-        if (onSearchInitiated != null) {
-            onSearchInitiated.accept("");
-        } else {
-            System.err.println("Callback onSearchInitiated chưa được thiết lập!");
-        }
+        System.out.println("Chuyển sang nguồn Anh-Việt.");
+        if (dictionaryManagement != null && dictionaryManagement.setActiveSource("en-vi")) {
+            if (onSearchInitiated != null) { onSearchInitiated.accept(""); } else { /* ... lỗi ... */ }
+        } else { System.err.println("Không thể chuyển sang nguồn Anh-Việt."); }
     }
 
     @FXML
     protected void handleVieEng(ActionEvent event) {
-        System.out.println("Navigating to Vietnamese-English...");
-
+        System.out.println("Chuyển sang nguồn Việt-Anh.");
+        if (dictionaryManagement != null && dictionaryManagement.setActiveSource("vi-en")) {
+            if (onSearchInitiated != null) { onSearchInitiated.accept(""); } else { /* ... lỗi ... */ }
+        } else { System.err.println("Không thể chuyển sang nguồn Việt-Anh."); }
     }
 
     @FXML
@@ -246,10 +231,14 @@ public class WelcomeController implements Initializable {
     @FXML
     protected void handleEditWords(ActionEvent event) {
         System.out.println("Edit Words clicked.");
+        // Chuyển sang nguồn đang hoạt động trước khi chuyển màn hình Dictionary
+        // (vì việc sửa/xóa sẽ xảy ra trên nguồn đang hoạt động)
         if (onSearchInitiated != null) {
-            onSearchInitiated.accept("");
+            onSearchInitiated.accept(""); // Chuyển đến màn hình dictionary (không search gì)
+            // TODO: Sau khi chuyển, cần báo hiệu DictionaryController mở Dialog sửa từ
+            // Cần một callback riêng hoặc cờ hiệu trong pending actions
         } else {
-            System.err.println("Callback onSearchInitiated chưa được thiết lập!");
+            System.out.println("Không thể mở màn hình từ điển.");
         }
     }
 
@@ -258,5 +247,4 @@ public class WelcomeController implements Initializable {
         System.out.println("Games clicked.");
         // TODO: Nếu có màn hình game riêng, gọi callback khác hoặc load Stage/Scene mới
     }
-
 }

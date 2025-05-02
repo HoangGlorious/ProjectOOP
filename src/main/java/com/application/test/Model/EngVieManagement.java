@@ -1,25 +1,23 @@
 package com.application.test.Model;
 
-import com.application.test.Model.DictionaryEntry;
-import com.application.test.Model.Trie;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 
-public class DictionaryManagement {
+public class EngVieManagement implements DictionarySource {
     private final Trie dictionaryTrie;
+    private static final String SOURCE_ID = "en-vi";
+    private static final String DISPLAY_NAME = "Anh - Việt";
+
     private static final String USER_HOME = System.getProperty("user.home");
     private static final String DATA_FILE_NAME = "dictionary_data.txt";
     public static final Path DATA_FILE_PATH = Paths.get(USER_HOME, DATA_FILE_NAME);
@@ -27,8 +25,18 @@ public class DictionaryManagement {
     private static final Pattern HEADWORD_PATTERN = Pattern.compile("^@\\s*(.*?)\\s*(/.*?/)?$");
 
 
-    public DictionaryManagement() {
+    public EngVieManagement() {
         this.dictionaryTrie = new Trie();
+    }
+
+    @Override
+    public String getSourceId() {
+        return SOURCE_ID;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return DISPLAY_NAME;
     }
 
     /** Helper function for the main data import function. */
@@ -112,8 +120,8 @@ public class DictionaryManagement {
      * Nạp dữ liệu từ điển từ file có định dạng phức tạp.
      * File được đọc theo encoding UTF-8.
      */
-    public void loadDataFromFile() {
-        InputStream resourceStream = DictionaryManagement.class.getResourceAsStream(DEFAULT_RESOURCE_PATH);
+    public void loadData() {
+        InputStream resourceStream = EngVieManagement.class.getResourceAsStream(DEFAULT_RESOURCE_PATH);
         if (resourceStream != null) {
             loadDataFromStream(resourceStream, "resource: " + DEFAULT_RESOURCE_PATH);
         } else {
@@ -295,7 +303,7 @@ public class DictionaryManagement {
      * Lưu (ghi đè) dữ liệu từ điển hiện tại ra file dữ liệu chính bên ngoài.
      * Dữ liệu được sắp xếp trước khi ghi.
      */
-    public void saveDataToFile() {
+    public void saveData() {
         System.out.println("Đang lưu dữ liệu từ điển vào file: " + DATA_FILE_PATH + "...");
 
         List<DictionaryEntry> entries = dictionaryTrie.getAllEntries();
@@ -348,7 +356,7 @@ public class DictionaryManagement {
     }
 
 
-    public List<DictionaryEntry> getAllDictionaryEntries() {
+    public List<DictionaryEntry> getAllEntries() {
         List<DictionaryEntry> allEntries = dictionaryTrie.getAllEntries();
         Collections.sort(allEntries, Comparator.comparing(DictionaryEntry::getHeadword, String.CASE_INSENSITIVE_ORDER));
         return allEntries;

@@ -1,10 +1,6 @@
 package com.application.test.Controller;
 
-import com.application.test.Model.WordSenseInputGroup;
-import com.application.test.Model.DictionaryManagement;
-import com.application.test.Model.DictionaryEntry;
-import com.application.test.Model.ExamplePhrase;
-import com.application.test.Model.WordSense;
+import com.application.test.Model.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,8 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Consumer; // Import Consumer
-import java.util.Optional; // Import Optional
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 
@@ -32,7 +27,7 @@ public class AddWordDialogController implements Initializable, SenseContainerCon
     @FXML private Button saveButton;
     @FXML private Button cancelButton;
 
-    private DictionaryManagement dictionaryManagement;
+    private GeneralManagement dictionaryManagement;
     // Callback để báo hiệu cho DictionaryController khi thêm thành công
     private Runnable onWordAdded;
     // Từ khóa ban đầu được truyền từ màn hình Welcome (nếu có)
@@ -43,7 +38,7 @@ public class AddWordDialogController implements Initializable, SenseContainerCon
 
 
     // Setter cho DictionaryManagement
-    public void setDictionaryManagement(DictionaryManagement dictionaryManagement) {
+    public void setDictionaryManagement(GeneralManagement dictionaryManagement) {
         this.dictionaryManagement = dictionaryManagement;
     }
 
@@ -121,56 +116,54 @@ public class AddWordDialogController implements Initializable, SenseContainerCon
             return;
         }
 
-        if (dictionaryManagement == null) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi hệ thống", "Dictionary Management chưa sẵn sàng.");
-            return;
-        }
+        if (dictionaryManagement == null) { showAlert(Alert.AlertType.ERROR, "Lỗi hệ thống", "Dictionary Manager chưa sẵn sàng."); return; }
+        // activeSource = dictionaryManager.getActiveSource(); // Lấy lại nguồn active trước khi lưu (đảm bảo dùng nguồn hiện tại)
+        DictionarySource activeSource = dictionaryManagement.getActiveSource();
 
-        // Nếu không phải là từ được truyền từ Welcome (initialWord), kiểm tra trùng lặp headword
+
+        // Nếu không phải là từ được truyền từ Welcome (initialWord), kiểm tra trùng lặp headword TRÊN NGUỒN ACTIVE
         if (initialWord == null || !initialWord.equalsIgnoreCase(headword)) {
-            if (dictionaryManagement.lookupEntry(headword).isPresent()) {
-                showAlert(Alert.AlertType.WARNING, "Từ đã tồn tại", "Từ '" + headword + "' đã tồn tại trong từ điển.");
+            if (activeSource.lookupEntry(headword).isPresent()) { // Lookup trên nguồn active
+                showAlert(Alert.AlertType.WARNING, "Từ đã tồn tại", "Từ '" + headword + "' đã tồn tại trong từ điển đang hoạt động.");
                 return;
             }
         }
 
 
-        // Thu thập dữ liệu Senses, Definitions, Examples từ các nhóm input
+        // Thu thập dữ liệu Senses, Definitions, Examples (giữ nguyên)
         List<WordSense> senses = new ArrayList<>();
-        boolean hasAtLeastOneSense = false;
+        boolean hasAtLeastOneSense = false; /* ... logic thu thập senses ... */
         for (WordSenseInputGroup senseGroup : senseInputGroups) {
             Optional<WordSense> senseOptional = senseGroup.getData();
             if (senseOptional.isPresent()) {
                 senses.add(senseOptional.get());
                 hasAtLeastOneSense = true;
             }
-            // Nếu senseGroup.getData() trả về Optional.empty(), có thể hiển thị lỗi cho sense đó
         }
 
-        if (!hasAtLeastOneSense) {
-            showAlert(Alert.AlertType.WARNING, "Thiếu thông tin", "Phải thêm ít nhất một loại từ/cách dùng (Sense).");
-            return;
-        }
 
-        // 3. Tạo DictionaryEntry
+        if (!hasAtLeastOneSense) { showAlert(Alert.AlertType.WARNING, "Thiếu thông tin", "Phải thêm ít nhất một loại từ/cách dùng (Sense)."); return; }
+
+        // Tạo DictionaryEntry (giữ nguyên)
         DictionaryEntry newEntry = new DictionaryEntry(headword, pronunciation);
-        senses.forEach(newEntry::addSense); // Thêm tất cả senses vào entry
+        senses.forEach(newEntry::addSense);
 
-        // 4. Lưu vào từ điển (sử dụng DictionaryManagement)
-        boolean added = dictionaryManagement.addEntry(newEntry); // Hàm addEntry đã kiểm tra trùng lặp
+        // *** Lưu vào từ điển (sử dụng nguồn đang hoạt động) ***
+        boolean added = activeSource.addEntry(newEntry); // Gọi addEntry trên nguồn active
 
         if (added) {
-            System.out.println("Thêm từ thành công: " + headword);
+            System.out.println("Thêm từ thành công: " + headword + " vào nguồn " + activeSource.getDisplayName());
             showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đã thêm từ '" + headword + "' vào từ điển.");
-            // Gọi callback để báo hiệu cho DictionaryController cập nhật ListView
-            if (onWordAdded != null) {
-                onWordAdded.run();
-            }
-            closeDialog(); // Đóng dialog sau khi lưu thành công
-        } else {
-            // Lỗi đã được in trong DictionaryManagement.addEntry()
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể thêm từ '" + headword + "'.");
-        }
+            if (onWordAdded != null) { onWordAdded.run(); }
+
+            // *** GỌI HÀM LƯU FILE TRÊN NGUỒN ĐANG HOẠT ĐỘNG (HOẶC TẤT CẢ CÁC NGUỒN) ***
+            activeSource.saveData(); // Lưu chỉ nguồn active
+            // dictionaryManager.saveAllSourcesData(); // Hoặc lưu tất cả nguồn
+
+            System.out.println("Đã lưu thay đổi sau khi thêm từ.");
+
+            closeDialog();
+        } else { showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể thêm từ '" + headword + "'."); }
     }
 
     /**

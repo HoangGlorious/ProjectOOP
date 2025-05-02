@@ -1,9 +1,6 @@
 package com.application.test.Controller;
 
-import com.application.test.Model.DictionaryManagement;
-import com.application.test.Model.DictionaryEntry;
-import com.application.test.Model.WordSense;
-import com.application.test.Model.WordSenseInputGroup;
+import com.application.test.Model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Optional;
-import java.util.function.Consumer; // Import Consumer
 import java.util.regex.Pattern;
 
 public class EditWordDialogController implements Initializable, SenseContainerController {
@@ -27,7 +23,7 @@ public class EditWordDialogController implements Initializable, SenseContainerCo
     @FXML private Button saveButton;
     @FXML private Button cancelButton;
 
-    private DictionaryManagement dictionaryManagement;
+    private GeneralManagement dictionaryManagement;
     private Runnable onWordUpdated; // Callback khi sửa thành công
     private DictionaryEntry originalEntry; // Lưu trữ entry gốc đang được sửa
     private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
@@ -38,7 +34,7 @@ public class EditWordDialogController implements Initializable, SenseContainerCo
 
 
     // Setter cho DictionaryManagement
-    public void setDictionaryManagement(DictionaryManagement dictionaryManagement) {
+    public void setDictionaryManagement(GeneralManagement dictionaryManagement) {
         this.dictionaryManagement = dictionaryManagement;
     }
 
@@ -141,21 +137,24 @@ public class EditWordDialogController implements Initializable, SenseContainerCo
         if (INVALID_CHARACTERS_PATTERN.matcher(headword).find()) { /* ... */ return; }
 
 
-        if (dictionaryManagement == null) { /* ... */ return; }
-        if (originalEntry == null) { /* ... */ return; } // Đảm bảo có entry gốc
+        if (dictionaryManagement == null) { showAlert(Alert.AlertType.ERROR, "Lỗi hệ thống", "Dictionary Manager chưa sẵn sàng."); return; }
+        if (originalEntry == null) { showAlert(Alert.AlertType.ERROR, "Lỗi", "Không có từ gốc để cập nhật."); return; }
+
+        // activeSource = dictionaryManager.getActiveSource(); // Lấy lại nguồn active trước khi lưu
+        DictionarySource activeSource = dictionaryManagement.getActiveSource();
 
 
-        // Kiểm tra trùng lặp headword MỚI (chỉ khi headword thay đổi)
+        // Kiểm tra trùng lặp headword MỚI (chỉ khi headword thay đổi) TRÊN NGUỒN ACTIVE
         if (!originalEntry.getHeadword().equalsIgnoreCase(headword)) {
-            if (dictionaryManagement.lookupEntry(headword).isPresent()) {
-                showAlert(Alert.AlertType.WARNING, "Từ đã tồn tại", "Từ '" + headword + "' đã tồn tại trong từ điển.");
+            if (activeSource.lookupEntry(headword).isPresent()) { // Lookup trên nguồn active
+                showAlert(Alert.AlertType.WARNING, "Từ đã tồn tại", "Từ '" + headword + "' đã tồn tại trong từ điển đang hoạt động.");
                 return;
             }
         }
 
-        // Thu thập dữ liệu Senses, Definitions, Examples (tương tự Add)
+        // Thu thập dữ liệu Senses, Definitions, Examples (giống Add)
         List<WordSense> senses = new ArrayList<>();
-        boolean hasAtLeastOneSense = false;
+        boolean hasAtLeastOneSense = false; /* ... logic thu thập senses ... */
         for (WordSenseInputGroup senseGroup : senseInputGroups) {
             Optional<WordSense> senseOptional = senseGroup.getData();
             if (senseOptional.isPresent()) {
@@ -164,29 +163,29 @@ public class EditWordDialogController implements Initializable, SenseContainerCo
             }
         }
 
-        if (!hasAtLeastOneSense) {
-            showAlert(Alert.AlertType.WARNING, "Thiếu thông tin", "Phải có ít nhất một loại từ/cách dùng (Sense).");
-            return;
-        }
+        if (!hasAtLeastOneSense) { showAlert(Alert.AlertType.WARNING, "Thiếu thông tin", "Phải có ít nhất một loại từ/cách dùng (Sense)."); return; }
 
-        // 3. Tạo DictionaryEntry MỚI từ dữ liệu đã sửa
+
+        // Tạo DictionaryEntry MỚI từ dữ liệu đã sửa
         DictionaryEntry updatedEntry = new DictionaryEntry(headword, pronunciation);
         senses.forEach(updatedEntry::addSense);
 
-        // 4. Thực hiện cập nhật trong DictionaryManagement
-        boolean updated = dictionaryManagement.updateEntry(originalEntry.getHeadword(), updatedEntry); // <-- Cần cài đặt hàm này
+        // *** Thực hiện cập nhật trong nguồn đang hoạt động ***
+        boolean updated = activeSource.updateEntry(originalEntry.getHeadword(), updatedEntry); // Gọi updateEntry trên nguồn active
 
         if (updated) {
-            System.out.println("Cập nhật từ thành công: " + headword);
+            System.out.println("Cập nhật từ thành công: " + headword + " trong nguồn " + activeSource.getDisplayName());
             showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đã cập nhật từ '" + headword + "'.");
-            // Gọi callback để báo hiệu cho DictionaryController cập nhật ListView
-            if (onWordUpdated != null) {
-                onWordUpdated.run();
-            }
+            if (onWordUpdated != null) { onWordUpdated.run(); }
+
+            // *** GỌI HÀM LƯU FILE TRÊN NGUỒN ĐANG HOẠT ĐỘNG (HOẶC TẤT CẢ CÁC NGUỒN) ***
+            activeSource.saveData(); // Lưu chỉ nguồn active
+            // dictionaryManager.saveAllSourcesData(); // Hoặc lưu tất cả nguồn
+
+            System.out.println("Đã lưu thay đổi sau khi cập nhật từ.");
+
             closeDialog();
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể cập nhật từ '" + headword + "'.");
-        }
+        } else { showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể cập nhật từ '" + headword + "'."); }
     }
 
     /**

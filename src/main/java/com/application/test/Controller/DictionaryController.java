@@ -1,7 +1,11 @@
 package com.application.test.Controller;
 
 import com.application.test.Model.DictionaryEntry;
-import com.application.test.Model.DictionaryManagement;
+import com.application.test.Model.DictionarySource;
+import com.application.test.Model.GeneralManagement;
+
+
+import javafx.scene.control.ComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,8 +26,6 @@ import javafx.stage.Modality; // Import Modality
 import javafx.stage.Stage; // Import Stage
 import javafx.event.ActionEvent;
 
-import javax.sound.midi.Synthesizer;
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -64,14 +66,18 @@ public class DictionaryController implements Initializable {
     private Button speakButton;
     @FXML
     private ListView<String> suggestionListView;
+    @FXML
+    private ComboBox<String> sourceComboBox;
 
-    private DictionaryManagement dictionaryManagement;
+    private GeneralManagement dictionaryManagement;
     private ObservableList<String> wordListObservable;
     private Runnable onGoBackToWelcome;
     private Runnable onDictionaryDataChanged;
     private Consumer<String> onSearchInitiated;
     private Consumer<String> onAddWordInitiated;
-    
+    private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
+    private TextField searchTextField;
+
     public void setOnGoBackToWelcome(Runnable onGoBackToWelcome) {
         this.onGoBackToWelcome = onGoBackToWelcome;
     }
@@ -82,47 +88,45 @@ public class DictionaryController implements Initializable {
      *
      * @param dictionaryManagement Instance DictionaryManagement đã được nạp dữ liệu.
      */
-    public void setDictionaryManagement(DictionaryManagement dictionaryManagement) {
+    public void setDictionaryManagement(GeneralManagement dictionaryManagement) {
         this.dictionaryManagement = dictionaryManagement;
+        initializeSourceComboBox();
         System.out.println("DictionaryManagement set in DictionaryController.");
     }
 
     public void setSearchText(String text) {
-        this.dictionarySearchTextField.setText(text);
+        this.searchTextField.setText(text);
+        // Sau khi set text, tự động kích hoạt tìm kiếm hoặc gợi ý
+        if (text == null || text.trim().isEmpty()) {
+            loadAndDisplayInitialData(); // Hiển thị toàn bộ của nguồn active
+        } else {
+            handleSearchTextChange(text); // Hiển thị gợi ý của nguồn active
+        }
     }
 
     public void performSearch(String searchTerm) {
         if (dictionaryManagement == null) return;
 
         String cleanedSearchTerm = searchTerm.trim();
-
-        // Ẩn ListView gợi ý sau khi thực hiện tìm kiếm chính xác
         suggestionListView.setVisible(false);
         suggestionListView.setManaged(false);
 
-        // Thực hiện lookup chính xác
-        Optional<DictionaryEntry> foundEntry = dictionaryManagement.lookupEntry(cleanedSearchTerm);
+        if (cleanedSearchTerm.isEmpty()) { loadAndDisplayInitialData(); return; }
+
+        // *** Lấy nguồn từ điển đang hoạt động và lookup trên nguồn đó ***
+        DictionarySource activeSource = dictionaryManagement.getActiveSource();
+        Optional<DictionaryEntry> foundEntry = activeSource.lookupEntry(cleanedSearchTerm);
 
         if (foundEntry.isPresent()) {
-            // Nếu tìm thấy chính xác, hiển thị chỉ từ đó trong ListView chính và nghĩa chi tiết
             wordListObservable.setAll(foundEntry.get().getHeadword());
-            wordListView.getSelectionModel().selectFirst(); // Tự động chọn từ đó
-            displayWordDefinition(foundEntry.get().getHeadword()); // Hiển thị nghĩa
+            wordListView.getSelectionModel().selectFirst();
+            displayWordDefinition(foundEntry.get().getHeadword());
             System.out.println("Displayed exact match for: " + cleanedSearchTerm);
-
         } else {
-            // Nếu không tìm thấy chính xác, hiển thị thông báo và có thể hiển thị gợi ý tiền tố (tùy thiết kế)
             System.out.println("Exact match not found for: " + cleanedSearchTerm);
-            wordListObservable.clear(); // Xóa danh sách chính
-            definitionTextArea.setText("Từ '" + cleanedSearchTerm + "' không tìm thấy trong từ điển."); // Thông báo
-            wordListView.getSelectionModel().clearSelection(); // Bỏ chọn
-
-            // Tùy chọn: Nếu bạn muốn hiển thị gợi ý tiền tố ngay cả khi search chính xác không tìm thấy:
-            // List<DictionaryEntry> prefixSuggestions = dictionaryManagement.searchEntriesByPrefix(cleanedSearchTerm);
-            // if (!prefixSuggestions.isEmpty()) {
-            //      definitionTextArea.appendText("\nKết quả gợi ý:");
-            //      // Hiển thị gợi ý ở đâu đó (ListView gợi ý đã ẩn, có thể hiển thị trong TextArea hoặc ListView chính)
-            // }
+            wordListObservable.clear();
+            definitionTextArea.setText("Từ '" + cleanedSearchTerm + "' không tìm thấy trong từ điển.");
+            wordListView.getSelectionModel().clearSelection();
         }
     }
 
@@ -208,6 +212,58 @@ public class DictionaryController implements Initializable {
         }
     }
 
+    private void initializeSourceComboBox() {
+        if (dictionaryManagement == null || sourceComboBox == null) return;
+
+        // Lấy danh sách tên hiển thị của các nguồn có sẵn
+        List<String> sourceDisplayNames = dictionaryManagement.getAvailableSourceDisplayNames();
+        sourceComboBox.setItems(FXCollections.observableArrayList(sourceDisplayNames));
+
+        // Chọn nguồn đang hoạt động làm giá trị mặc định
+        DictionarySource activeSource = dictionaryManagement.getActiveSource();
+        sourceComboBox.getSelectionModel().select(activeSource.getDisplayName());
+
+        // Thêm Listener khi người dùng chọn một nguồn khác trong ComboBox
+        sourceComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.equals(oldValue)) {
+                String newSourceId = dictionaryManagement.getSourceIdByDisplayName(newValue);
+                if (newSourceId != null && dictionaryManagement.setActiveSource(newSourceId)) {
+                    System.out.println("Nguồn đã chuyển sang: " + newValue);
+                    // *** Nạp lại dữ liệu vào ListView chính khi chuyển nguồn ***
+                    // Xóa nội dung search field và hiển thị toàn bộ từ điển của nguồn mới
+                    setSearchText(""); // Đặt text rỗng, hàm này sẽ gọi loadAndDisplayInitialData()
+                    // TODO: Cập nhật trạng thái các nút (ví dụ: nút Speak có thể bị disable nếu nguồn mới không hỗ trợ phát âm)
+                }
+            }
+        });
+    }
+
+    public void resetScene() {
+        System.out.println("Resetting Dictionary scene UI...");
+        // Check if FXML elements have been injected and are not null
+        // These checks are still good practice, although the timing should now be correct
+        if (searchTextField != null) {
+            searchTextField.clear();
+        }
+        if (suggestionListView != null) {
+            suggestionListView.setVisible(false);
+            suggestionListView.setManaged(false);
+            suggestionListView.getItems().clear(); // Clear items in the suggestion list
+        }
+        // Optional: Clear the main word list and definition area
+        // (The setSearchText("") call from Welcome will reload the main list anyway when you return)
+        if (wordListView != null) {
+            wordListView.getItems().clear();
+            wordListView.getSelectionModel().clearSelection();
+        }
+        if (definitionTextArea != null) {
+            definitionTextArea.clear();
+        }
+
+        // Ensure buttons are updated based on no selection
+        // This will likely be handled by the wordListView listener firing when items are cleared
+        // updateButtonStates(null); // Can call explicitly if needed
+    }
 
 
     /**
@@ -233,72 +289,60 @@ public class DictionaryController implements Initializable {
         }
     }
 
-    private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
-
     public void loadAndDisplayInitialData() {
-        if (dictionaryManagement != null) {
-            System.out.println("Loading and displaying initial dictionary data...");
-            List<String> allHeadwords = dictionaryManagement.getAllDictionaryEntries().stream()
-                    .map(DictionaryEntry::getHeadword)
-                    .sorted(String.CASE_INSENSITIVE_ORDER)
-                    .collect(Collectors.toList());
+        if (dictionaryManagement == null) return;
 
-            wordListObservable.setAll(allHeadwords);
-            System.out.println("Displayed " + allHeadwords.size() + " entries.");
-        } else {
-            System.err.println("DictionaryManagement chưa được set!");
-        }
+        // *** Lấy nguồn từ điển đang hoạt động và lấy tất cả entries ***
+        DictionarySource activeSource = dictionaryManagement.getActiveSource();
+        List<DictionaryEntry> allEntries = activeSource.getAllEntries();
+
+        List<String> allHeadwords = allEntries.stream()
+                .map(DictionaryEntry::getHeadword)
+                .collect(Collectors.toList());
+
+        wordListObservable.setAll(allHeadwords);
+        System.out.println("Displayed " + allHeadwords.size() + " entries from source: " + activeSource.getDisplayName());
+        wordListView.getSelectionModel().clearSelection();
+        definitionTextArea.setText("");
+        // TODO: Cập nhật các nút (Speak) dựa trên khả năng của nguồn active
     }
 
 
     private void displayWordDefinition(String headword) {
-        Optional<DictionaryEntry> entry = dictionaryManagement.lookupEntry(headword);
+        if (dictionaryManagement == null) return;
+        DictionarySource activeSource = dictionaryManagement.getActiveSource();
+        Optional<DictionaryEntry> entry = activeSource.lookupEntry(headword);
         if (entry.isPresent()) {
             definitionTextArea.setText(entry.get().getFormattedExplanation());
         } else {
-            definitionTextArea.setText("Không tìm thấy thông tin chi tiết của từ " + headword + ".");
+            definitionTextArea.setText("Không tìm thấy thông tin chi tiết cho '" + headword + "'.");
         }
     }
 
     // Hàm xử lý sự kiện khi text trong ô tìm kiếm thay đổi
     private void handleSearchTextChange(String searchTerm) {
         if (dictionaryManagement == null) return;
-
         String cleanedSearchTerm = searchTerm.trim();
 
         if (cleanedSearchTerm.isEmpty()) {
-            // Nếu search field trống, hiển thị toàn bộ từ điển và ẩn gợi ý
-            loadAndDisplayInitialData(); // Hiển thị toàn bộ
+            loadAndDisplayInitialData();
             suggestionListView.setVisible(false);
             suggestionListView.setManaged(false);
             return;
         }
 
-        // *** Thực hiện tìm kiếm theo tiền tố để gợi ý ***
-        List<DictionaryEntry> suggestions = dictionaryManagement.searchEntriesByPrefix(cleanedSearchTerm);
-        List<String> suggestionHeadwords = suggestions.stream()
-                .map(DictionaryEntry::getHeadword)
-                .collect(Collectors.toList());
+        DictionarySource activeSource = dictionaryManagement.getActiveSource();
+        List<DictionaryEntry> suggestions = activeSource.searchEntriesByPrefix(cleanedSearchTerm);
 
-        // Cập nhật ListView gợi ý
+        List<String> suggestionHeadwords = suggestions.stream().map(DictionaryEntry::getHeadword).collect(Collectors.toList());
+
         suggestionListView.setItems(FXCollections.observableArrayList(suggestionHeadwords));
 
-        // Hiển thị hoặc ẩn ListView gợi ý
-        if (!suggestionHeadwords.isEmpty()) {
-            suggestionListView.setVisible(true);
-            suggestionListView.setManaged(true);
-            // Tùy chọn: Đặt chiều cao cho ListView gợi ý
-            // suggestionListView.setMaxHeight(suggestionHeadwords.size() * 24);
-        } else {
-            suggestionListView.setVisible(false);
-            suggestionListView.setManaged(false);
-        }
+        if (!suggestionHeadwords.isEmpty()) { /* ... hiển thị gợi ý ... */ suggestionListView.setVisible(true); suggestionListView.setManaged(true); /* ... set prefHeight ... */ } else { /* ... ẩn gợi ý ... */ suggestionListView.setVisible(false); suggestionListView.setManaged(false); }
 
-        // *** Xóa nội dung ListView chính và TextArea định nghĩa khi đang gõ gợi ý ***
         wordListObservable.clear();
         definitionTextArea.setText("");
-        wordListView.getSelectionModel().clearSelection(); // Bỏ chọn
-
+        wordListView.getSelectionModel().clearSelection();
     }
 
 
@@ -350,7 +394,11 @@ public class DictionaryController implements Initializable {
             return; // Dừng xử lý
         }
 
-        Optional<DictionaryEntry> foundEntry = dictionaryManagement.lookupEntry(searchTerm);
+        // *** Lấy nguồn từ điển đang hoạt động ***
+        DictionarySource activeSource = dictionaryManagement.getActiveSource();
+
+        // *** Gọi lookupEntry trên nguồn đang hoạt động ***
+        Optional<DictionaryEntry> foundEntry = activeSource.lookupEntry(searchTerm);
 
         // 4. Xử lý kết quả Tra cứu
         if (foundEntry.isPresent()) {
@@ -408,73 +456,53 @@ public class DictionaryController implements Initializable {
 
     @FXML
     protected void handleAddButtonAction(ActionEvent event) {
-        Stage ownerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        initiateAddWordDialog("", ownerStage);
+        // TODO: Mở dialog thêm từ, truyền dictionaryManager và active source info nếu cần
+        // initiateAddWordDialog("", (Stage)((Node)event.getSource()).getScene().getWindow()); // Cần sửa initiateAddWordDialog để nhận DictionaryManager
+        // Hoặc dialogController nhận DictionaryManager và tự lấy active source
+        Stage ownerStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        initiateAddWordDialog("", ownerStage); // Hàm này cần truyền dictionaryManager cho dialogController
     }
 
-    // Cập nhật handleEditButtonAction để gọi initiateEditWordDialog
     @FXML
     protected void handleEditButtonAction(ActionEvent event) {
+        if (dictionaryManagement == null) return;
         String selectedHeadword = wordListView.getSelectionModel().getSelectedItem();
-        if (selectedHeadword != null && dictionaryManagement != null) {
-            Optional<DictionaryEntry> entryToEdit = dictionaryManagement.lookupEntry(selectedHeadword);
+        if (selectedHeadword != null) {
+            DictionarySource activeSource = dictionaryManagement.getActiveSource();
+            Optional<DictionaryEntry> entryToEdit = activeSource.lookupEntry(selectedHeadword); // Lookup trên nguồn active
             if (entryToEdit.isPresent()) {
-                // Lấy Stage cha từ sự kiện của nút
-                Stage ownerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                initiateEditWordDialog(entryToEdit.get(), ownerStage); // <-- Truyền Stage cha
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Không tìm thấy thông tin chi tiết cho từ đã chọn.");
-            }
-        } else {
-            showAlert(Alert.AlertType.INFORMATION, "Chọn từ", "Vui lòng chọn một từ trong danh sách để sửa.");
-        }
+                // TODO: Mở dialog sửa từ, truyền dictionaryManager, entryToEdit, và active source info nếu cần
+                // initiateEditWordDialog(entryToEdit.get(), (Stage)((Node)event.getSource()).getScene().getWindow()); // Cần sửa initiateEditWordDialog
+                Stage ownerStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                initiateEditWordDialog(entryToEdit.get(), ownerStage); // Hàm này cần truyền dictionaryManager cho dialogController
+            } else { showAlert(Alert.AlertType.ERROR, "Lỗi", "Không tìm thấy thông tin chi tiết cho từ đã chọn trong nguồn đang hoạt động."); }
+        } else { showAlert(Alert.AlertType.INFORMATION, "Chọn từ", "Vui lòng chọn một từ trong danh sách để sửa."); }
     }
 
 
     @FXML
     protected void handleDeleteButtonAction(ActionEvent event) {
+        if (dictionaryManagement == null) return;
         String selectedHeadword = wordListView.getSelectionModel().getSelectedItem();
-        if (selectedHeadword != null && dictionaryManagement != null) {
+        if (selectedHeadword != null) {
             // Hỏi xác nhận xóa
-            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmationAlert.setTitle("Xác nhận xóa");
-            confirmationAlert.setHeaderText(null);
-            confirmationAlert.setContentText("Bạn có chắc chắn muốn xóa từ '" + selectedHeadword + "' không?");
-
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION); /* ... */
             Optional<ButtonType> result = confirmationAlert.showAndWait();
-
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                // Nếu người dùng xác nhận, gọi hàm xóa trong DictionaryManagement
-                boolean deleted = dictionaryManagement.deleteEntry(selectedHeadword);
+                // *** Gọi deleteEntry trên nguồn đang hoạt động ***
+                DictionarySource activeSource = dictionaryManagement.getActiveSource();
+                boolean deleted = activeSource.deleteEntry(selectedHeadword);
 
                 if (deleted) {
-                    // Nếu xóa thành công, cập nhật ListView và xóa nội dung chi tiết
-                    // Cách đơn giản: load lại toàn bộ danh sách
-                    onDictionaryDataChanged.run(); // Gọi callback cập nhật ListView
-
-                    // Hoặc cách tối ưu: chỉ xóa mục đó khỏi ObservableList
-                    // wordListObservable.remove(selectedHeadword);
-                    // definitionTextArea.setText(""); // Xóa nội dung chi tiết
-                    // wordListView.getSelectionModel().clearSelection(); // Bỏ chọn
-
-                    System.out.println("Đã xóa: " + selectedHeadword);
+                    onDictionaryDataChanged.run(); // Cập nhật ListView
+                    System.out.println("Đã xóa: " + selectedHeadword + " từ nguồn " + activeSource.getDisplayName());
                     showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đã xóa từ '" + selectedHeadword + "'.");
-
                     // Tùy chọn: Lưu thay đổi ngay sau khi xóa
-                    // dictionaryManagement.saveDataToFile();
-
-                } else {
-                    // Thông báo lỗi (lỗi nội bộ hoặc không tìm thấy mặc dù đã check)
-                    showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể xóa từ '" + selectedHeadword + "'.");
-                }
-            } else {
-                // Người dùng hủy xóa
-                System.out.println("Hủy bỏ xóa từ '" + selectedHeadword + "'.");
-            }
-
-        } else {
-            showAlert(Alert.AlertType.INFORMATION, "Chọn từ", "Vui lòng chọn một từ trong danh sách để xóa.");
-        }
+                    // activeSource.saveData(); // Lưu chỉ nguồn active
+                    // dictionaryManager.saveAllSourcesData(); // Lưu tất cả nguồn
+                } else { showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể xóa từ '" + selectedHeadword + "'."); }
+            } else { System.out.println("Hủy bỏ xóa."); }
+        } else { showAlert(Alert.AlertType.INFORMATION, "Chọn từ", "Vui lòng chọn một từ trong danh sách để xóa."); }
     }
 
 
@@ -495,15 +523,8 @@ public class DictionaryController implements Initializable {
         boolean isWordSelected = (selectedHeadword != null && !selectedHeadword.isEmpty());
         editButton.setDisable(!isWordSelected);
         deleteButton.setDisable(!isWordSelected);
-        speakButton.setDisable(!isWordSelected);
+
     }
-
-    // TODO: Implement functions for Add/Edit/Delete Dialogs, TTS integration, Game integration
-
-    public DictionaryManagement getDictionaryManagement() {
-        return dictionaryManagement;
-    }
-
 
     /**
      * Phương thức để mở dialog Thêm từ.
