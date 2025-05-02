@@ -38,7 +38,7 @@
 
     <HBox alignment="CENTER" spacing="20.0">
         <children>
-            <Button fx:id="saveButton" text="Cập nhật" onAction="#handleSave"/> <!-- Text khác -->
+            <Button fx:id="saveButton" text="Cập nhật" onAction="#handleSave"/>
             <Button fx:id="cancelButton" text="Hủy" onAction="#handleCancel"/>
         </children>
     </HBox>

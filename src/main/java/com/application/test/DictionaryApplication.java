@@ -2,7 +2,8 @@ package com.application.test;
 
 import com.application.test.Controller.DictionaryController;
 import com.application.test.Controller.WelcomeController;
-import com.application.test.Model.DictionaryManagement;
+import com.application.test.Model.GeneralManagement;
+import com.application.test.Model.DictionarySource;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,9 +17,10 @@ import java.net.URL;
 public class DictionaryApplication extends Application {
 
     private Stage primaryStage;
-    private DictionaryManagement dictionaryManagement;
+    private GeneralManagement dictionaryManagement;
     private Scene welcomeScene;
     private Scene dictionaryScene;
+    private WelcomeController welcomeControllerInstance;
     private DictionaryController dictionaryControllerInstance;
     private String pendingActionWord = null;
     private boolean pendingAddAction = false;
@@ -28,34 +30,23 @@ public class DictionaryApplication extends Application {
         this.primaryStage = stage;
         stage.setTitle("Ứng dụng Từ điển");
 
-        // --- Khởi tạo và nạp dữ liệu từ điển ---
-        this.dictionaryManagement = new DictionaryManagement();
-        dictionaryManagement.loadDataFromFile();
+        // *** Khởi tạo DictionaryManager và nạp dữ liệu cho TẤT CẢ các nguồn ***
+        this.dictionaryManagement = new GeneralManagement();
+        dictionaryManagement.loadAllSourcesData(); // Nạp dữ liệu cho tất cả sources
 
         // --- Load màn hình Welcome ---
-        URL welcomeFxmlUrl = getClass().getResource("/com/application/test/view/welcome.fxml"); // <-- Lấy URL của resource
-        if (welcomeFxmlUrl == null) {
-            System.err.println("Lỗi: Không tìm thấy file welcome.fxml trong classpath!");
-            System.exit(1);
-        }
-
-        FXMLLoader welcomeLoader = new FXMLLoader(welcomeFxmlUrl); // <-- Truyền URL vào constructor
-
+        URL welcomeFxmlUrl = getClass().getResource("/com/application/test/view/welcome.fxml"); // Kiểm tra lại đường dẫn
+        if (welcomeFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file welcome.fxml trong classpath!"); System.exit(1); }
+        FXMLLoader welcomeLoader = new FXMLLoader(welcomeFxmlUrl);
         Parent welcomeRoot = welcomeLoader.load();
         WelcomeController welcomeController = welcomeLoader.getController();
-
-        // Truyền DictionaryManagement cho WelcomeController
         welcomeController.setDictionaryManagement(this.dictionaryManagement);
+        welcomeController.setOnSearchInitiated(this::handleSearchInitiated);
+        welcomeController.setOnAddWordInitiated(this::handleAddWordInitiated);
+        // TODO: Thiết lập callback cho các nút khác nếu chúng dẫn đến màn hình/chức năng khác
 
-        // *** Thiết lập các callbacks cho WelcomeController ***
-        welcomeController.setOnSearchInitiated(this::handleSearchInitiated); // Khi WelcomeController báo search
-        welcomeController.setOnAddWordInitiated(this::handleAddWordInitiated); // Khi WelcomeController báo add từ
 
-
-        // Tạo Scene và lưu trữ nó
         this.welcomeScene = new Scene(welcomeRoot);
-
-        // Gán Scene welcome và hiển thị Stage ban đầu
         stage.setScene(welcomeScene);
         stage.show();
 
@@ -63,11 +54,15 @@ public class DictionaryApplication extends Application {
         stage.setOnCloseRequest(event -> {
             System.out.println("Đang đóng ứng dụng...");
             if (dictionaryManagement != null) {
-                dictionaryManagement.saveDataToFile();
+                dictionaryManagement.saveAllSourcesData(); // Lưu dữ liệu cho TẤT CẢ các nguồn
             }
-            /** if (dictionaryControllerInstance != null) {
-                dictionaryControllerInstance.shutdownTTS();
-            }*/
+            if (dictionaryControllerInstance != null) {
+                dictionaryControllerInstance.resetScene(); // Reset Dictionary view
+            }
+            // *** Call resetView on WelcomeController instance before closing ***
+            if (welcomeControllerInstance != null) {
+                welcomeControllerInstance.resetView(); // Reset Welcome view
+            }
             System.out.println("Ứng dụng đã đóng.");
         });
     }
@@ -107,6 +102,12 @@ public class DictionaryApplication extends Application {
                 this.dictionaryScene = new Scene(dictionaryRoot);
             }
 
+            if (welcomeControllerInstance != null) {
+                welcomeControllerInstance.resetView();
+            } else {
+                System.err.println("WelcomeController instance is null. Cannot reset Welcome scene.");
+            }
+
             // Thay thế Scene hiện tại bằng Scene từ điển
             primaryStage.setScene(this.dictionaryScene);
             primaryStage.setTitle("📚 Dictionary Lookup");
@@ -132,7 +133,6 @@ public class DictionaryApplication extends Application {
         } catch (IOException e) {
             System.err.println("Lỗi khi load màn hình từ điển: " + e.getMessage());
             e.printStackTrace();
-            // TODO: Hiển thị Alert lỗi nghiêm trọng và thoát ứng dụng
         }
     }
 
@@ -143,12 +143,11 @@ public class DictionaryApplication extends Application {
         if (this.welcomeScene != null) {
             primaryStage.setScene(this.welcomeScene);
             primaryStage.setTitle("Ứng dụng Từ điển"); // Đổi lại tiêu đề
-
-            // TODO: Reset trạng thái màn hình Welcome (xóa search text, ẩn gợi ý)
-            // Bạn cần lấy WelcomeController instance và gọi hàm reset.
-            // Cần lưu WelcomeController instance giống như DictionaryControllerInstance
-            // welcomeControllerInstance.resetView(); // Cần tạo và gọi hàm này
-            System.out.println("Đã quay lại màn hình welcome.");
+            if (welcomeControllerInstance != null) {
+                welcomeControllerInstance.resetView();
+            } else {
+                System.err.println("WelcomeController instance is null. Cannot reset Welcome scene.");
+            }
         } else {
             System.err.println("Welcome scene chưa được tạo!");
         }

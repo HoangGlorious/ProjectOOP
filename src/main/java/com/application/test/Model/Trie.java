@@ -46,7 +46,12 @@ public class Trie {
             currentNode = currentNode.children.get(ch);
         }
         // Đến cuối từ, thêm entry vào danh sách tại nút hiện tại
-        currentNode.entries.add(entry);
+        boolean alreadyExists = currentNode.entries.stream().anyMatch(existing -> existing.getHeadword().equalsIgnoreCase(entry.getHeadword()));
+        if (!alreadyExists) {
+            currentNode.entries.add(entry);
+        } else {
+            System.err.println("Warning: Duplicate headword '" + entry.getHeadword() + "' encountered during insert.");
+        }
     }
 
     /**

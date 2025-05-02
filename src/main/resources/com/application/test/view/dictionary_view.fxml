@@ -16,6 +16,7 @@
                 <Button fx:id="backButton1" onAction="#handleBackButtonAction" styleClass="nav-button" text="🔙 Back" />
                 <Label styleClass="logo" text="📚 My Dictionary" />
                 <Region HBox.hgrow="ALWAYS"/>
+                <ComboBox fx:id="sourceComboBox" promptText="Chọn nguồn" />
                 <VBox fx:id="searchContainer" spacing="0" alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
                     <children>
                         <!-- HBox chứa TextField và Button Search -->
@@ -28,13 +29,7 @@
 
                 <Region HBox.hgrow="ALWAYS"/>
 
-                <!-- Các nút chức năng khác trên top bar nếu có -->
-                <!-- <Button text="Eng-Vie" onAction="#handleEngVie" styleClass="nav-button"/> -->
-
             </HBox>
-
-            <!-- *** ListView để hiển thị gợi ý (trong AnchorPane bọc ngoài) *** -->
-            <!-- Vị trí được neo dưới searchContainer -->
             <ListView fx:id="suggestionListView" prefHeight="150.0" prefWidth="300.0" styleClass="suggestion-list" visible="false" managed="false"
                       AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/> <!-- Neo tạm thời, sẽ tính toán vị trí trong Controller -->
         </AnchorPane>
@@ -58,10 +53,10 @@
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <Button fx:id="addButton" onAction="#handleAddButtonAction" text="+ Add" styleClass="button"/>
-            <Button fx:id="editButton" onAction="#handleEditButtonAction" text="✎ Edit" styleClass="button"/>
-            <Button fx:id="deleteButton" onAction="#handleDeleteButtonAction" text="🗑️ Delete" styleClass="button"/>
-            <Button fx:id="speakButton" onAction="#handleSpeakButtonAction" text="🔊 Speak" styleClass="button"/>
+            <Button fx:id="addButton" onAction="#handleAddButtonAction" text="+ Add" styleClass="bot-button"/>
+            <Button fx:id="editButton" onAction="#handleEditButtonAction" text="✎ Edit" styleClass="bot-button"/>
+            <Button fx:id="deleteButton" onAction="#handleDeleteButtonAction" text="🗑️ Delete" styleClass="bot-button"/>
+            <Button fx:id="speakButton" onAction="#handleSpeakButtonAction" text="🔊 Speak" styleClass="bot-button"/>
         </HBox>
     </bottom>
 

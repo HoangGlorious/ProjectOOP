@@ -180,55 +180,43 @@
 }
 
 .suggestion-list {
-    /* Loại bỏ border mặc định */
-    -fx-border-color: transparent;
-    -fx-border-width: 0;
-
-    /* Có thể thêm border tùy chỉnh */
+     -fx-border-color: transparent;
+     -fx-border-width: 0;
      border-color: lightgray;
      border-width: 1px;
      border-style: solid;
-     /* Chỉ hiển thị border ở dưới và hai bên */
-     -fx-border-radius: 0 0 5 5; /* Góc bo tròn chỉ ở dưới */
-     -fx-border-width: 0 1px 1px 1px; /* border-width: top right bottom left */
-
-
-    /* Background cho ListView */
-    -fx-background-color: white;
-
-    /* Padding bên trong ListView */
-    -fx-padding: 0;
+     -fx-border-radius: 0 0 5 5;
+     -fx-border-width: 0 1px 1px 1px;
+     -fx-background-color: white;
+     -fx-padding: 0;
 }
 
-/* Style cho các item (dòng) trong ListView gợi ý */
+
 .suggestion-list .list-cell {
-    /* Loại bỏ background mặc định khi không chọn */
     -fx-background: transparent;
-    -fx-background-color: transparent; /* Quan trọng để background trong suốt */
-
-    /* Padding cho mỗi item */
-    -fx-padding: 5 10 5 10; /* top right bottom left */
-
-    /* Màu text mặc định */
+    -fx-background-color: transparent;
+    -fx-padding: 5 10 5 10;
     -fx-text-fill: #333;
-
-    /* Loại bỏ border/graphic mặc định */
     -fx-border-color: transparent;
     -fx-graphic-text-gap: 0;
     -fx-border-color: #eee;
     -fx-border-width: 0 0 1px 0;
 }
 
-/* Style cho item khi hover */
+
 .suggestion-list .list-cell:filled:hover {
-    -fx-background-color: #f0f0f0; /* Màu nền khi hover */
-    -fx-text-fill: #000; /* Màu text khi hover */
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #000;
 }
 
-/* Style cho item khi được chọn */
 .suggestion-list .list-cell:filled:selected {
-     -fx-background-color: #007bff; /* Màu nền khi chọn */
-     -fx-text-fill: white; /* Màu text khi chọn */
+     -fx-background-color: #007bff;
+     -fx-text-fill: white;
+}
+
+.bot-button:hover {
+    -fx-background-color: #ab1c0f;
+    -fx-text-fill: #ebeb13;
 }
 
 
