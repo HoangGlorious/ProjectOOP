@@ -1,0 +1,63 @@
+.wordle-container {
+    -fx-background-color: #f5f5f5;
+}
+
+.title-label {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.message-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+}
+
+.letter-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 2px;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-alignment: center;
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+}
+
+.correct {
+    -fx-background-color: #6aaa64;
+    -fx-border-color: #6aaa64;
+    -fx-text-fill: white;
+}
+
+.present {
+    -fx-background-color: #c9b458;
+    -fx-border-color: #c9b458;
+    -fx-text-fill: white;
+}
+
+.absent {
+    -fx-background-color: #787c7e;
+    -fx-border-color: #787c7e;
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-background-color: #538d4e;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #48773f;
+}
+
+.text-field {
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+}
