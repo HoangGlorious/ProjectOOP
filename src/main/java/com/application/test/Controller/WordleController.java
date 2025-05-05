@@ -1,9 +1,11 @@
 package com.application.test.Controller;
 
 import com.application.test.Model.WordleGame;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -22,6 +24,7 @@ import java.util.List;
 public class WordleController {
     private static final int WORD_LENGTH = 5;
     private static final int MAX_ATTEMPTS = 6;
+    private Runnable onGoBackToGames;
 
     @FXML
     private VBox rootPane;
@@ -43,6 +46,10 @@ public class WordleController {
 
     private WordleGame game;
     private Label[][] letterLabels;
+
+    public void setOnGoBackToGames(Runnable onGoBackToGames) {
+        this.onGoBackToGames = onGoBackToGames;
+    }
 
     public void initialize() {
         // Tạo game với đường dẫn đến file từ điển 5 chữ cái
@@ -160,7 +167,7 @@ public class WordleController {
         }
     }
 
-    private void resetGame() {
+    public void resetGame() {
         game.resetGame();
 
         // Đặt lại giao diện
@@ -191,29 +198,23 @@ public class WordleController {
         alert.showAndWait();
     }
 
-    /**
-     * Method to handle the "Back" button to return to the Games menu
-     */
+
     @FXML
-    protected void backToGames() {
-        try {
-            // Load the games.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/application/test/view/games.fxml"));
-            Parent gamesRoot = loader.load();
-
-            // Get the current stage
-            Stage primaryStage = (Stage) rootPane.getScene().getWindow();
-
-            // Set the new scene
-            Scene gamesScene = new Scene(gamesRoot);
-            primaryStage.setTitle("Games");
-            primaryStage.setScene(gamesScene);
-            primaryStage.sizeToScene();
-
-            System.out.println("Returned to games menu");
-        } catch (IOException e) {
-            System.err.println("Error returning to games menu: " + e.getMessage());
-            e.printStackTrace();
+    protected void backToGames(ActionEvent event) {
+        System.out.println("Back button clicked in WordleController.");
+        resetGame(); // Reset game state
+        // *** Signal DictionaryApplication to switch scene back to Games Menu ***
+        if (onGoBackToGames != null) {
+            try {
+                onGoBackToGames.run(); // <-- Trigger the callback
+            } catch (RuntimeException e) {
+                System.err.println("Error executing go back to Games callback: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Callback onGoBackToGames is not set in WordleController!");
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
         }
     }
 }
