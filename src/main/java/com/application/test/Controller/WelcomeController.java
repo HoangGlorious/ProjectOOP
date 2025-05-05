@@ -27,7 +27,35 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.function.Consumer;
+import com.application.test.Model.DictionaryEntry;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.event.ActionEvent;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.function.Consumer;
 
 public class WelcomeController implements Initializable {
 
@@ -242,9 +270,23 @@ public class WelcomeController implements Initializable {
         }
     }
 
+
     @FXML
     protected void handleGames(ActionEvent event) {
-        System.out.println("Games clicked.");
-        // TODO: Nếu có màn hình game riêng, gọi callback khác hoặc load Stage/Scene mới
+        try {
+            // Load màn hình game mà không tạo stage mới
+            Parent gamesRoot = FXMLLoader.load(
+                    getClass().getResource("/com/application/test/view/games.fxml")
+            );
+            Scene gamesScene = new Scene(gamesRoot);
+
+            // Lấy stage hiện tại và thiết lập scene mới
+            Stage primaryStage = (Stage) mainPane.getScene().getWindow();
+            primaryStage.setTitle("Games");
+            primaryStage.setScene(gamesScene);
+            primaryStage.sizeToScene();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
