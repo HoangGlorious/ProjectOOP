@@ -6,6 +6,7 @@ import com.application.test.Model.GeneralManagement;
 
 
 import com.application.test.Model.TextToSpeech;
+import javafx.application.Platform;
 import javafx.scene.control.ComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -79,32 +80,21 @@ public class DictionaryController implements Initializable {
     private Consumer<String> onSearchInitiated;
     private Consumer<String> onAddWordInitiated;
     private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
-    private TextField searchTextField;
+    private String initialSearchTerm;
 
     public void setOnGoBackToWelcome(Runnable onGoBackToWelcome) {
         this.onGoBackToWelcome = onGoBackToWelcome;
     }
 
+    public void setInitialSearchTerm(String initialSearchTerm) {
+        this.initialSearchTerm = initialSearchTerm;
+        System.out.println("Initial search term set to: '" + initialSearchTerm + "' in DictionaryController.");
+    }
 
-    /**
-     * Setter để nhận instance DictionaryManagement từ DictionaryApplication.
-     *
-     * @param dictionaryManagement Instance DictionaryManagement đã được nạp dữ liệu.
-     */
     public void setDictionaryManagement(GeneralManagement dictionaryManagement) {
         this.dictionaryManagement = dictionaryManagement;
         initializeSourceComboBox();
         System.out.println("DictionaryManagement set in DictionaryController.");
-    }
-
-    public void setSearchText(String text) {
-        this.searchTextField.setText(text);
-        // Sau khi set text, tự động kích hoạt tìm kiếm hoặc gợi ý
-        if (text == null || text.trim().isEmpty()) {
-            loadAndDisplayInitialData(); // Hiển thị toàn bộ của nguồn active
-        } else {
-            handleSearchTextChange(text); // Hiển thị gợi ý của nguồn active
-        }
     }
 
     public void performSearch(String searchTerm) {
@@ -140,10 +130,13 @@ public class DictionaryController implements Initializable {
         // Khởi tạo ObservableList cho wordListView (danh sách từ chính)
         wordListObservable = FXCollections.observableArrayList();
         wordListView.setItems(wordListObservable);
-        suggestionListView.setItems(FXCollections.observableArrayList());
+
+        // Khởi tạo ObservableList cho suggestionListView (gợi ý)
+        suggestionListView.setItems(FXCollections.observableArrayList()); // Initialize suggestion list items too
         suggestionListView.setFocusTraversable(false);
         suggestionListView.setVisible(false);
         suggestionListView.setManaged(false);
+
         // --- Thêm Listener khi người dùng chọn một từ trong wordListView (danh sách chính) ---
         wordListView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
@@ -158,17 +151,18 @@ public class DictionaryController implements Initializable {
         // --- Thêm Listener khi người dùng chọn một gợi ý trong suggestionListView ---
         suggestionListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                dictionarySearchTextField.setText(newValue); // Đặt gợi ý vào search field
-                performSearch(newValue); // Gọi hàm tìm kiếm với gợi ý được chọn
+
+                dictionarySearchTextField.setText(newValue);
+                // Ẩn gợi ý sau khi chọn
                 suggestionListView.setVisible(false);
+                suggestionListView.setManaged(false);
             }
         });
-
 
         // --- Thêm Listener cho TextField tìm kiếm (trên màn hình Dictionary) ---
         // Listener này sẽ gọi hàm xử lý tìm kiếm/gợi ý khi text thay đổi
         dictionarySearchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            handleSearchTextChange(newValue); // Gọi hàm xử lý khi text thay đổi
+            handleSearchTextChange(newValue); // Gọi hàm xử lý khi text thay đổi (cho gợi ý)
         });
 
         // Xử lý nhấn Enter trên dictionarySearchTextField màn hình Dictionary
@@ -197,22 +191,29 @@ public class DictionaryController implements Initializable {
         // Thiết lập callback khi dữ liệu từ điển thay đổi
         this.onDictionaryDataChanged = this::loadAndDisplayInitialData;
 
-        // *** Thêm Listener để tính toán vị trí của ListView gợi ý khi layout thay đổi ***
-        // Điều này đảm bảo ListView gợi ý luôn nằm ngay dưới search field
-        searchContainer.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
-            updateSuggestionListViewPosition();
-        });
-        // Tính toán vị trí lần đầu sau khi initialize hoàn tất và layout được tính
-        // Sử dụng Platform.runLater để đảm bảo layout đã được tính toán
-        javafx.application.Platform.runLater(this::updateSuggestionListViewPosition);
+        // Listener để tính toán vị trí của ListView gợi ý
+        /* ... */
+        Platform.runLater(this::updateSuggestionListViewPosition);
+
 
         if (centerSplitPane != null && wordListView != null) {
-            // Đặt ListView bên trái là không co giãn
             SplitPane.setResizableWithParent(wordListView, false);
-            // VBox bên phải (definition) sẽ tự động co giãn để lấp đầy phần còn lại
         } else {
             System.err.println("SplitPane hoặc ListView chưa sẵn sàng!");
         }
+
+        Platform.runLater(() -> {
+            if (initialSearchTerm != null && dictionarySearchTextField != null) { // Kiểm tra initialSearchTerm và TextField
+                System.out.println("Processing initial search term: '" + initialSearchTerm + "' in Platform.runLater.");
+                dictionarySearchTextField.setText(initialSearchTerm); // <-- Đặt text field (sẽ trigger listener)
+
+                performSearch(initialSearchTerm);
+            } else {
+                // Nếu initialSearchTerm là null hoặc trống, hiển thị toàn bộ từ điển ban đầu
+                System.out.println("No initial search term or it's empty. Loading all data.");
+                loadAndDisplayInitialData();
+            }
+        });
     }
 
     private void initializeSourceComboBox() {
@@ -234,7 +235,7 @@ public class DictionaryController implements Initializable {
                     System.out.println("Nguồn đã chuyển sang: " + newValue);
                     // *** Nạp lại dữ liệu vào ListView chính khi chuyển nguồn ***
                     // Xóa nội dung search field và hiển thị toàn bộ từ điển của nguồn mới
-                    setSearchText(""); // Đặt text rỗng, hàm này sẽ gọi loadAndDisplayInitialData()
+                    setInitialSearchTerm(""); // Đặt text rỗng, hàm này sẽ gọi loadAndDisplayInitialData()
                     // TODO: Cập nhật trạng thái các nút (ví dụ: nút Speak có thể bị disable nếu nguồn mới không hỗ trợ phát âm)
                 }
             }
@@ -245,8 +246,8 @@ public class DictionaryController implements Initializable {
         System.out.println("Resetting Dictionary scene UI...");
         // Check if FXML elements have been injected and are not null
         // These checks are still good practice, although the timing should now be correct
-        if (searchTextField != null) {
-            searchTextField.clear();
+        if (dictionarySearchTextField != null) {
+            dictionarySearchTextField.clear();
         }
         if (suggestionListView != null) {
             suggestionListView.setVisible(false);
@@ -514,8 +515,6 @@ public class DictionaryController implements Initializable {
         String selectedHeadword = wordListView.getSelectionModel().getSelectedItem();
         if (selectedHeadword != null) {
             System.out.println("Speak button clicked for: " + selectedHeadword);
-            // TODO: Tích hợp thư viện TTS (Text-to-Speech) và gọi API của nó để phát âm selectedHeadword
-            // Ví dụ với FreeTTS: Call API để nói selectedHeadword
             try {
                 speak(selectedHeadword);
             } catch (Exception e){
