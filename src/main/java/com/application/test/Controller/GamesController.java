@@ -8,74 +8,73 @@ import javafx.scene.layout.VBox;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 public class GamesController {
-
+    private Scene wordleMenuScene; // Added scene for WordleMenu
+    private WordleMenuController wordleMenuControllerInstance; // Added controller for WordleMenu
     @FXML
     private VBox gamesPane;
+    private Runnable onGoBackToWelcome;
+    private Consumer<String> onLaunchSpecificGame;
+
+
+    public void setOnGoBackToWelcome(Runnable onGoBackToWelcome) {
+        this.onGoBackToWelcome = onGoBackToWelcome;
+    }
+
+    public void setOnLaunchSpecificGame(Consumer<String> onLaunchSpecificGame) {
+        this.onLaunchSpecificGame = onLaunchSpecificGame;
+    }
 
     @FXML
     protected void launchWordle(MouseEvent event) {
-        try {
-            // Load FXML with the correct path that matches your project structure
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/application/test/view/wordle_view.fxml"));
-            Parent wordleRoot = loader.load();
-
-            // Create scene and add CSS if it exists
-            Scene wordleScene = new Scene(wordleRoot);
-
-            // Try to load CSS with the correct path
-            String cssPath = "/com/application/test/css/wordle.css";
-            if (getClass().getResource(cssPath) != null) {
-                wordleScene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
-                System.out.println("CSS loaded successfully");
-            } else {
-                System.err.println("Warning: CSS file not found at: " + cssPath);
-                // Try alternative path
-                cssPath = "/com/application/test/wordle.css";
-                if (getClass().getResource(cssPath) != null) {
-                    wordleScene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
-                    System.out.println("CSS loaded from alternative path");
-                }
+        System.out.println("Launching Wordle game from Game Menu.");
+        if (onLaunchSpecificGame != null) {
+            try {
+                onLaunchSpecificGame.accept("wordle"); // Signal to launch Wordle menu
+            } catch (RuntimeException e) {
+                System.err.println("Error executing launch Wordle callback: " + e.getMessage());
+                e.printStackTrace();
             }
+        } else {
+            // Direct navigation as fallback if callback is not set
+            System.err.println("Callback onLaunchSpecificGame is not set in GamesController! Trying direct navigation...");
+            try {
+                // Load the WordleMenu directly as a fallback
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/application/test/view/wordlemenu.fxml"));
+                Parent wordleMenuRoot = loader.load();
 
-            // Get the current stage
-            Stage primaryStage = (Stage) gamesPane.getScene().getWindow();
+                Scene wordleMenuScene = new Scene(wordleMenuRoot);
 
-            // Set the new scene
-            primaryStage.setTitle("Wordle Game");
-            primaryStage.setScene(wordleScene);
-            primaryStage.sizeToScene();
 
-            // Debug info
-            System.out.println("Wordle game launched successfully");
+                Stage stage = (Stage) gamesPane.getScene().getWindow();
+                stage.setTitle("Wordle Menu");
+                stage.setScene(wordleMenuScene);
+                stage.sizeToScene();
 
-        } catch (IOException e) {
-            System.err.println("Error loading Wordle game: " + e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.err.println("Unexpected error: " + e.getMessage());
-            e.printStackTrace();
+                System.out.println("Loaded Wordle Menu screen using direct navigation");
+            } catch (IOException e) {
+                System.err.println("Error during direct navigation to Wordle Menu: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 
     @FXML
     protected void backToWelcome() {
-        try {
-            // Load welcome screen with the correct path
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/application/test/view/welcome.fxml"));
-            Parent welcomeRoot = loader.load();
+        System.out.println("Back to Welcome button clicked in GamesController. Signaling DictionaryApplication.");
 
-            Scene welcomeScene = new Scene(welcomeRoot);
-            Stage primaryStage = (Stage) gamesPane.getScene().getWindow();
-            primaryStage.setTitle("Ứng dụng Từ điển");
-            primaryStage.setScene(welcomeScene);
-            primaryStage.sizeToScene();
-
-            System.out.println("Returned to welcome screen");
-        } catch (IOException e) {
-            System.err.println("Error returning to welcome screen: " + e.getMessage());
-            e.printStackTrace();
+        // Signal DictionaryApplication to switch scene back to Welcome
+        if (onGoBackToWelcome != null) {
+            try {
+                onGoBackToWelcome.run();
+            } catch (RuntimeException e) {
+                System.err.println("Error executing go back to Welcome callback: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Callback onGoBackToWelcome is not set in GamesController!");
         }
     }
 }
