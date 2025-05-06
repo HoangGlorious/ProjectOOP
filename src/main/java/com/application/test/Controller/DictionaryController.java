@@ -5,6 +5,7 @@ import com.application.test.Model.DictionarySource;
 import com.application.test.Model.GeneralManagement;
 
 
+import com.application.test.Model.TextToSpeech;
 import javafx.scene.control.ComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,6 +35,8 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.function.Consumer; // Import Consumer
+
+import static com.application.test.Model.TextToSpeech.speak;
 
 
 public class DictionaryController implements Initializable {
@@ -513,6 +516,11 @@ public class DictionaryController implements Initializable {
             System.out.println("Speak button clicked for: " + selectedHeadword);
             // TODO: Tích hợp thư viện TTS (Text-to-Speech) và gọi API của nó để phát âm selectedHeadword
             // Ví dụ với FreeTTS: Call API để nói selectedHeadword
+            try {
+                speak(selectedHeadword);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         } else {
             System.out.println("No word selected to speak.");
         }
