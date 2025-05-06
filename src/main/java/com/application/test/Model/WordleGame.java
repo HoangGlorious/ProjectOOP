@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class WordleGame {
+public class WordleGame implements Games {
     private static final int WORD_LENGTH = 5;
     private static final int MAX_ATTEMPTS = 6;
 
@@ -89,8 +89,6 @@ public class WordleGame {
     }
 
     private List<LetterState> checkGuess(String guess) {
-        // ... giữ nguyên logic checkGuess của bạn ...
-        // (xem ví dụ trước)
         List<LetterState> states = new ArrayList<>();
         char[] targetChars = targetWord.toCharArray();
         char[] guessChars  = guess.toCharArray();
@@ -135,5 +133,16 @@ public class WordleGame {
     public List<String> getAttempts() { return new ArrayList<>(attempts); }
     public List<List<LetterState>> getAttemptsStates() {
         return new ArrayList<>(attemptsStates);
+    }
+
+    @Override
+    public void startGame() {
+        resetGame();
+        System.out.println("Wordle game has started!");
+    }
+
+    @Override
+    public void endGame() {
+        System.out.println("Wordle game has ended.");
     }
 }
