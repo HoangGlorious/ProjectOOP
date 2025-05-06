@@ -44,12 +44,14 @@ public class DictionaryApplication extends Application {
         if (welcomeFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file welcome.fxml trong classpath!"); System.exit(1); }
         FXMLLoader welcomeLoader = new FXMLLoader(welcomeFxmlUrl);
         Parent welcomeRoot = welcomeLoader.load();
+
+        this.welcomeControllerInstance = welcomeLoader.getController();
+
         WelcomeController welcomeController = welcomeLoader.getController();
         welcomeController.setDictionaryManagement(this.dictionaryManagement);
         welcomeController.setOnSearchInitiated(this::handleSearchInitiated);
         welcomeController.setOnAddWordInitiated(this::handleAddWordInitiated);
         welcomeController.setOnGoToGame(this::showGameMenu);
-        // TODO: Thiết lập callback cho các nút khác nếu chúng dẫn đến màn hình/chức năng khác
 
 
         this.welcomeScene = new Scene(welcomeRoot);
@@ -98,49 +100,38 @@ public class DictionaryApplication extends Application {
             if (this.dictionaryScene == null) {
                 FXMLLoader dictionaryLoader = new FXMLLoader(getClass().getResource("/com/application/test/view/dictionary_view.fxml"));
                 Parent dictionaryRoot = dictionaryLoader.load();
-                this.dictionaryControllerInstance = dictionaryLoader.getController();
-
-                // Truyền instance DictionaryManagement
-                dictionaryControllerInstance.setDictionaryManagement(this.dictionaryManagement);
-
-                // Thiết lập callback quay lại
-                dictionaryControllerInstance.setOnGoBackToWelcome(this::showWelcomeView);
-
-                this.dictionaryScene = new Scene(dictionaryRoot);
-            }
-
-            if (welcomeControllerInstance != null) {
-                welcomeControllerInstance.resetView();
-            } else {
-                System.err.println("WelcomeController instance is null. Cannot reset Welcome scene.");
-            }
-
-            // Thay thế Scene hiện tại bằng Scene từ điển
-            primaryStage.setScene(this.dictionaryScene);
-            primaryStage.setTitle("📚 Dictionary Lookup");
-            System.out.println("Đã chuyển sang màn hình từ điển.");
-
-            // *** Sau khi chuyển Scene, xử lý các pending actions ***
-            if (this.pendingAddAction) {
                 if (this.pendingActionWord != null && !this.pendingActionWord.isEmpty()) {
-                    Stage currentStage = (Stage) primaryStage.getScene().getWindow();
-                    dictionaryControllerInstance.initiateAddWordDialog(this.pendingActionWord, primaryStage);
+                    this.dictionaryControllerInstance = dictionaryLoader.getController();
+                    dictionaryControllerInstance.setDictionaryManagement(this.dictionaryManagement);
+                    dictionaryControllerInstance.setOnGoBackToWelcome(this::showWelcomeView);
+
+                    // *** Store the pending search term in the controller instance itself ***
+                    // This transfers the data to the controller
+                    dictionaryControllerInstance.setInitialSearchTerm(this.pendingActionWord);
+
+                    this.dictionaryScene = new Scene(dictionaryRoot);
                 }
+
+                this.pendingActionWord = null;
+                this.pendingAddAction = false;
+
+
+                primaryStage.setScene(this.dictionaryScene); // Set the Dictionary scene
+                primaryStage.setTitle("📚 Dictionary Lookup");
+                System.out.println("Đã chuyển sang màn hình từ điển.");
+
+
             } else {
-                // Nếu không phải add action, thì có thể là search hoặc chỉ chuyển màn hình
-                // Dù có pendingActionWord hay không, gọi setSearchText để cập nhật search field
-                // và trigger logic hiển thị ban đầu hoặc search/gợi ý
-                dictionaryControllerInstance.setSearchText(this.pendingActionWord != null ? this.pendingActionWord : "");
+                this.pendingActionWord = null;
+                this.pendingAddAction = false;
+
+                primaryStage.setScene(this.dictionaryScene); // Set the Dictionary scene
+                primaryStage.setTitle("📚 Dictionary Lookup");
+                System.out.println("Đã chuyển sang màn hình từ điển.");
             }
 
-            // Reset pending actions (đã xử lý trong setSearchText nếu text rỗng)
-            this.pendingActionWord = null;
-            this.pendingAddAction = false;
 
-        } catch (IOException e) {
-            System.err.println("Lỗi khi load màn hình từ điển: " + e.getMessage());
-            e.printStackTrace();
-        }
+        } catch (IOException e) { System.err.println("Lỗi khi load màn hình từ điển: " + e.getMessage()); e.printStackTrace(); /* ... */ }
     }
 
     private void showGameMenu() { // Đổi tên từ showGameView
