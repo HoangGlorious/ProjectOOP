@@ -8,6 +8,7 @@ import com.application.test.Model.GeneralManagement;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 
@@ -56,6 +57,7 @@ public class DictionaryApplication extends Application {
 
         this.welcomeScene = new Scene(welcomeRoot);
         stage.setScene(welcomeScene);
+        stage.getIcons().add(new Image(getClass().getResource("/com/application/test/images/app_icon.png").toExternalForm()));
         stage.show();
         stage.setResizable(false);
 
