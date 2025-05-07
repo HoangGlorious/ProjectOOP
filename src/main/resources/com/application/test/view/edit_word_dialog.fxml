@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.test.Controller.EditWordDialogController">
+<VBox alignment="TOP_CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.test.Controller.EditWordDialogController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -21,9 +27,9 @@
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="200.0" />
         </columnConstraints>
         <children>
-            <Label text="Headword (Anh):" GridPane.rowIndex="0" />
+            <Label text="Headword (Từ):" GridPane.rowIndex="0" />
             <!-- Headword có thể không cho sửa hoặc có logic sửa đặc biệt -->
-            <TextField fx:id="headwordField" promptText="English word" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <TextField fx:id="headwordField" promptText="Enter a word..." GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
             <Label text="Phiên âm:" GridPane.rowIndex="1" />
             <TextField fx:id="pronunciationField" promptText="Pronunciation" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -33,13 +39,18 @@
                 <!-- Sense items will be loaded/managed here -->
             </VBox>
         </children>
+      <rowConstraints>
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+      </rowConstraints>
     </GridPane>
-    <Button fx:id="addSenseButton" text="+ Thêm Loại từ/Nghĩa" onAction="#handleAddSense"/>
+    <Button fx:id="addSenseButton" onAction="#handleAddSense" text="+ Thêm Loại từ/Nghĩa" />
 
     <HBox alignment="CENTER" spacing="20.0">
         <children>
-            <Button fx:id="saveButton" text="Cập nhật" onAction="#handleSave"/>
-            <Button fx:id="cancelButton" text="Hủy" onAction="#handleCancel"/>
+            <Button fx:id="saveButton" onAction="#handleSave" text="Cập nhật" />
+            <Button fx:id="cancelButton" onAction="#handleCancel" text="Hủy" />
         </children>
     </HBox>
 </VBox>

@@ -1,12 +1,14 @@
 package com.application.test;
 
 import com.application.test.Controller.DictionaryController;
+import com.application.test.Controller.GamesController;
 import com.application.test.Controller.WelcomeController;
+import com.application.test.Controller.WordleController;
 import com.application.test.Model.GeneralManagement;
-import com.application.test.Model.DictionarySource;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 
@@ -20,8 +22,12 @@ public class DictionaryApplication extends Application {
     private GeneralManagement dictionaryManagement;
     private Scene welcomeScene;
     private Scene dictionaryScene;
+    private Scene gameMenuScene;
     private WelcomeController welcomeControllerInstance;
     private DictionaryController dictionaryControllerInstance;
+    private GamesController gamesControllerInstance;
+    private Scene wordleScene;
+    private WordleController wordleControllerInstance;
     private String pendingActionWord = null;
     private boolean pendingAddAction = false;
 
@@ -39,16 +45,21 @@ public class DictionaryApplication extends Application {
         if (welcomeFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file welcome.fxml trong classpath!"); System.exit(1); }
         FXMLLoader welcomeLoader = new FXMLLoader(welcomeFxmlUrl);
         Parent welcomeRoot = welcomeLoader.load();
+
+        this.welcomeControllerInstance = welcomeLoader.getController();
+
         WelcomeController welcomeController = welcomeLoader.getController();
         welcomeController.setDictionaryManagement(this.dictionaryManagement);
         welcomeController.setOnSearchInitiated(this::handleSearchInitiated);
         welcomeController.setOnAddWordInitiated(this::handleAddWordInitiated);
-        // TODO: Thiết lập callback cho các nút khác nếu chúng dẫn đến màn hình/chức năng khác
+        welcomeController.setOnGoToGame(this::showGameMenu);
 
 
         this.welcomeScene = new Scene(welcomeRoot);
         stage.setScene(welcomeScene);
+        stage.getIcons().add(new Image(getClass().getResource("/com/application/test/images/app_icon.png").toExternalForm()));
         stage.show();
+        stage.setResizable(false);
 
         // Xử lý sự kiện khi đóng cửa sổ
         stage.setOnCloseRequest(event -> {
@@ -91,49 +102,106 @@ public class DictionaryApplication extends Application {
             if (this.dictionaryScene == null) {
                 FXMLLoader dictionaryLoader = new FXMLLoader(getClass().getResource("/com/application/test/view/dictionary_view.fxml"));
                 Parent dictionaryRoot = dictionaryLoader.load();
-                this.dictionaryControllerInstance = dictionaryLoader.getController();
-
-                // Truyền instance DictionaryManagement
-                dictionaryControllerInstance.setDictionaryManagement(this.dictionaryManagement);
-
-                // Thiết lập callback quay lại
-                dictionaryControllerInstance.setOnGoBackToWelcome(this::showWelcomeView);
-
-                this.dictionaryScene = new Scene(dictionaryRoot);
-            }
-
-            if (welcomeControllerInstance != null) {
-                welcomeControllerInstance.resetView();
-            } else {
-                System.err.println("WelcomeController instance is null. Cannot reset Welcome scene.");
-            }
-
-            // Thay thế Scene hiện tại bằng Scene từ điển
-            primaryStage.setScene(this.dictionaryScene);
-            primaryStage.setTitle("📚 Dictionary Lookup");
-            System.out.println("Đã chuyển sang màn hình từ điển.");
-
-            // *** Sau khi chuyển Scene, xử lý các pending actions ***
-            if (this.pendingAddAction) {
                 if (this.pendingActionWord != null && !this.pendingActionWord.isEmpty()) {
-                    Stage currentStage = (Stage) primaryStage.getScene().getWindow();
-                    dictionaryControllerInstance.initiateAddWordDialog(this.pendingActionWord, primaryStage);
+                    this.dictionaryControllerInstance = dictionaryLoader.getController();
+                    dictionaryControllerInstance.setDictionaryManagement(this.dictionaryManagement);
+                    dictionaryControllerInstance.setOnGoBackToWelcome(this::showWelcomeView);
+
+                    // *** Store the pending search term in the controller instance itself ***
+                    // This transfers the data to the controller
+                    dictionaryControllerInstance.setInitialSearchTerm(this.pendingActionWord);
+
+                    this.dictionaryScene = new Scene(dictionaryRoot);
                 }
+
+                this.pendingActionWord = null;
+                this.pendingAddAction = false;
+
+
+                primaryStage.setScene(this.dictionaryScene); // Set the Dictionary scene
+                primaryStage.setTitle("📚 Dictionary Lookup");
+                System.out.println("Đã chuyển sang màn hình từ điển.");
+
+
             } else {
-                // Nếu không phải add action, thì có thể là search hoặc chỉ chuyển màn hình
-                // Dù có pendingActionWord hay không, gọi setSearchText để cập nhật search field
-                // và trigger logic hiển thị ban đầu hoặc search/gợi ý
-                dictionaryControllerInstance.setSearchText(this.pendingActionWord != null ? this.pendingActionWord : "");
+                this.pendingActionWord = null;
+                this.pendingAddAction = false;
+
+                primaryStage.setScene(this.dictionaryScene); // Set the Dictionary scene
+                primaryStage.setTitle("📚 Dictionary Lookup");
+                System.out.println("Đã chuyển sang màn hình từ điển.");
             }
 
-            // Reset pending actions (đã xử lý trong setSearchText nếu text rỗng)
-            this.pendingActionWord = null;
-            this.pendingAddAction = false;
 
-        } catch (IOException e) {
-            System.err.println("Lỗi khi load màn hình từ điển: " + e.getMessage());
-            e.printStackTrace();
-        }
+        } catch (IOException e) { System.err.println("Lỗi khi load màn hình từ điển: " + e.getMessage()); e.printStackTrace(); /* ... */ }
+    }
+
+    private void showGameMenu() { // Đổi tên từ showGameView
+        try {
+            if (this.gameMenuScene == null) { // Sử dụng gameMenuScene
+                URL gameMenuFxmlUrl = getClass().getResource("/com/application/test/view/games.fxml"); // <-- File FXML Game Menu
+                if (gameMenuFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file games.fxml trong classpath!"); System.exit(1); }
+                FXMLLoader gameMenuLoader = new FXMLLoader(gameMenuFxmlUrl);
+                Parent gameMenuRoot = gameMenuLoader.load();
+                this.gamesControllerInstance = gameMenuLoader.getController(); // Lưu instance GamesController
+
+                gamesControllerInstance.setOnGoBackToWelcome(this::showWelcomeView);
+
+                // *** Thiết lập callback launch game cụ thể cho GamesController ***
+                gamesControllerInstance.setOnLaunchSpecificGame(this::showSpecificGame); // <-- Cần tạo hàm showSpecificGame
+
+                this.gameMenuScene = new Scene(gameMenuRoot); // Sử dụng gameMenuScene
+            }
+
+            if (welcomeControllerInstance != null) { welcomeControllerInstance.resetView(); } // Reset Welcome view
+            if (dictionaryControllerInstance != null) { dictionaryControllerInstance.resetScene(); } // Reset Dictionary view
+
+
+            primaryStage.setScene(this.gameMenuScene); // Sử dụng gameMenuScene
+            primaryStage.setTitle("🎮 Games"); // Tiêu đề cho màn hình Game Menu
+            System.out.println("Đã chuyển sang màn hình game (Menu).");
+
+        } catch (IOException e) { System.err.println("Lỗi khi load màn hình game menu: " + e.getMessage()); e.printStackTrace(); /* ... */ }
+    }
+
+    private void showSpecificGame(String gameId) {
+        try {
+            URL specificGameFxmlUrl;
+            if ("wordle".equals(gameId)) {
+                specificGameFxmlUrl = getClass().getResource("/com/application/test/view/wordle_view.fxml");
+                if (specificGameFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file wordle_view.fxml!"); System.exit(1); }
+            } else {
+                System.err.println("Game ID không hợp lệ: " + gameId);
+                return;
+            }
+
+
+            if (this.wordleScene == null) { // Chỉ load Wordle FXML lần đầu
+                FXMLLoader specificGameLoader = new FXMLLoader(specificGameFxmlUrl);
+                Parent specificGameRoot = specificGameLoader.load();
+                this.wordleControllerInstance = specificGameLoader.getController();
+
+                // *** Thiết lập callback quay lại Game Menu cho WordleController ***
+                wordleControllerInstance.setOnGoBackToGames(this::showGameMenu);
+                System.out.println("setOnGoBackToGames called on WordleController instance.");
+
+                this.wordleScene = new Scene(specificGameRoot); // Sử dụng wordleScene
+            } else {
+                if (wordleControllerInstance != null) {
+                    wordleControllerInstance.resetGame();
+                }
+            }
+
+            // *** Reset trạng thái màn hình trước khi chuyển ***
+            if (welcomeControllerInstance != null) { welcomeControllerInstance.resetView(); }
+            if (dictionaryControllerInstance != null) { dictionaryControllerInstance.resetScene(); }
+
+            // Set the specific game Scene (Wordle) on the primary stage
+            primaryStage.setScene(this.wordleScene); // Sử dụng wordleScene
+            primaryStage.setTitle("Wordle Game"); // Tiêu đề cho màn hình Wordle
+            System.out.println("Đã chuyển sang màn hình game: " + gameId);
+
+        } catch (IOException e) { System.err.println("Lỗi khi load màn hình game cụ thể: " + e.getMessage()); e.printStackTrace(); /* ... */ }
     }
 
     /**
@@ -142,7 +210,7 @@ public class DictionaryApplication extends Application {
     private void showWelcomeView() {
         if (this.welcomeScene != null) {
             primaryStage.setScene(this.welcomeScene);
-            primaryStage.setTitle("Ứng dụng Từ điển"); // Đổi lại tiêu đề
+            primaryStage.setTitle("Ứng dụng Từ điển");
             if (welcomeControllerInstance != null) {
                 welcomeControllerInstance.resetView();
             } else {

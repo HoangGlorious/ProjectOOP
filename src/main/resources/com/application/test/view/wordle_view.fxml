@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane styleClass="wordle-container" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.test.Controller.WordleController">
+<BorderPane stylesheets="@../CSS/wordle.css" styleClass="wordle-container" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.test.Controller.WordleController">
 
     <center>
         <VBox fx:id="rootPane" alignment="CENTER" prefHeight="310.0" prefWidth="278.0" spacing="20.0">
-            <Button text="Back" onAction="#backToGames" />
+            <Button text="Back" onAction= "#backToGames" />
             <children>
                 <Label styleClass="title-label" text="WORDLE">
                     <font>
