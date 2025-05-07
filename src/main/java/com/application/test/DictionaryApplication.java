@@ -38,7 +38,7 @@ public class DictionaryApplication extends Application {
 
         // *** Khởi tạo DictionaryManager và nạp dữ liệu cho TẤT CẢ các nguồn ***
         this.dictionaryManagement = new GeneralManagement();
-        dictionaryManagement.loadAllSourcesData(); // Nạp dữ liệu cho tất cả sources
+        dictionaryManagement.loadAllSourcesData();
 
         // --- Load màn hình Welcome ---
         URL welcomeFxmlUrl = getClass().getResource("/com/application/test/view/welcome.fxml"); // Kiểm tra lại đường dẫn
