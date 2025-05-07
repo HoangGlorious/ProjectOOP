@@ -17,7 +17,6 @@
                     </font>
                 </Label>
                 <GridPane fx:id="wordleGrid" alignment="CENTER" hgap="5.0" vgap="5.0">
-                    <!-- GridPane cells will be added programmatically -->
                 </GridPane>
                 <HBox alignment="CENTER" spacing="10.0">
                     <children>
