@@ -1,6 +1,7 @@
 package com.application.test.Controller;
 
 import com.application.test.DictionaryApplication;
+import com.application.test.Model.Games;
 import com.application.test.Model.WordleGame;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -17,7 +18,7 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.util.List;
 
-public class WordleController {
+public class WordleController implements Games {
     protected static final int WORD_LENGTH = 5;
     protected static final int MAX_ATTEMPTS = 6;
     protected Runnable onGoBackToMenu;
@@ -342,5 +343,15 @@ public class WordleController {
             System.err.println("DictionaryApplication instance not found in stage user data!");
             showAlert("Lỗi", "Không thể khởi chạy chức năng tìm hiểu từ điển.");
         }
+    }
+    @Override
+    public void startGame() {
+        resetGame();
+        System.out.println("Wordle game has started!");
+    }
+
+    @Override
+    public void endGame() {
+        System.out.println("Wordle game has ended.");
     }
 }
