@@ -69,11 +69,11 @@
 
 .logo {
     -fx-text-fill: white;
-    -fx-font-size: 22px;
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
 
-.nav-button {
+.dnav-button {
     -fx-background-color: transparent;
     -fx-text-fill: white;
     -fx-font-weight: bold;
@@ -149,18 +149,19 @@
 .nav-button {
     -fx-background-color: transparent;
     -fx-text-fill: #fcd000;
-    -fx-font-size: 16px;
+    -fx-font-size: 21px;
     -fx-font-weight: bold;
-    -fx-padding: 6 12;
+    -fx-padding: 20 38;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-border-color: transparent;
     -fx-cursor: hand;
-    -fx-transition: all 0.3s ease-in-out;
+    -fx-transition: all 0.5s ease-in-out;
 }
 
 .WsearchButton {
     -fx-background-color: red;
+    -fx-padding: 10 12
 }
 
 .button:hover {
