@@ -238,7 +238,6 @@ public class DictionaryController implements Initializable {
                     // *** Nạp lại dữ liệu vào ListView chính khi chuyển nguồn ***
                     // Xóa nội dung search field và hiển thị toàn bộ từ điển của nguồn mới
                     setInitialSearchTerm(""); // Đặt text rỗng, hàm này sẽ gọi loadAndDisplayInitialData()
-                    // TODO: Cập nhật trạng thái các nút (ví dụ: nút Speak có thể bị disable nếu nguồn mới không hỗ trợ phát âm)
                 }
             }
         });
@@ -310,7 +309,6 @@ public class DictionaryController implements Initializable {
         System.out.println("Displayed " + allHeadwords.size() + " entries from source: " + activeSource.getDisplayName());
         wordListView.getSelectionModel().clearSelection();
         definitionTextArea.setText("");
-        // TODO: Cập nhật các nút (Speak) dựa trên khả năng của nguồn active
     }
 
 
@@ -351,15 +349,14 @@ public class DictionaryController implements Initializable {
         wordListView.getSelectionModel().clearSelection();
     }
 
-
     // --- Các phương thức xử lý sự kiện từ Buttons (@FXML) ---
 
-    // *** Phương thức xử lý sự kiện khi nhấn nút Back ***
     @FXML
     protected void handleBackButtonAction(ActionEvent event) {
         System.out.println("Back button clicked. Signalling to go back to Welcome View.");
         if (onGoBackToWelcome != null) {
             try {
+                resetScene();
                 onGoBackToWelcome.run();
             } catch (RuntimeException e) {
                 System.err.println("Lỗi khi thực hiện callback quay lại màn hình welcome: " + e.getMessage());
@@ -453,11 +450,6 @@ public class DictionaryController implements Initializable {
             // Người dùng chọn "Đóng" hoặc đóng alert, không làm gì thêm
             System.out.println("Người dùng không muốn thêm từ.");
         }
-    }
-
-    @FXML
-    protected void handleSearchButtonAction(ActionEvent event) {
-        performSearch(dictionarySearchTextField.getText().trim());
     }
 
     @FXML

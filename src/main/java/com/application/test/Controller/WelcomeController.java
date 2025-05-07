@@ -50,6 +50,7 @@ public class WelcomeController implements Initializable {
     @FXML private Label welcomeLabel;
     @FXML private ImageView backgroundImageView;
     @FXML private ImageView icon1;
+    @FXML private ComboBox<String> sourceComboBox;
 
     // Callbacks để báo hiệu cho DictionaryApplication
     private Consumer<String> onSearchInitiated; // Callback khi người dùng tìm kiếm từ tồn tại
@@ -71,6 +72,7 @@ public class WelcomeController implements Initializable {
 
     public void setDictionaryManagement(GeneralManagement dictionaryManagement) {
         this.dictionaryManagement = dictionaryManagement;
+        initializeSourceComboBox();
     }
 
     @Override
@@ -92,8 +94,30 @@ public class WelcomeController implements Initializable {
             }
         });
         suggestionListView.setFocusTraversable(false);
-        // TODO: Khởi tạo UI chọn nguồn (ví dụ ComboBox) với danh sách từ dictionaryManager.getAvailableSourceDisplayNames()
-        // TODO: Đặt listener cho ComboBox để gọi dictionaryManager.setActiveSource()
+    }
+
+    private void initializeSourceComboBox() {
+        if (dictionaryManagement == null || sourceComboBox == null) return;
+
+        // Lấy danh sách tên hiển thị của các nguồn có sẵn
+        List<String> sourceDisplayNames = dictionaryManagement.getAvailableSourceDisplayNames();
+        sourceComboBox.setItems(FXCollections.observableArrayList(sourceDisplayNames));
+
+        // Chọn nguồn đang hoạt động làm giá trị mặc định
+        DictionarySource activeSource = dictionaryManagement.getActiveSource();
+        sourceComboBox.getSelectionModel().select(activeSource.getDisplayName());
+
+        // *** Thêm Listener khi người dùng chọn một nguồn khác trong ComboBox ***
+        sourceComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.equals(oldValue)) {
+                String newSourceId = dictionaryManagement.getSourceIdByDisplayName(newValue);
+                if (newSourceId != null && dictionaryManagement.setActiveSource(newSourceId)) {
+                    System.out.println("Nguồn đã chuyển sang: " + newValue);
+                    welcomeSearchTextField.clear();
+                    showSuggestions(""); // Ẩn gợi ý và clear listview gợi ý
+                }
+            }
+        });
     }
 
     public void resetView() {
@@ -203,21 +227,6 @@ public class WelcomeController implements Initializable {
     // Các phương thức xử lý sự kiện khác cho các nút khác
     // Các nút này có thể gọi các callback khác nếu chúng dẫn đến các màn hình khác
     // Hoặc nếu chúng vẫn dẫn đến màn hình từ điển (như Vie-Eng), bạn có thể gọi onGoToDictionary.run()
-    @FXML
-    protected void handleEngVie(ActionEvent event) {
-        System.out.println("Chuyển sang nguồn Anh-Việt.");
-        if (dictionaryManagement != null && dictionaryManagement.setActiveSource("en-vi")) {
-            if (onSearchInitiated != null) { onSearchInitiated.accept(""); } else { /* ... lỗi ... */ }
-        } else { System.err.println("Không thể chuyển sang nguồn Anh-Việt."); }
-    }
-
-    @FXML
-    protected void handleVieEng(ActionEvent event) {
-        System.out.println("Chuyển sang nguồn Việt-Anh.");
-        if (dictionaryManagement != null && dictionaryManagement.setActiveSource("vi-en")) {
-            if (onSearchInitiated != null) { onSearchInitiated.accept(""); } else { /* ... lỗi ... */ }
-        } else { System.err.println("Không thể chuyển sang nguồn Việt-Anh."); }
-    }
 
     @FXML
     protected void handleSentenceTranslation(ActionEvent event) {
