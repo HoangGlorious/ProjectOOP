@@ -5,7 +5,7 @@ import com.application.test.Model.DictionarySource;
 import com.application.test.Model.GeneralManagement;
 
 
-import com.application.test.Model.TextToSpeech;
+
 import javafx.scene.control.ComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -514,8 +514,7 @@ public class DictionaryController implements Initializable {
         String selectedHeadword = wordListView.getSelectionModel().getSelectedItem();
         if (selectedHeadword != null) {
             System.out.println("Speak button clicked for: " + selectedHeadword);
-            // TODO: Tích hợp thư viện TTS (Text-to-Speech) và gọi API của nó để phát âm selectedHeadword
-            // Ví dụ với FreeTTS: Call API để nói selectedHeadword
+            //Gọi hàm speak của TextToSpeech để phát âm từ.
             try {
                 speak(selectedHeadword);
             } catch (Exception e){
