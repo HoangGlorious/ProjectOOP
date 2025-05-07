@@ -7,13 +7,12 @@
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.test.Controller.DictionaryController" stylesheets="@../CSS/style.css">
 
     <top>
-        <!-- *** Bọc HBox top-bar và ListView gợi ý trong một AnchorPane *** -->
         <AnchorPane fx:id="topAnchorPane">
             <HBox fx:id="topBarHBox" spacing="10" styleClass="top-bar" alignment="CENTER_LEFT" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <padding>
                     <Insets bottom="15" left="15" right="15" top="15" />
                 </padding>
-                <Button fx:id="backButton1" onAction="#handleBackButtonAction" styleClass="nav-button" text="🔙 Back" />
+                <Button fx:id="backButton1" onAction="#handleBackButtonAction" styleClass="dnav-button" text="🔙 Back" />
                 <Label styleClass="logo" text="📚 My Dictionary" />
                 <Region HBox.hgrow="ALWAYS"/>
                 <ComboBox fx:id="sourceComboBox" promptText="Chọn nguồn" />

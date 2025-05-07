@@ -227,21 +227,6 @@ public class WelcomeController implements Initializable {
     // Các phương thức xử lý sự kiện khác cho các nút khác
     // Các nút này có thể gọi các callback khác nếu chúng dẫn đến các màn hình khác
     // Hoặc nếu chúng vẫn dẫn đến màn hình từ điển (như Vie-Eng), bạn có thể gọi onGoToDictionary.run()
-    @FXML
-    protected void handleEngVie(ActionEvent event) {
-        System.out.println("Chuyển sang nguồn Anh-Việt.");
-        if (dictionaryManagement != null && dictionaryManagement.setActiveSource("en-vi")) {
-            if (onSearchInitiated != null) { onSearchInitiated.accept(""); }
-        } else { System.err.println("Không thể chuyển sang nguồn Anh-Việt."); }
-    }
-
-    @FXML
-    protected void handleVieEng(ActionEvent event) {
-        System.out.println("Chuyển sang nguồn Việt-Anh.");
-        if (dictionaryManagement != null && dictionaryManagement.setActiveSource("vi-en")) {
-            if (onSearchInitiated != null) { onSearchInitiated.accept(""); }
-        } else { System.err.println("Không thể chuyển sang nguồn Việt-Anh."); }
-    }
 
     @FXML
     protected void handleSentenceTranslation(ActionEvent event) {
