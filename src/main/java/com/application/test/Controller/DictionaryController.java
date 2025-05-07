@@ -5,8 +5,10 @@ import com.application.test.Model.DictionarySource;
 import com.application.test.Model.GeneralManagement;
 
 
+
 import com.application.test.Model.TextToSpeech;
 import javafx.application.Platform;
+
 import javafx.scene.control.ComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -515,6 +517,8 @@ public class DictionaryController implements Initializable {
         String selectedHeadword = wordListView.getSelectionModel().getSelectedItem();
         if (selectedHeadword != null) {
             System.out.println("Speak button clicked for: " + selectedHeadword);
+
+            //Gọi hàm speak của TextToSpeech để phát âm từ.
             try {
                 speak(selectedHeadword);
             } catch (Exception e){

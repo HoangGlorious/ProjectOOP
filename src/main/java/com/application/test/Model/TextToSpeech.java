@@ -21,17 +21,20 @@ import java.nio.file.StandardCopyOption;
 public class TextToSpeech {
     public static void speak(String text) throws Exception {
         try {
+            //Encode từ thành URL để thuận tiện cho việc gọi api.
             String encodedText = URLEncoder.encode(text, StandardCharsets.UTF_8);
             String urlStr = "https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=" + encodedText;
 
+            //Tải xuống file audio thành 1 file tạm thời.
             File tmpFile = File.createTempFile("tts", ".wav");
             tmpFile.deleteOnExit();
+
 
             try (InputStream in = new URL(urlStr).openStream()) {
                 Files.copy(in, tmpFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
 
-            // Play using JavaFX MediaPlayer
+            // Chạy file audio bằng JavaFX MediaPlayer.
             Media media = new Media(tmpFile.toURI().toString());
             MediaPlayer mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setOnError(() -> {
