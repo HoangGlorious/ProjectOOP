@@ -11,6 +11,7 @@ module com.example.btl {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.desktop;
+    requires javafx.media;
 
     opens com.application.test to javafx.fxml;
     exports com.application.test;

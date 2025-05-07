@@ -35,27 +35,11 @@ import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
+
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.function.Consumer;
+
 
 public class WelcomeController implements Initializable {
 
@@ -71,6 +55,11 @@ public class WelcomeController implements Initializable {
     private Consumer<String> onSearchInitiated; // Callback khi người dùng tìm kiếm từ tồn tại
     private Consumer<String> onAddWordInitiated; // Callback khi người dùng muốn thêm từ (từ thông báo lỗi)
     private GeneralManagement dictionaryManagement;
+    private Runnable onGoToGame;
+
+    public void setOnGoToGame(Runnable onGoToGame) {
+        this.onGoToGame = onGoToGame;
+    }
 
     public void setOnSearchInitiated(Consumer<String> onSearchInitiated) {
         this.onSearchInitiated = onSearchInitiated;
@@ -210,14 +199,6 @@ public class WelcomeController implements Initializable {
         }
     }
 
-    protected void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
 
     // Các phương thức xử lý sự kiện khác cho các nút khác
     // Các nút này có thể gọi các callback khác nếu chúng dẫn đến các màn hình khác
@@ -273,20 +254,17 @@ public class WelcomeController implements Initializable {
 
     @FXML
     protected void handleGames(ActionEvent event) {
-        try {
-            // Load màn hình game mà không tạo stage mới
-            Parent gamesRoot = FXMLLoader.load(
-                    getClass().getResource("/com/application/test/view/games.fxml")
-            );
-            Scene gamesScene = new Scene(gamesRoot);
-
-            // Lấy stage hiện tại và thiết lập scene mới
-            Stage primaryStage = (Stage) mainPane.getScene().getWindow();
-            primaryStage.setTitle("Games");
-            primaryStage.setScene(gamesScene);
-            primaryStage.sizeToScene();
-        } catch (IOException e) {
-            e.printStackTrace();
+        System.out.println("Games clicked. Signaling to go to Game screen.");
+        // *** Gọi callback onGoToGame ***
+        if (onGoToGame != null) {
+            try {
+                onGoToGame.run(); // Kích hoạt hành động chuyển màn hình game
+            } catch (RuntimeException e) {
+                System.err.println("Error executing go to Game callback: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Callback onGoToGame chưa được thiết lập!");
         }
     }
 }
