@@ -12,6 +12,8 @@ module com.example.btl {
     requires com.almasb.fxgl.all;
     requires java.desktop;
     requires javafx.media;
+    requires java.net.http;
+    requires com.google.gson;
 
     opens com.application.test to javafx.fxml;
     exports com.application.test;
