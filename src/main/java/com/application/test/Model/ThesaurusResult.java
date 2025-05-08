@@ -43,6 +43,6 @@ public class ThesaurusResult {
     }
 
     public boolean hasError() {
-        return error != null;
+        return error != null && !error.trim().isEmpty();
     }
 }

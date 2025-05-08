@@ -43,14 +43,13 @@ public class Thesaurus {
 
     private static ThesaurusResult parseResponse(String json) {
         try {
-            JsonArray entries = new JsonArray();
-            entries.add(json);
+            JsonArray entries = com.google.gson.JsonParser.parseString(json).getAsJsonArray();
 
             if (entries.isEmpty()) {
                 return new ThesaurusResult("", List.of(), List.of(), "No results found");
             }
 
-            JsonObject firstEntry = entries.getAsJsonObject();
+            JsonObject firstEntry = entries.get(0).getAsJsonObject();
             String word = firstEntry.getAsJsonPrimitive("word").getAsString();
             List<String> synonym = new ArrayList<>();
             List<String> antonym = new ArrayList<>();
@@ -60,7 +59,6 @@ public class Thesaurus {
             for (int i = 0; i < meanings.size(); i++) {
                 JsonObject meaning = meanings.get(i).getAsJsonObject();
                 JsonArray definitions = meaning.getAsJsonArray("definitions");
-
 
                 for (int j = 0; j < definitions.size(); j++) {
                     JsonObject definition = definitions.get(j).getAsJsonObject();
