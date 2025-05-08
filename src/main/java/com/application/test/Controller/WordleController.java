@@ -16,9 +16,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 public class WordleController {
@@ -145,6 +149,7 @@ public class WordleController {
                 learnButton.setVisible(true);
                 learnButton.setManaged(true);
             }
+            playCutscene(true); // Phát cutscene thắng
         } else if (game.isGameOver()) {
             messageLabel.setText("Hết lượt! Từ cần đoán là: " + game.getTargetWord().toUpperCase());
             guessInput.setDisable(true);
@@ -153,6 +158,7 @@ public class WordleController {
                 learnButton.setVisible(true);
                 learnButton.setManaged(true);
             }
+            playCutscene(false); // Phát cutscene thua
         } else {
             messageLabel.setText("Lượt đoán " + (game.getCurrentAttempt()) + "/" + MAX_ATTEMPTS);
         }
@@ -259,5 +265,95 @@ public class WordleController {
             e.printStackTrace();
             showAlert("Lỗi", "Không thể mở màn hình từ điển!");
         }
+    }
+
+    protected void playCutscene(boolean isWin) {
+        try {
+            // Chọn video dựa trên trạng thái thắng/thua
+            String videoPath = isWin ? "/com/application/test/videos/win_cutscene.mp4" : "/com/application/test/videos/lose_cutscene.mp4";
+            String videoTitle = isWin ? "Cutscene Thắng" : "Cutscene Thua";
+            System.out.println("Attempting to load cutscene: " + videoPath);
+
+            // Kiểm tra tài nguyên video
+            URL videoUrl = getClass().getResource(videoPath);
+            if (videoUrl == null) {
+                System.err.println("Video resource not found: " + videoPath);
+                showAlert("Lỗi", "Không thể tìm thấy file video: " + videoPath);
+                return; // Không gọi restoreGameScene, vì không thay đổi scene
+            }
+            System.out.println("Video resource found at: " + videoUrl.toExternalForm());
+
+            // Tải tài nguyên video
+            Media media = new Media(videoUrl.toExternalForm());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            MediaView mediaView = new MediaView(mediaPlayer);
+
+            // Tạo giao diện cho cutscene
+            VBox cutsceneLayout = new VBox(10);
+            cutsceneLayout.setAlignment(Pos.CENTER);
+            mediaView.setFitWidth(800); // Điều chỉnh kích thước video
+            mediaView.setFitHeight(600);
+            Button skipButton = new Button("Bỏ qua");
+
+            // Lấy Stage hiện tại
+            Stage stage = (Stage) guessInput.getScene().getWindow();
+            if (stage == null) {
+                System.err.println("Stage is null in playCutscene!");
+                showAlert("Lỗi", "Không thể truy cập cửa sổ chính!");
+                return;
+            }
+            Scene originalScene = guessInput.getScene(); // Lưu scene gốc
+            if (originalScene == null) {
+                System.err.println("Original scene is null in playCutscene!");
+                showAlert("Lỗi", "Không thể lưu scene trò chơi!");
+                return;
+            }
+
+            // Thiết lập hành động cho nút Bỏ qua
+            skipButton.setOnAction(e -> {
+                mediaPlayer.stop();
+                restoreGameScene(stage, originalScene);
+            });
+            cutsceneLayout.getChildren().addAll(mediaView, skipButton);
+
+            // Tạo scene cho cutscene
+            Scene cutsceneScene = new Scene(cutsceneLayout, 1200, 640);
+            stage.setScene(cutsceneScene);
+            stage.setTitle(videoTitle);
+
+            // Tự động phát video
+            mediaPlayer.setAutoPlay(true);
+
+            // Khi video kết thúc, khôi phục scene trò chơi
+            mediaPlayer.setOnEndOfMedia(() -> {
+                mediaPlayer.stop();
+                restoreGameScene(stage, originalScene);
+            });
+
+            // Xử lý lỗi phát media
+            mediaPlayer.setOnError(() -> {
+                System.err.println("MediaPlayer error: " + mediaPlayer.getError().getMessage());
+                showAlert("Lỗi", "Không thể phát cutscene: " + mediaPlayer.getError().getMessage());
+                restoreGameScene(stage, originalScene);
+            });
+
+            System.out.println("Cutscene started: " + videoPath);
+        } catch (Exception e) {
+            System.err.println("Error loading cutscene: " + e.getMessage());
+            e.printStackTrace();
+            showAlert("Lỗi", "Không thể tải cutscene: " + e.getMessage());
+            // Không gọi restoreGameScene nếu chưa thay đổi scene
+        }
+    }
+
+    private void restoreGameScene(Stage stage, Scene originalScene) {
+        if (stage == null || originalScene == null) {
+            System.err.println("Cannot restore game scene: stage or originalScene is null");
+            showAlert("Lỗi", "Không thể khôi phục giao diện trò chơi!");
+            return;
+        }
+        stage.setScene(originalScene);
+        stage.setTitle("Wordle");
+        System.out.println("Restored game scene.");
     }
 }
