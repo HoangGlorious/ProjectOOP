@@ -10,6 +10,13 @@ public class ThesaurusResult {
     private List<String> antonyms = new ArrayList<>();
     private String error;
 
+    public ThesaurusResult(String word, List<String> synonyms, List<String> antonyms, String error) {
+        this.word = word;
+        this.synonyms = List.copyOf(synonyms);
+        this.antonyms = List.copyOf(antonyms);
+        this.error = error;
+    }
+
     // Getters and setters
     public String getWord() {
         return word;
@@ -23,20 +30,8 @@ public class ThesaurusResult {
         return synonyms.stream().distinct().collect(Collectors.toList());
     }
 
-    public void addSynonym(String synonym) {
-        if (synonym != null && !synonym.isEmpty()) {
-            this.synonyms.add(synonym.toLowerCase());
-        }
-    }
-
     public List<String> getAntonyms() {
         return antonyms.stream().distinct().collect(Collectors.toList());
-    }
-
-    public void addAntonym(String antonym) {
-        if (antonym != null && !antonym.isEmpty()) {
-            this.antonyms.add(antonym.toLowerCase());
-        }
     }
 
     public String getError() {
@@ -48,6 +43,6 @@ public class ThesaurusResult {
     }
 
     public boolean hasError() {
-        return error != null;
+        return error != null && !error.trim().isEmpty();
     }
 }

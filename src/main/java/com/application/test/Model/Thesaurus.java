@@ -5,68 +5,85 @@ import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+
 public class Thesaurus {
 
     private static final String API_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+    private static final HttpClient httpClient = HttpClient.newHttpClient();
 
     public static ThesaurusResult lookup(String word) throws Exception {
-        String encodedWord = URLEncoder.encode(word, StandardCharsets.UTF_8);
-        String finalURL = API_URL + encodedWord;
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(java.net.URI.create(finalURL))
-                .GET().build();
+        try {
+            String encodedWord = URLEncoder.encode(word, StandardCharsets.UTF_8);
+            String finalURL = API_URL + encodedWord;
 
-        HttpResponse<String> response = HttpClient.newHttpClient()
-                .send(request, HttpResponse.BodyHandlers.ofString());
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(java.net.URI.create(finalURL))
+                    .GET().build();
 
-        if(response.statusCode() != 200) {
-            throw new RuntimeException("API request failed with status code " + response.statusCode());
+            HttpResponse<String> response = httpClient
+                    .send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200) {
+                return new ThesaurusResult("", List.of(), List.of(),
+                        "API request failed with status code " + response.statusCode());
+            }
+            return parseResponse(response.body());
+        } catch (Exception e) {
+            return new ThesaurusResult("", List.of(), List.of(), "Error: " + e.getMessage());
         }
-
-        return parseResponse(response.body());
     }
 
     private static ThesaurusResult parseResponse(String json) {
-        ThesaurusResult result = new ThesaurusResult();
-        JsonArray entries = new JsonArray();
-        entries.add(json);
+        try {
+            JsonArray entries = com.google.gson.JsonParser.parseString(json).getAsJsonArray();
 
-        if(entries.isEmpty()) {
-            return result;
-        }
-
-        JsonObject firstEntry = entries.get(0).getAsJsonObject();
-        result.setWord(firstEntry.get("word").getAsString());
-
-        JsonArray meanings = firstEntry.getAsJsonArray("meanings");
-
-        for(int i = 0; i<meanings.size(); i++) {
-            JsonObject meaning = meanings.get(i).getAsJsonObject();
-            JsonArray definitions = meaning.getAsJsonArray("definitions");
-
-            for(int j=0; j<definitions.size(); j++) {
-                JsonObject definition = definitions.get(j).getAsJsonObject();
+            if (entries.isEmpty()) {
+                return new ThesaurusResult("", List.of(), List.of(), "No results found");
             }
 
-            for(int j=0; j< definitions.size(); j++) {
-                JsonObject definition = definitions.get(j).getAsJsonObject();
-                if(definition.has("synonyms")) {
-                    JsonArray synonyms = definition.getAsJsonArray("synonyms");
-                    result.addSynonym(synonyms.get(0).getAsString());
+            JsonObject firstEntry = entries.get(0).getAsJsonObject();
+            String word = firstEntry.getAsJsonPrimitive("word").getAsString();
+            List<String> synonym = new ArrayList<>();
+            List<String> antonym = new ArrayList<>();
+
+            JsonArray meanings = firstEntry.getAsJsonArray("meanings");
+
+            for (int i = 0; i < meanings.size(); i++) {
+                JsonObject meaning = meanings.get(i).getAsJsonObject();
+                JsonArray definitions = meaning.getAsJsonArray("definitions");
+
+                for (int j = 0; j < definitions.size(); j++) {
+                    JsonObject definition = definitions.get(j).getAsJsonObject();
+                    addAllStrings(definition, "synonyms", synonym);
+                    addAllStrings(definition, "antonyms", antonym);
                 }
-                if(definition.has("antonyms")) {
-                    JsonArray antonyms = definition.getAsJsonArray("antonyms");
-                    result.addAntonym(antonyms.get(0).getAsString());
+
+                addAllStrings(meaning, "synonyms", synonym);
+                addAllStrings(meaning, "antonyms", antonym);
+            }
+            return new ThesaurusResult(word, synonym, antonym, "");
+        } catch (Exception e) {
+            return new ThesaurusResult("", List.of(), List.of(), "Parsing response failed: " + e.getMessage());
+        }
+    }
+
+    private static void addAllStrings(JsonObject obj, String key, List<String> list) {
+        if (obj.has(key)) {
+            JsonArray items = obj.getAsJsonArray(key);
+            for (int i = 0; i < items.size(); i++) {
+                String item = items.get(i).getAsString();
+                if (item != null && !item.trim().isEmpty()) {
+                    list.add(item.trim());
                 }
             }
         }
-        return result;
     }
 }

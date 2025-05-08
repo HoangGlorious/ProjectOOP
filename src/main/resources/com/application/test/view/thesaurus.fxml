@@ -7,32 +7,29 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.application.test.Controller.ThesaurusController"
             stylesheets="@../CSS/thesaurus.css"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="640.0" prefWidth="1200.0">
 
     <top>
         <AnchorPane prefHeight="60.0" prefWidth="600.0" BorderPane.alignment="CENTER" styleClass="thesaurus-top-bar">
-            <children>
-                <Label layoutX="120.0" layoutY="14.0" prefHeight="35.0" prefWidth="240.0"
-                       text="📚 Thesaurus" styleClass="thesaurus-header"/>
+            <Label layoutX="120.0" layoutY="14.0" prefHeight="35.0" prefWidth="240.0"
+                   text="📚 Thesaurus" styleClass="thesaurus-header"/>
 
-                <Button fx:id="TBackButton" layoutX="14.0" layoutY="18.0"
-                        mnemonicParsing="false" prefHeight="30.0" prefWidth="62.0"
-                        text="⬅ Back" onAction="#thesaurusBackToWelcome" styleClass="back-button"/>
+            <Button fx:id="TBackButton" layoutX="14.0" layoutY="18.0"
+                    mnemonicParsing="false" prefHeight="30.0" prefWidth="62.0"
+                    text="⬅ Back" onAction="#thesaurusBackToWelcome" styleClass="back-button"/>
 
-                <TextField fx:id="thesaurusSearchBar" layoutX="286.0" layoutY="20.0"
-                           prefHeight="26.0" prefWidth="244.0" promptText="Search for a word..."
-                           onAction="#handleThesaurusSearch" styleClass="search-bar"/>
+            <TextField fx:id="thesaurusSearchBar" layoutX="286.0" layoutY="20.0"
+                       prefHeight="26.0" prefWidth="244.0" promptText="Search for a word..."
+                       onAction="#handleThesaurusSearch" styleClass="search-bar"/>
 
-                <Button fx:id="thesaurusSearchButton" layoutX="548.0" layoutY="20.0"
-                        text="🔍" onAction="#handleThesaurusSearch" styleClass="search-button"/>
-            </children>
+            <Button fx:id="thesaurusSearchButton" layoutX="548.0" layoutY="20.0"
+                    text="🔍" onAction="#handleThesaurusSearch" styleClass="search-button"/>
         </AnchorPane>
     </top>
 
     <center>
-        <TextArea fx:id="thesaurusResultArea" prefHeight="300.0" prefWidth="560.0"
-                  BorderPane.alignment="CENTER"
-                  wrapText="true" editable="false"
-                  styleClass="result-area"/>
+        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+            <VBox fx:id="thesaurusResultContainer" spacing="5"/>
+        </ScrollPane>
     </center>
 </BorderPane>
