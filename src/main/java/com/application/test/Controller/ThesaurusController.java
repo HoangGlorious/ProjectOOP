@@ -5,10 +5,7 @@ import com.application.test.Model.Thesaurus;
 import com.application.test.Model.ThesaurusResult;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 
 
@@ -17,14 +14,20 @@ import java.util.concurrent.Executors;
 
 public class ThesaurusController {
     @FXML
+    private Button TBackButton;
+    @FXML
     private TextField thesaurusSearchBar;
     @FXML
     private TextArea thesaurusResultArea;
-
+    private Runnable onGoBackToWelcome;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
+    public void setOnGoBackToWelcome(Runnable onGoBackToWelcome) {
+        this.onGoBackToWelcome = onGoBackToWelcome;
+    }
+
     @FXML
-    private void handleThesaurusSearch() {
+    protected void handleThesaurusSearch() {
         String word = thesaurusSearchBar.getText().trim().toLowerCase();
         if (!word.isEmpty()) {
             thesaurusResultArea.setText("Thesaurus result for " + word);
@@ -34,7 +37,7 @@ public class ThesaurusController {
         }
     }
 
-    private void loadThesaurus(String word) {
+    protected void loadThesaurus(String word) {
         thesaurusResultArea.clear();
         thesaurusResultArea.appendText("Thesaurus result for " + word + "\n");
 
@@ -103,5 +106,30 @@ public class ThesaurusController {
                 });
             }
         });
+    }
+
+    public void resetScene() {
+        System.out.println("Resetting Thesaurus scene...");
+        if (thesaurusSearchBar != null) {
+            thesaurusSearchBar.clear();
+        }
+        if (thesaurusResultArea != null) {
+            thesaurusResultArea.clear();
+        }
+    }
+
+    @FXML
+    protected void thesaurusBackToWelcome() {
+        System.out.println("Back to Welcome button clicked in GamesController. Signaling DictionaryApplication.");
+        if (onGoBackToWelcome != null) {
+            try {
+                onGoBackToWelcome.run();
+            } catch (RuntimeException e) {
+                System.err.println("Error executing go back to Welcome callback: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Callback onGoBackToWelcome is not set in GamesController!");
+        }
     }
 }

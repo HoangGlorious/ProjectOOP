@@ -1,9 +1,6 @@
 package com.application.test;
 
-import com.application.test.Controller.DictionaryController;
-import com.application.test.Controller.GamesController;
-import com.application.test.Controller.WelcomeController;
-import com.application.test.Controller.WordleController;
+import com.application.test.Controller.*;
 import com.application.test.Model.GeneralManagement;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,10 +20,12 @@ public class DictionaryApplication extends Application {
     private Scene welcomeScene;
     private Scene dictionaryScene;
     private Scene gameMenuScene;
+    private Scene wordleScene;
+    private Scene thesaurusScene;
     private WelcomeController welcomeControllerInstance;
     private DictionaryController dictionaryControllerInstance;
+    private ThesaurusController thesaurusControllerInstance;
     private GamesController gamesControllerInstance;
-    private Scene wordleScene;
     private WordleController wordleControllerInstance;
     private String pendingActionWord = null;
     private boolean pendingAddAction = false;
@@ -53,6 +52,7 @@ public class DictionaryApplication extends Application {
         welcomeController.setOnSearchInitiated(this::handleSearchInitiated);
         welcomeController.setOnAddWordInitiated(this::handleAddWordInitiated);
         welcomeController.setOnGoToGame(this::showGameMenu);
+        welcomeController.setOnGoToThesaurus(this::showThesaurusView);
 
 
         this.welcomeScene = new Scene(welcomeRoot);
@@ -70,7 +70,6 @@ public class DictionaryApplication extends Application {
             if (dictionaryControllerInstance != null) {
                 dictionaryControllerInstance.resetScene(); // Reset Dictionary view
             }
-            // *** Call resetView on WelcomeController instance before closing ***
             if (welcomeControllerInstance != null) {
                 welcomeControllerInstance.resetView(); // Reset Welcome view
             }
@@ -136,7 +135,7 @@ public class DictionaryApplication extends Application {
         } catch (IOException e) { System.err.println("Lỗi khi load màn hình từ điển: " + e.getMessage()); e.printStackTrace(); /* ... */ }
     }
 
-    private void showGameMenu() { // Đổi tên từ showGameView
+    private void showGameMenu() {
         try {
             if (this.gameMenuScene == null) { // Sử dụng gameMenuScene
                 URL gameMenuFxmlUrl = getClass().getResource("/com/application/test/view/games.fxml"); // <-- File FXML Game Menu
@@ -202,6 +201,32 @@ public class DictionaryApplication extends Application {
             System.out.println("Đã chuyển sang màn hình game: " + gameId);
 
         } catch (IOException e) { System.err.println("Lỗi khi load màn hình game cụ thể: " + e.getMessage()); e.printStackTrace(); /* ... */ }
+    }
+
+    private void showThesaurusView() {
+        try {
+            if (this.thesaurusScene == null) {
+                URL thesaurusFxmlUrl = getClass().getResource("/com/application/test/view/thesaurus.fxml"); // <-- File FXML Game Menu
+                if (thesaurusFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file thesaurus.fxml trong classpath!"); System.exit(1); }
+                FXMLLoader thesaurusLoader = new FXMLLoader(thesaurusFxmlUrl);
+                Parent thesaurusRoot = thesaurusLoader.load();
+                this.thesaurusControllerInstance = thesaurusLoader.getController();
+
+                thesaurusControllerInstance.setOnGoBackToWelcome(this::showWelcomeView);
+                this.thesaurusScene = new Scene(thesaurusRoot);
+            } else {
+                thesaurusControllerInstance.resetScene();
+            }
+
+            if (welcomeControllerInstance != null) { welcomeControllerInstance.resetView(); } // Reset Welcome view
+            if (dictionaryControllerInstance != null) { dictionaryControllerInstance.resetScene(); } // Reset Dictionary view
+
+
+            primaryStage.setScene(this.thesaurusScene);
+            primaryStage.setTitle("Thesaurus");
+            System.out.println("Đã chuyển sang màn hình Thesaurus (Menu).");
+
+        } catch (IOException e) { System.err.println("Lỗi khi load màn hình thesaurus menu: " + e.getMessage()); e.printStackTrace(); /* ... */ }
     }
 
     /**
