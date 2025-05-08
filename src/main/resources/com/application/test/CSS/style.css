@@ -93,12 +93,19 @@
 }
 
 .search-bar {
-    -fx-pref-width: 600px;
-    -fx-font-size: 16px;
-    -fx-background-radius: 20;
-    -fx-padding: 10;
-    -fx-border-color: #ddd;
-    -fx-border-radius: 20;
+     -fx-background-radius: 30;
+     -fx-border-radius: 30;
+     -fx-background-color: #ffffff;
+     -fx-border-color: #a3cef1;
+     -fx-border-width: 2;
+     -fx-padding: 8 16 8 16;
+     -fx-effect: dropshadow(gaussian, transparent, 0, 0.5, 0, 0);
+     -fx-transition: all 0.3s ease-in-out;
+}
+
+.search-bar:focused {
+     -fx-border-color: #61045f;
+     -fx-effect: dropshadow(gaussian, #7b2cbf, 20, 0.3, 0, 0);
 }
 
 .editor-pane {

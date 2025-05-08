@@ -4,12 +4,16 @@ import com.application.test.Model.DictionaryEntry;
 import com.application.test.Model.GeneralManagement;
 import com.application.test.Model.DictionarySource;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -30,7 +34,9 @@ import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -93,6 +99,7 @@ public class WelcomeController implements Initializable {
             }
         });
         suggestionListView.setFocusTraversable(false);
+
     }
 
     private void initializeSourceComboBox() {
@@ -202,7 +209,11 @@ public class WelcomeController implements Initializable {
     @FXML
     protected void handleWelcomeSearchAction(ActionEvent event) {
         String searchTerm = welcomeSearchTextField.getText().trim();
-        if (dictionaryManagement == null) { /* ... lỗi ... */ return; }
+        if (dictionaryManagement == null) { return ; }
+        if (searchTerm.isEmpty()) {
+            showNotFoundAlert();
+            return ;
+        }
 
         // *** Lấy nguồn từ điển đang hoạt động và lookup trên nguồn đó ***
         DictionarySource activeSource = dictionaryManagement.getActiveSource();
@@ -210,11 +221,25 @@ public class WelcomeController implements Initializable {
 
         if (foundEntry.isPresent()) {
             // Báo hiệu cho DictionaryApplication để chuyển sang màn hình từ điển và hiển thị từ này
-            if (onSearchInitiated != null) { onSearchInitiated.accept(searchTerm); } else { /* ... lỗi ... */ }
+            if (onSearchInitiated != null) { onSearchInitiated.accept(searchTerm); }
         } else {
             // Hiển thị thông báo không tìm thấy và hỏi thêm từ
             showNotFoundAlertWithAddOption(searchTerm); // Hàm này gọi onAddWordInitiated
         }
+    }
+
+    private void showNotFoundAlert() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Tìm kiếm trống!");
+        alert.setHeaderText(null);
+        alert.setContentText("Vui lòng gõ một từ vào thanh tìm kiếm!");
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setStyle("-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);"
+                + "-fx-font-family: 'Segoe UI';"
+                + "-fx-font-size: 14px;");
+
+        alert.showAndWait();
     }
 
     private void showNotFoundAlertWithAddOption(String notFoundWord) {
@@ -228,6 +253,10 @@ public class WelcomeController implements Initializable {
         ButtonType cancelButtonType = new ButtonType("Đóng");
 
         alert.getButtonTypes().setAll(addButtonType, cancelButtonType);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setStyle("-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);"
+                + "-fx-font-family: 'Segoe UI';"
+                + "-fx-font-size: 14px;");
 
         // Hiển thị alert và chờ phản hồi của người dùng
         Optional<ButtonType> result = alert.showAndWait();
