@@ -35,5 +35,5 @@
             <Label text="Wordle" styleClass="game-label"/>
         </VBox>
     </HBox>
-    <Button text="Back" onAction="#backToWelcome" styleClass="button"/>
+    <Button text="Back" onAction="#backToWelcome" styleClass="Gbutton"/>
 </VBox>
