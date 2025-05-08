@@ -157,7 +157,7 @@ public class DictionaryApplication extends Application {
 
 
             primaryStage.setScene(this.gameMenuScene); // Sử dụng gameMenuScene
-            primaryStage.setTitle("🎮 Games"); // Tiêu đề cho màn hình Game Menu
+            primaryStage.setTitle("Games"); // Tiêu đề cho màn hình Game Menu
             System.out.println("Đã chuyển sang màn hình game (Menu).");
 
         } catch (IOException e) { System.err.println("Lỗi khi load màn hình game menu: " + e.getMessage()); e.printStackTrace(); /* ... */ }

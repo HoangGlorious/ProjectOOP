@@ -9,27 +9,27 @@
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.application.test.Controller.GamesController"
-      spacing="20" alignment="CENTER">
-    <!-- Padding được khai báo bằng phần tử Insets -->
+      spacing="20" alignment="CENTER"
+    stylesheets="@../CSS/games.css">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="Select a Game" style="-fx-font-size: 20px;"/>
+    <Label text="Select a Game" style="-fx-font-size: 20px;" styleClass="title-label"/>
     <HBox spacing="40" alignment="CENTER">
-        <!-- Wordle Icon Button -->
         <VBox alignment="CENTER" spacing="10">
             <ImageView fx:id="wordleIcon"
                        fitWidth="64" fitHeight="64"
                        pickOnBounds="true"
                        preserveRatio="true"
-                       onMouseClicked="#launchWordle">
+                       onMouseClicked="#launchWordle"
+                       styleClass="image-view">
                 <image>
                     <Image url="@../images/wordle_icon.png"/>
                 </image>
             </ImageView>
-            <Label text="Wordle"/>
+            <Label text="Wordle" styleClass="game-label"/>
         </VBox>
     </HBox>
-    <Button text="Back" onAction="#backToWelcome"/>
+    <Button text="Back" onAction="#backToWelcome" styleClass="button"/>
 </VBox>
