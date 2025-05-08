@@ -15,7 +15,7 @@
                 <Button fx:id="backButton1" onAction="#handleBackButtonAction" styleClass="dnav-button" text="🔙 Back" />
                 <Label styleClass="logo" text="📚 My Dictionary" />
                 <Region HBox.hgrow="ALWAYS"/>
-                <ComboBox fx:id="sourceComboBox" promptText="Chọn nguồn" />
+                <ComboBox fx:id="sourceComboBox" promptText="Chọn nguồn" styleClass="WcomboBox"/>
                 <VBox fx:id="searchContainer" spacing="0" alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
                     <children>
                         <!-- HBox chứa TextField và Button Search -->
