@@ -156,7 +156,8 @@ public class ThesaurusController {
 
     @FXML
     protected void thesaurusBackToWelcome() {
-        System.out.println("Back to Welcome button clicked in GamesController. Signaling DictionaryApplication.");
+        System.out.println("Back to Welcome button clicked in Thesaurus." +
+                " Signaling DictionaryApplication.");
         if (onGoBackToWelcome != null) {
             try {
                 onGoBackToWelcome.run();
@@ -165,7 +166,7 @@ public class ThesaurusController {
                 e.printStackTrace();
             }
         } else {
-            System.err.println("Callback onGoBackToWelcome is not set in GamesController!");
+            System.err.println("Callback onGoBackToWelcome is not set in Thesaurus!");
         }
     }
 }

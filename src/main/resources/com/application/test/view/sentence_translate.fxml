@@ -9,46 +9,37 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
+<BorderPane fx:id="rootPane" stylesheets="@../CSS/sentrans.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.test.Controller.SenTransController">
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.application.test.Controller.SenTransController">
+   <!-- Top Bar -->
    <top>
-      <AnchorPane prefHeight="52.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="20" styleClass="top-bar">
          <children>
-            <ComboBox fx:id="langSource" layoutX="404.0" layoutY="14.0" prefWidth="150.0" promptText="Eng-Vie" />
+            <Button fx:id="backButton" onAction="#senBackToWelcome" styleClass="top-button" text="← Back" />
+            <Label prefHeight="24.0" prefWidth="367.0" styleClass="title-label" text="                 🌐 Sentence Translator" />
+            <ComboBox fx:id="langSource" prefWidth="120" promptText="Eng → Vie" styleClass="lang-combo" />
          </children>
-      </AnchorPane>
+      </HBox>
    </top>
+
+   <!-- Center Content -->
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" spacing="15" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="sentenceInput" alignment="TOP_LEFT" onAction="#handleSenTranslation" prefHeight="113.0" prefWidth="600.0" promptText="Enter sentence here...">
-               <font>
-                  <Font name="Comic Sans MS Bold Italic" size="18.0" />
-               </font>
-            </TextField>
-            <HBox prefHeight="35.0" prefWidth="600.0">
+            <TextField fx:id="sentenceInput" onAction="#handleSenTranslation" prefWidth="500" promptText="Type your sentence here..." styleClass="input-field" />
+            <AnchorPane prefHeight="54.0" prefWidth="638.0">
                <children>
-                  <Label fx:id="status" prefHeight="35.0" prefWidth="503.0" />
-                  <Button fx:id="translateButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleSenTranslation" prefHeight="34.0" prefWidth="107.0" text="Translate" textFill="#eb1a1a">
-                     <font>
-                        <Font name="Franklin Gothic Medium" size="18.0" />
-                     </font>
-                  </Button>
+                  <Label fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutX="168.0" layoutY="31.0" prefWidth="300" styleClass="status-label" />
+                  <Button fx:id="translateButton" layoutX="244.0" layoutY="-9.0" onAction="#handleSenTranslation" prefHeight="35.0" prefWidth="147.0" styleClass="action-button" text="🔍 Translate" />
                </children>
-            </HBox>
+            </AnchorPane>
          </children>
       </VBox>
    </center>
+
+   <!-- Bottom TextArea -->
    <bottom>
-      <TextArea fx:id="translationArea" prefHeight="200.0" prefWidth="200.0" promptText="Translation goes here..." BorderPane.alignment="CENTER">
-         <font>
-            <Font name="Comic Sans MS Bold Italic" size="18.0" />
-         </font>
-      </TextArea>
+      <TextArea fx:id="translationArea" prefHeight="180" promptText="Translation appears here..." styleClass="output-area" wrapText="true" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>

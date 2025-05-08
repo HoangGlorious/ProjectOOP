@@ -1,7 +1,9 @@
 package com.application.test.Model;
 
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
 import java.net.HttpURLConnection;
@@ -20,7 +22,6 @@ public class SentenceTranslation {
                 GAPI_URL, sourceLang, targetLang, encodedSentence);
 
         URL url = new URL(urlString);
-
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
 
@@ -37,8 +38,14 @@ public class SentenceTranslation {
                 response.append(output);
             }
 
-            JsonObject json = com.google.gson.JsonParser.parseString(response.toString()).getAsJsonObject();
-            return json.getAsJsonArray("0").getAsJsonArray().getAsString();
+            JsonArray jsonArray = JsonParser.parseString(response.toString()).getAsJsonArray();
+            // Navigate through nested arrays to get the translated text
+            String translatedText = jsonArray
+                    .get(0).getAsJsonArray()
+                    .get(0).getAsJsonArray()
+                    .get(0).getAsString();
+
+            return translatedText;
         }
     }
 }
