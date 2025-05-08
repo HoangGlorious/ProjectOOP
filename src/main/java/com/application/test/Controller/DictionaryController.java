@@ -106,7 +106,10 @@ public class DictionaryController implements Initializable {
         suggestionListView.setVisible(false);
         suggestionListView.setManaged(false);
 
-        if (cleanedSearchTerm.isEmpty()) { loadAndDisplayInitialData(); return; }
+        if (cleanedSearchTerm.isEmpty()) {
+            loadAndDisplayInitialData();
+            showAlert(Alert.AlertType.WARNING, "Tìm kiếm trống", "Vui lòng gõ một từ vào thanh tìm kiếm.");
+        }
 
         // *** Lấy nguồn từ điển đang hoạt động và lookup trên nguồn đó ***
         DictionarySource activeSource = dictionaryManagement.getActiveSource();
@@ -239,6 +242,32 @@ public class DictionaryController implements Initializable {
                     // Xóa nội dung search field và hiển thị toàn bộ từ điển của nguồn mới
                     setInitialSearchTerm(""); // Đặt text rỗng, hàm này sẽ gọi loadAndDisplayInitialData()
                 }
+            }
+        });
+
+        // Apply custom cell factory for consistent styling
+        sourceComboBox.setCellFactory(lv -> {
+            ListCell<String> cell = new ListCell<>();
+            cell.getStyleClass().add("WcomboBoxCell");
+            cell.itemProperty().addListener((obs, oldItem, newItem) -> {
+                if (newItem != null) {
+                    cell.setText(newItem);
+                } else {
+                    cell.setText(null);
+                }
+            });
+            return cell;
+        });
+
+        // Style the selected value display (button cell)
+        sourceComboBox.setButtonCell(new ListCell<>() {
+            {
+                getStyleClass().add("WcomboBoxCell");
+            }
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item);
             }
         });
     }
@@ -609,7 +638,10 @@ public class DictionaryController implements Initializable {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setStyle("-fx-background-color: linear-gradient(to bottom, #f5f7fa, #c3cfe2);"
+                + "-fx-font-family: 'Segoe UI';"
+                + "-fx-font-size: 14px;");
         alert.showAndWait();
     }
-
 }
