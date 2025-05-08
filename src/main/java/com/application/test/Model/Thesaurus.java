@@ -1,13 +1,10 @@
 package com.application.test.Model;
 
-
 import java.nio.charset.StandardCharsets;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 
 
@@ -62,11 +59,11 @@ public class Thesaurus {
                 JsonObject definition = definitions.get(j).getAsJsonObject();
                 if(definition.has("synonyms")) {
                     JsonArray synonyms = definition.getAsJsonArray("synonyms");
-                    result.addSynonyms(synonyms.get(0).getAsString());
+                    result.addSynonym(synonyms.get(0).getAsString());
                 }
                 if(definition.has("antonyms")) {
                     JsonArray antonyms = definition.getAsJsonArray("antonyms");
-                    result.addAntonyms(antonyms.get(0).getAsString());
+                    result.addAntonym(antonyms.get(0).getAsString());
                 }
             }
         }
