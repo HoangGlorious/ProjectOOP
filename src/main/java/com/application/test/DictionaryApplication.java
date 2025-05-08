@@ -22,19 +22,18 @@ public class DictionaryApplication extends Application {
     private Scene gameMenuScene;
     private Scene wordleScene;
     private Scene thesaurusScene;
+    private Scene senTranScene;
     private WelcomeController welcomeControllerInstance;
     private DictionaryController dictionaryControllerInstance;
     private ThesaurusController thesaurusControllerInstance;
+    private SenTransController senTransControllerInstance;
     private GamesController gamesControllerInstance;
     private WordleController wordleControllerInstance;
     private String pendingActionWord = null;
     private boolean pendingAddAction = false;
     private Scene wordleMenuScene;
-
     private Scene dailyWordleScene;
-
     private WordleMenuController wordleMenuControllerInstance;
-
     private DailyWordleController dailyWordleControllerInstance;
 
     @Override
@@ -60,6 +59,7 @@ public class DictionaryApplication extends Application {
         welcomeController.setOnAddWordInitiated(this::handleAddWordInitiated);
         welcomeController.setOnGoToGame(this::showGameMenu);
         welcomeController.setOnGoToThesaurus(this::showThesaurusView);
+        welcomeController.setOnGoToSentenceTranslation(this::showSenTranView);
 
 
         this.welcomeScene = new Scene(welcomeRoot);
@@ -322,6 +322,32 @@ public class DictionaryApplication extends Application {
             System.out.println("Đã chuyển sang màn hình Thesaurus (Menu).");
 
         } catch (IOException e) { System.err.println("Lỗi khi load màn hình thesaurus menu: " + e.getMessage()); e.printStackTrace(); /* ... */ }
+    }
+
+    private void showSenTranView() {
+        try {
+            if (this.senTranScene == null) {
+                URL senTranFxmlUrl = getClass().getResource("/com/application/test/view/sentence_translate.fxml");
+                if (senTranFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file sentence_translate.fxml trong classpath!"); System.exit(1); }
+                FXMLLoader senLoader = new FXMLLoader(senTranFxmlUrl);
+                Parent senRoot = senLoader.load();
+                this.senTransControllerInstance = senLoader.getController();
+
+                senTransControllerInstance.setOnGoBackToWelcome(this::showWelcomeView);
+                this.senTranScene = new Scene(senRoot);
+            } else {
+                senTransControllerInstance.resetScene();
+            }
+
+            if (welcomeControllerInstance != null) { welcomeControllerInstance.resetView(); } // Reset Welcome view
+            if (dictionaryControllerInstance != null) { dictionaryControllerInstance.resetScene(); } // Reset Dictionary view
+
+
+            primaryStage.setScene(this.senTranScene);
+            primaryStage.setTitle("Sentence Translator");
+            System.out.println("Đã chuyển sang màn hình SenTran.");
+
+        } catch (IOException e) { System.err.println("Lỗi khi load màn hình SenTran menu: " + e.getMessage()); e.printStackTrace(); /* ... */ }
     }
 
     /**

@@ -6,6 +6,5 @@ public class WordOfTheDay {
     private Hyperlink wotd;
     public WordOfTheDay() {
         wotd = new Hyperlink();
-
     }
 }
