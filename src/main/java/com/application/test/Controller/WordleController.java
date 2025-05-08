@@ -1,11 +1,13 @@
 package com.application.test.Controller;
 
 import com.application.test.DictionaryApplication;
-import com.application.test.Model.Games;
 import com.application.test.Model.WordleGame;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,10 +16,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
 
-public class WordleController{
+public class WordleController {
     protected static final int WORD_LENGTH = 5;
     protected static final int MAX_ATTEMPTS = 6;
     protected Runnable onGoBackToMenu;
@@ -34,13 +38,13 @@ public class WordleController{
     @FXML
     protected Label messageLabel;
     @FXML
-    protected Button learnButton; // Nút "Tìm hiểu từ"
+    protected Button learnButton;
 
     protected WordleGame game;
     protected Label[][] letterLabels;
 
     public void initialize() {
-        game = new WordleGame(); // Giả sử WordleGame đã được khởi tạo và có từ điển
+        game = new WordleGame();
         letterLabels = new Label[MAX_ATTEMPTS][WORD_LENGTH];
         setupWordleGrid();
         guessInput.setOnKeyPressed(this::handleKeyPress);
@@ -49,9 +53,9 @@ public class WordleController{
         messageLabel.setText("Hãy đoán từ có 5 chữ cái!");
 
         if (learnButton != null) {
-            learnButton.setVisible(false); // Ẩn nút ban đầu
-            learnButton.setManaged(false); // Không quản lý layout của nút khi ẩn
-            learnButton.setOnAction(this::learnWord); // Gán hành động cho nút
+            learnButton.setVisible(false);
+            learnButton.setManaged(false);
+            learnButton.setOnAction(this::learnWord);
         }
     }
 
@@ -93,27 +97,19 @@ public class WordleController{
             showAlert("Lỗi", "Từ đoán chỉ được chứa các chữ cái a-z.");
             return;
         }
-        if (!game.isValidGuess(guess)) { // Kiểm tra xem từ đoán có trong từ điển của WordleGame không
+        if (!game.isValidGuess(guess)) {
             showAlert("Lỗi", "Từ '" + guess.toUpperCase() + "' không có trong từ điển cho phép!");
             return;
         }
 
         List<WordleGame.LetterState> states = game.makeGuess(guess);
-        // Giả sử game.makeGuess() không bao giờ trả về null nếu guess hợp lệ
-        // Nếu có thể trả về null, cần kiểm tra
-        // if (states == null) {
-        //     showAlert("Lỗi", "Không thể xử lý lượt đoán này!");
-        //     return;
-        // }
-
         updateUI(guess, states);
         guessInput.clear();
         checkGameEnd();
     }
 
     protected void updateUI(String guess, List<WordleGame.LetterState> states) {
-        int rowIndex = game.getCurrentAttempt() - 1; // game.getCurrentAttempt() là lần đoán TIẾP THEO
-        // nên lần đoán vừa thực hiện là currentAttempt - 1
+        int rowIndex = game.getCurrentAttempt() - 1;
         if (rowIndex < 0 || rowIndex >= MAX_ATTEMPTS) {
             System.err.println("Chỉ số hàng không hợp lệ khi cập nhật UI: " + rowIndex);
             return;
@@ -123,8 +119,8 @@ public class WordleController{
             Label label = letterLabels[rowIndex][i];
             label.setText(String.valueOf(guess.charAt(i)).toUpperCase());
             label.getStyleClass().removeAll("correct", "present", "absent", "letter-box-filled");
-            label.getStyleClass().add("letter-box"); // Luôn giữ lại style cơ bản
-            label.getStyleClass().add("letter-box-filled"); // Thêm style cho ô đã điền
+            label.getStyleClass().add("letter-box");
+            label.getStyleClass().add("letter-box-filled");
 
             switch (states.get(i)) {
                 case CORRECT:
@@ -163,7 +159,7 @@ public class WordleController{
     }
 
     public void resetGame() {
-        game.resetGame(); // Đặt lại trạng thái game trong WordleGame
+        game.resetGame();
         for (int row = 0; row < MAX_ATTEMPTS; row++) {
             for (int col = 0; col < WORD_LENGTH; col++) {
                 Label label = letterLabels[row][col];
@@ -194,7 +190,6 @@ public class WordleController{
     @FXML
     protected void backToMenu(ActionEvent event) {
         System.out.println("Back button clicked in WordleController.");
-        // resetGame(); // Có thể reset game trước khi quay lại menu
         if (onGoBackToMenu != null) {
             try {
                 onGoBackToMenu.run();
@@ -204,143 +199,65 @@ public class WordleController{
             }
         } else {
             System.err.println("Callback onGoBackToMenu is not set in WordleController!");
-            // Cân nhắc không đóng stage ở đây, để lớp gọi quản lý stage
-            // Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            // stage.close();
         }
-    }
-
-    /**
-     * Cố gắng lấy dạng cơ bản (lemma) của một từ.
-     * Lưu ý: Hàm này đơn giản hóa và không thể bao quát hết các trường hợp bất quy tắc
-     * hoặc phức tạp của tiếng Anh.
-     * @param word Từ cần lấy dạng cơ bản.
-     * @return Dạng cơ bản ước tính của từ.
-     */
-    private String getBaseForm(String word) {
-        if (word == null || word.length() < 2) {
-            return word;
-        }
-
-        String lowerWord = word.toLowerCase();
-
-        // Ưu tiên các hậu tố đặc biệt và dài hơn trước
-        // Ví dụ: cries -> cry (cho từ 5 chữ)
-        if (lowerWord.length() == 5 && lowerWord.endsWith("ies")) {
-
-            char charBeforeIes = lowerWord.charAt(lowerWord.length() - 4);
-            if (!isVowel(charBeforeIes)) {
-                return lowerWord.substring(0, lowerWord.length() - 3) + "y";
-            }
-        }
-
-
-        if (lowerWord.length() == 5 && lowerWord.endsWith("ied")) {
-
-            char charBeforeIed = lowerWord.charAt(lowerWord.length() - 4);
-            if (!isVowel(charBeforeIed)) {
-                return lowerWord.substring(0, lowerWord.length() - 3) + "y";
-            }
-        }
-
-
-        if (lowerWord.endsWith("ed")) {
-            String stem = lowerWord.substring(0, lowerWord.length() - 2);
-            if (stem.length() == 0) return lowerWord;
-
-
-            if (stem.endsWith("e")) {
-                return stem;
-            }
-
-            if (stem.length() >= 2 && stem.charAt(stem.length() - 1) == stem.charAt(stem.length() - 2) &&
-                    !isVowel(stem.charAt(stem.length() - 1)) && // là phụ âm
-                    !(stem.endsWith("ll") || stem.endsWith("ss") || stem.endsWith("ff") || stem.endsWith("zz")) // Trừ các đuôi ll, ss, ff, zz thường giữ nguyên
-            ) {
-
-                return stem.substring(0, stem.length() - 1);
-            }
-            // Từ gốc kết thúc bằng "ed": "need", "feed", "bed"
-            if (lowerWord.equals("need") || lowerWord.equals("feed") || lowerWord.equals("bed") ||
-                    lowerWord.equals("bleed") || lowerWord.equals("speed") || lowerWord.equals("breed")) {
-                return lowerWord;
-            }
-            return stem;
-        }
-
-
-        if (lowerWord.endsWith("es")) {
-            String stem = lowerWord.substring(0, lowerWord.length() - 2);
-            if (stem.length() == 0) return lowerWord;
-
-
-            if (stem.endsWith("s") || stem.endsWith("x") || stem.endsWith("z") ||
-                    (stem.length() >= 2 && (stem.substring(stem.length()-2).equals("ch") || stem.substring(stem.length()-2).equals("sh")))) {
-                return stem;
-            }
-
-            if (lowerWord.equals("goes")) return "go";
-            if (lowerWord.equals("does")) return "do";
-
-            if (stem.endsWith("e")) {
-                return stem;
-            }
-            return lowerWord;
-        }
-
-
-        if (lowerWord.endsWith("s")) {
-
-            if (lowerWord.endsWith("ss")) {
-                return lowerWord;
-            }
-            String stem = lowerWord.substring(0, lowerWord.length() - 1);
-            if (stem.length() == 0) return lowerWord;
-
-
-            if (lowerWord.equals("bus") || lowerWord.equals("lens") || lowerWord.equals("always") ||
-                    lowerWord.equals("is") || lowerWord.equals("as") || lowerWord.equals("this") ||
-                    lowerWord.equals("its") || lowerWord.equals("his") || lowerWord.equals("us") ||
-                    lowerWord.equals("plus")) {
-                return lowerWord;
-            }
-
-            return stem;
-        }
-
-        return lowerWord;
-    }
-
-    private boolean isVowel(char c) {
-        return "aeiou".indexOf(Character.toLowerCase(c)) != -1;
     }
 
     @FXML
     protected void learnWord(ActionEvent event) {
+        System.out.println("learnWord() called in WordleController");
         String targetWord = game.getTargetWord();
-        if (targetWord == null || targetWord.isEmpty()) {
-            showAlert("Thông báo", "Không có từ mục tiêu để tìm hiểu.");
-            return;
-        }
+        String baseWord = game.getBaseForm(targetWord);
+        System.out.println("Target word: " + targetWord + ", Base word: " + baseWord);
 
-        String baseWord = getBaseForm(targetWord);
-        System.out.println("learnWord() called with targetWord: " + targetWord + ", baseWord: " + baseWord);
+        try {
+            // Tải dictionary_view.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/application/test/view/dictionary_view.fxml"));
+            Parent root = loader.load();
+            DictionaryController dictionaryController = loader.getController();
 
-        DictionaryApplication app = null;
-        if (guessInput.getScene() != null && guessInput.getScene().getWindow() != null) {
-            Object userData = guessInput.getScene().getWindow().getUserData();
-            if (userData instanceof DictionaryApplication) {
-                app = (DictionaryApplication) userData;
+            // Lấy Stage từ guessInput
+            Stage stage = (Stage) guessInput.getScene().getWindow();
+            if (stage == null) {
+                System.err.println("Stage is null in learnWord!");
+                showAlert("Lỗi", "Không thể truy cập cửa sổ chính!");
+                return;
             }
-        }
+            System.out.println("Using stage: " + stage);
 
-//        if (app != null) {
-//            System.out.println("DictionaryApplication found, calling handleSearchInitiated with: " + baseWord);
-//            app.handleSearchInitiated(baseWord); // Gọi phương thức để chuyển sang tab tra từ và tìm kiếm
-//            System.out.println("handleSearchInitiated called.");
-//        } else {
-//            System.err.println("DictionaryApplication instance not found in stage user data!");
-//            showAlert("Lỗi", "Không thể khởi chạy chức năng tìm hiểu từ điển.");
-//        }
+            // Lấy DictionaryApplication từ userData
+            DictionaryApplication app = (DictionaryApplication) stage.getUserData();
+            if (app == null) {
+                System.err.println("DictionaryApplication not found in stage userData! Stage: " + stage);
+                showAlert("Lỗi", "Không thể truy cập ứng dụng từ điển!");
+                return;
+            }
+            System.out.println("DictionaryApplication found: " + app);
+
+            // Thiết lập DictionaryManagement và callback
+            dictionaryController.setDictionaryManagement(app.getDictionaryManagement());
+            dictionaryController.setOnGoBackToWelcome(() -> {
+                try {
+                    if (onGoBackToMenu != null) {
+                        onGoBackToMenu.run(); // Quay lại menu Wordle
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error going back to Wordle menu: " + e.getMessage());
+                }
+            });
+
+            // Thiết lập từ cần tìm kiếm
+            dictionaryController.setInitialSearchTerm(baseWord);
+
+            // Chuyển sang màn hình từ điển
+            Scene dictionaryScene = new Scene(root, 1200, 640);
+            dictionaryScene.getStylesheets().add(getClass().getResource("/com/application/test/CSS/style.css").toExternalForm());
+            stage.setScene(dictionaryScene);
+            stage.setTitle("📚 Dictionary Lookup");
+            System.out.println("Switched to dictionary view with search term: " + baseWord);
+        } catch (IOException e) {
+            System.err.println("Error loading dictionary_view.fxml: " + e.getMessage());
+            e.printStackTrace();
+            showAlert("Lỗi", "Không thể mở màn hình từ điển!");
+        }
     }
 }

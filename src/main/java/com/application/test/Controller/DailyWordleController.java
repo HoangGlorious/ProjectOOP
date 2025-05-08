@@ -9,11 +9,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -30,6 +33,17 @@ public class DailyWordleController extends WordleController implements Initializ
 
     @FXML
     private Button playClassicButton;
+
+    @FXML
+    private TextField guessInput;
+
+    @FXML
+    private Button guessButton;
+
+    @FXML
+    private Button learnButton;
+
+    private Stage primaryStage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -63,6 +77,14 @@ public class DailyWordleController extends WordleController implements Initializ
         }
         updateDailyStatusAndControls();
 
+        // Lấy primaryStage từ guessInput
+        if (guessInput != null && guessInput.getScene() != null && guessInput.getScene().getWindow() != null) {
+            primaryStage = (Stage) guessInput.getScene().getWindow();
+            System.out.println("PrimaryStage set in DailyWordleController: " + primaryStage);
+        } else {
+            System.err.println("Cannot set primaryStage: guessInput, scene, or window is null");
+        }
+
         System.out.println("DailyWordleController initialized.");
     }
 
@@ -72,7 +94,7 @@ public class DailyWordleController extends WordleController implements Initializ
         for (int i = 0; i < attempts.size(); i++) {
             updateUI(attempts.get(i), states.get(i));
         }
-        checkGameEnd(); // Cập nhật thông báo và nút dựa trên trạng thái game
+        checkGameEnd();
         System.out.println("Restored " + attempts.size() + " previous guesses.");
     }
 
@@ -97,11 +119,6 @@ public class DailyWordleController extends WordleController implements Initializ
         if (dailyStatusLabel == null || guessInput == null || guessButton == null
                 || learnButton == null || playClassicButton == null) {
             System.err.println("Lỗi: FXML controls chưa được inject đầy đủ.");
-            System.out.println("dailyStatusLabel: " + dailyStatusLabel);
-            System.out.println("guessInput: " + guessInput);
-            System.out.println("guessButton: " + guessButton);
-            System.out.println("learnButton: " + learnButton);
-            System.out.println("playClassicButton: " + playClassicButton);
             return;
         }
 
@@ -113,7 +130,6 @@ public class DailyWordleController extends WordleController implements Initializ
             learnButton.setManaged(false);
             playClassicButton.setVisible(false);
             playClassicButton.setManaged(false);
-            System.out.println("Input controls ENABLED, action buttons HIDDEN.");
         } else {
             guessInput.setDisable(true);
             guessButton.setDisable(true);
@@ -121,9 +137,6 @@ public class DailyWordleController extends WordleController implements Initializ
             learnButton.setManaged(true);
             playClassicButton.setVisible(true);
             playClassicButton.setManaged(true);
-            System.out.println("Input controls DISABLED, action buttons SHOWN.");
-            System.out.println("learnButton visibility: " + learnButton.isVisible());
-            System.out.println("playClassicButton visibility: " + playClassicButton.isVisible());
         }
 
         if (!canPlay) {
@@ -172,15 +185,11 @@ public class DailyWordleController extends WordleController implements Initializ
     private void handlePlayClassic() {
         System.out.println("Handling Play Classic button click...");
         try {
-            // Tải wordle_view.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/application/test/View/wordle_view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/application/test/view/wordle_view.fxml"));
             Parent root = loader.load();
-
-            // Lấy controller của wordle_view.fxml
             WordleController controller = loader.getController();
             controller.setOnGoBackToMenu(() -> {
                 try {
-                    // Quay lại menu khi nhấn Back từ Wordle thường
                     if (onGoBackToMenu != null) {
                         onGoBackToMenu.run();
                     }
@@ -189,12 +198,9 @@ public class DailyWordleController extends WordleController implements Initializ
                     e.printStackTrace();
                 }
             });
-
-            // Thay đổi scene
-            Stage stage = (Stage) playClassicButton.getScene().getWindow();
             Scene scene = new Scene(root, 1200, 640);
             scene.getStylesheets().add(getClass().getResource("/com/application/test/CSS/wordle.css").toExternalForm());
-            stage.setScene(scene);
+            primaryStage.setScene(scene);
             System.out.println("Switched to Classic Wordle mode (wordle_view.fxml).");
         } catch (Exception e) {
             System.err.println("Error loading wordle_view.fxml: " + e.getMessage());
@@ -202,32 +208,77 @@ public class DailyWordleController extends WordleController implements Initializ
             showAlert("Lỗi", "Không thể chuyển sang Wordle thường!");
         }
     }
-    private String getBaseForm(String word) {
-        if (word == null || word.length() < 2) {
-            return word;
-        }
-        if (word.endsWith("es")) {
-            return word.substring(0, word.length() - 2);
-        } else if (word.endsWith("ed")) {
-            return word.substring(0, word.length() - 2);
-        } else if (word.endsWith("s") && !word.endsWith("ss")) {
-            return word.substring(0, word.length() - 1);
-        }
-        return word;
-    }
+
     @FXML
     protected void learnWord(ActionEvent event) {
-//        String targetWord = game.getTargetWord();
-//        String baseWord = getBaseForm(targetWord);
-//        System.out.println("learnWord() called with targetWord: " + targetWord + ", baseWord: " + baseWord);
-//        DictionaryApplication app = (DictionaryApplication) guessInput.getScene().getWindow().getUserData();
-//        if (app != null) {
-//            System.out.println("DictionaryApplication found, calling handleSearchInitiated with: " + baseWord);
-//            app.handleSearchInitiated(baseWord);
-//            System.out.println("handleSearchInitiated called, checking if dictionary updated...");
-//        } else {
-//            System.err.println("DictionaryApplication instance not found in stage user data!");
-//        }
+        System.out.println("learnWord() called in DailyWordleController");
+        if (!(game instanceof DailyWordleGame)) {
+            System.err.println("Error: game is not instance of DailyWordleGame");
+            showAlert("Lỗi", "Không thể lấy thông tin từ vì trò chơi không hợp lệ!");
+            return;
+        }
+
+        String targetWord = game.getTargetWord();
+        String baseWord = game.getBaseForm(targetWord);
+        System.out.println("Target word: " + targetWord + ", Base word: " + baseWord);
+
+        try {
+            // Tải dictionary_view.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/application/test/view/dictionary_view.fxml"));
+            Parent root = loader.load();
+            DictionaryController dictionaryController = loader.getController();
+
+            // Kiểm tra primaryStage
+            if (primaryStage == null) {
+                System.err.println("primaryStage is null in learnWord!");
+                showAlert("Lỗi", "Không thể truy cập cửa sổ chính!");
+                return;
+            }
+            System.out.println("Using primaryStage: " + primaryStage);
+
+            // Lấy DictionaryApplication từ userData
+            DictionaryApplication app = (DictionaryApplication) primaryStage.getUserData();
+            if (app == null) {
+                System.err.println("DictionaryApplication not found in stage userData! Stage: " + primaryStage);
+                showAlert("Lỗi", "Không thể truy cập ứng dụng từ điển!");
+                return;
+            }
+            System.out.println("DictionaryApplication found: " + app);
+
+            // Thiết lập DictionaryManagement và callback
+            dictionaryController.setDictionaryManagement(app.getDictionaryManagement());
+            dictionaryController.setOnGoBackToWelcome(() -> {
+                try {
+                    if (onGoBackToMenu != null) {
+                        onGoBackToMenu.run(); // Quay lại menu Wordle
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error going back to Wordle menu: " + e.getMessage());
+                }
+            });
+
+            // Thiết lập từ cần tìm kiếm
+            dictionaryController.setInitialSearchTerm(baseWord);
+
+            // Chuyển sang màn hình từ điển
+            Scene dictionaryScene = new Scene(root, 1200, 640);
+            dictionaryScene.getStylesheets().add(getClass().getResource("/com/application/test/CSS/style.css").toExternalForm());
+            primaryStage.setScene(dictionaryScene);
+            primaryStage.setTitle("📚 Dictionary Lookup");
+            System.out.println("Switched to dictionary view with search term: " + baseWord);
+        } catch (IOException e) {
+            System.err.println("Error loading dictionary_view.fxml: " + e.getMessage());
+            e.printStackTrace();
+            showAlert("Lỗi", "Không thể mở màn hình từ điển!");
+        }
     }
 
+    @Override
+    protected void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
