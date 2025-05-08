@@ -44,7 +44,6 @@ public class GamesController {
     @FXML
     protected void backToWelcome() {
         System.out.println("Back to Welcome button clicked in GamesController. Signaling DictionaryApplication.");
-
         // Signal DictionaryApplication to switch scene back to Welcome
         if (onGoBackToWelcome != null) {
             try {

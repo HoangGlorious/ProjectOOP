@@ -1,0 +1,42 @@
+.thesaurus-top-bar {
+    -fx-background-color: linear-gradient(to right, #152b56, #750202);
+}
+
+.thesaurus-header {
+    -fx-text-fill: #ffcc00;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.back-button {
+    -fx-background-color: #ff4b5c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 15;
+}
+
+.back-button:hover {
+    -fx-background-color: #ff7c89;
+}
+
+.search-bar {
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-padding: 5 10 5 10;
+}
+
+.search-button {
+    -fx-background-color: #ffcc00;
+    -fx-background-radius: 50%;
+    -fx-font-size: 14px;
+}
+
+.result-area {
+    -fx-control-inner-background: linear-gradient(to bottom right, #d3e0ea, #a3cef1);
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+    -fx-padding: 15;
+    -fx-border-color: #61045f;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0, 0, 2);
+}

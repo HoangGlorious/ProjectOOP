@@ -4,16 +4,10 @@ import com.application.test.Model.DictionaryEntry;
 import com.application.test.Model.GeneralManagement;
 import com.application.test.Model.DictionarySource;
 
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -57,9 +51,14 @@ public class WelcomeController implements Initializable {
     private Consumer<String> onAddWordInitiated; // Callback khi người dùng muốn thêm từ (từ thông báo lỗi)
     private GeneralManagement dictionaryManagement;
     private Runnable onGoToGame;
+    private Runnable onGoToThesaurus;
 
     public void setOnGoToGame(Runnable onGoToGame) {
         this.onGoToGame = onGoToGame;
+    }
+
+    public void setOnGoToThesaurus(Runnable onGoToThesaurus) {
+        this.onGoToThesaurus = onGoToThesaurus;
     }
 
     public void setOnSearchInitiated(Consumer<String> onSearchInitiated) {
@@ -107,7 +106,7 @@ public class WelcomeController implements Initializable {
         DictionarySource activeSource = dictionaryManagement.getActiveSource();
         sourceComboBox.getSelectionModel().select(activeSource.getDisplayName());
 
-        // *** Thêm Listener khi người dùng chọn một nguồn khác trong ComboBox ***
+        // Thêm Listener khi người dùng chọn một nguồn khác trong ComboBox
         sourceComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.equals(oldValue)) {
                 String newSourceId = dictionaryManagement.getSourceIdByDisplayName(newValue);
@@ -118,7 +117,34 @@ public class WelcomeController implements Initializable {
                 }
             }
         });
+
+        // Apply custom cell factory for consistent styling
+        sourceComboBox.setCellFactory(lv -> {
+            ListCell<String> cell = new ListCell<>();
+            cell.getStyleClass().add("WcomboBoxCell");
+            cell.itemProperty().addListener((obs, oldItem, newItem) -> {
+                if (newItem != null) {
+                    cell.setText(newItem);
+                } else {
+                    cell.setText(null);
+                }
+            });
+            return cell;
+        });
+
+        // Style the selected value display (button cell)
+        sourceComboBox.setButtonCell(new ListCell<>() {
+            {
+                getStyleClass().add("WcomboBoxCell");
+            }
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item);
+            }
+        });
     }
+
 
     public void resetView() {
         System.out.println("Resetting Welcome scene UI...");
@@ -236,8 +262,17 @@ public class WelcomeController implements Initializable {
 
     @FXML
     protected void handleThesaurus(ActionEvent event) {
-        System.out.println("Thesaurus clicked.");
-        // TODO: Nếu có màn hình từ đồng nghĩa riêng, gọi callback khác hoặc load Stage/Scene mới
+        System.out.println("Thesaurus clicked. Signaling to go to Thesaurus screen.");
+        if (onGoToThesaurus != null) {
+            try {
+                onGoToThesaurus.run();
+            } catch (RuntimeException e) {
+                System.err.println("Error executing go to Thesaurus callback: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Callback onGoToThesaurus chưa được thiết lập!");
+        }
     }
 
     @FXML
@@ -247,24 +282,8 @@ public class WelcomeController implements Initializable {
     }
 
     @FXML
-    protected void handleEditWords(ActionEvent event) {
-        System.out.println("Edit Words clicked.");
-        // Chuyển sang nguồn đang hoạt động trước khi chuyển màn hình Dictionary
-        // (vì việc sửa/xóa sẽ xảy ra trên nguồn đang hoạt động)
-        if (onSearchInitiated != null) {
-            onSearchInitiated.accept(""); // Chuyển đến màn hình dictionary (không search gì)
-            // TODO: Sau khi chuyển, cần báo hiệu DictionaryController mở Dialog sửa từ
-            // Cần một callback riêng hoặc cờ hiệu trong pending actions
-        } else {
-            System.out.println("Không thể mở màn hình từ điển.");
-        }
-    }
-
-
-    @FXML
     protected void handleGames(ActionEvent event) {
         System.out.println("Games clicked. Signaling to go to Game screen.");
-        // *** Gọi callback onGoToGame ***
         if (onGoToGame != null) {
             try {
                 onGoToGame.run(); // Kích hoạt hành động chuyển màn hình game
