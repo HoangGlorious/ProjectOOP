@@ -3,6 +3,7 @@ package com.application.test.Controller;
 import com.application.test.DictionaryApplication;
 import com.application.test.Model.DailyWordleGame;
 import com.application.test.Model.WordleGame;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,10 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -218,17 +217,17 @@ public class DailyWordleController extends WordleController implements Initializ
     }
     @FXML
     protected void learnWord(ActionEvent event) {
-        String targetWord = game.getTargetWord();
-        String baseWord = getBaseForm(targetWord);
-        System.out.println("learnWord() called with targetWord: " + targetWord + ", baseWord: " + baseWord);
-        DictionaryApplication app = (DictionaryApplication) guessInput.getScene().getWindow().getUserData();
-        if (app != null) {
-            System.out.println("DictionaryApplication found, calling handleSearchInitiated with: " + baseWord);
-            app.handleSearchInitiated(baseWord);
-            System.out.println("handleSearchInitiated called, checking if dictionary updated...");
-        } else {
-            System.err.println("DictionaryApplication instance not found in stage user data!");
-        }
+//        String targetWord = game.getTargetWord();
+//        String baseWord = getBaseForm(targetWord);
+//        System.out.println("learnWord() called with targetWord: " + targetWord + ", baseWord: " + baseWord);
+//        DictionaryApplication app = (DictionaryApplication) guessInput.getScene().getWindow().getUserData();
+//        if (app != null) {
+//            System.out.println("DictionaryApplication found, calling handleSearchInitiated with: " + baseWord);
+//            app.handleSearchInitiated(baseWord);
+//            System.out.println("handleSearchInitiated called, checking if dictionary updated...");
+//        } else {
+//            System.err.println("DictionaryApplication instance not found in stage user data!");
+//        }
     }
 
 }

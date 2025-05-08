@@ -1,8 +1,8 @@
 package com.application.test.Controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import javafx.event.ActionEvent; // Sửa import
 
 public class WordleMenuController {
     @FXML
