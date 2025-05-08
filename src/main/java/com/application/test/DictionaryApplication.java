@@ -29,6 +29,13 @@ public class DictionaryApplication extends Application {
     private WordleController wordleControllerInstance;
     private String pendingActionWord = null;
     private boolean pendingAddAction = false;
+    private Scene wordleMenuScene;
+
+    private Scene dailyWordleScene;
+
+    private WordleMenuController wordleMenuControllerInstance;
+
+    private DailyWordleController dailyWordleControllerInstance;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -134,73 +141,161 @@ public class DictionaryApplication extends Application {
 
         } catch (IOException e) { System.err.println("Lỗi khi load màn hình từ điển: " + e.getMessage()); e.printStackTrace(); /* ... */ }
     }
-
     private void showGameMenu() {
         try {
-            if (this.gameMenuScene == null) { // Sử dụng gameMenuScene
-                URL gameMenuFxmlUrl = getClass().getResource("/com/application/test/view/games.fxml"); // <-- File FXML Game Menu
-                if (gameMenuFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file games.fxml trong classpath!"); System.exit(1); }
+            if (this.gameMenuScene == null) {
+                URL gameMenuFxmlUrl = getClass().getResource("/com/application/test/view/games.fxml");
+                if (gameMenuFxmlUrl == null) {
+                    System.err.println("Lỗi: Không tìm thấy file games.fxml trong classpath!");
+                    // Có thể hiển thị Alert cho người dùng hoặc quay lại welcome
+                    showWelcomeView();
+                    return;
+                }
                 FXMLLoader gameMenuLoader = new FXMLLoader(gameMenuFxmlUrl);
                 Parent gameMenuRoot = gameMenuLoader.load();
-                this.gamesControllerInstance = gameMenuLoader.getController(); // Lưu instance GamesController
+                this.gamesControllerInstance = gameMenuLoader.getController();
 
-                gamesControllerInstance.setOnGoBackToWelcome(this::showWelcomeView);
-
-                // *** Thiết lập callback launch game cụ thể cho GamesController ***
-                gamesControllerInstance.setOnLaunchSpecificGame(this::showSpecificGame); // <-- Cần tạo hàm showSpecificGame
-
-                this.gameMenuScene = new Scene(gameMenuRoot); // Sử dụng gameMenuScene
+                if (this.gamesControllerInstance != null) {
+                    gamesControllerInstance.setOnGoBackToWelcome(this::showWelcomeView);
+                    // Khi chọn một game từ menu chính, sẽ đi đến menu con của game đó (nếu có)
+                    // Ở đây, giả sử "wordle" là game duy nhất có menu con
+                    gamesControllerInstance.setOnLaunchSpecificGame(gameId -> {
+                        if ("wordle".equalsIgnoreCase(gameId)) {
+                            showSpecificGameMenu("wordle"); // Gọi menu con của Wordle
+                        } else {
+                            // Xử lý các game khác không có menu con (nếu có)
+                            // showSpecificGame(gameId); // Hoặc đi thẳng vào game
+                            System.err.println("Game ID không được hỗ trợ cho menu con: " + gameId);
+                        }
+                    });
+                } else {
+                    System.err.println("Lỗi: gamesControllerInstance is null!");
+                }
+                this.gameMenuScene = new Scene(gameMenuRoot);
             }
+            // Không gọi resetOtherViews ở đây theo yêu cầu của bạn
+            primaryStage.setScene(this.gameMenuScene);
+            primaryStage.setTitle("🎮 Games Menu");
+            System.out.println("Đã chuyển sang Games Menu.");
 
-            if (welcomeControllerInstance != null) { welcomeControllerInstance.resetView(); } // Reset Welcome view
-            if (dictionaryControllerInstance != null) { dictionaryControllerInstance.resetScene(); } // Reset Dictionary view
+        } catch (IOException e) {
+            System.err.println("Lỗi khi load Games Menu: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
+    private void showSpecificGameMenu(String gameType) { // gameType ví dụ: "wordle"
+        if (!"wordle".equalsIgnoreCase(gameType)) {
+            System.err.println("Loại game menu không được hỗ trợ: " + gameType + ". Quay lại Game Menu.");
+            showGameMenu();
+            return;
+        }
+        try {
+            if (this.wordleMenuScene == null) {
+                URL menuFxmlUrl = getClass().getResource("/com/application/test/view/wordlemenu.fxml");
+                if (menuFxmlUrl == null) {
+                    System.err.println("Lỗi: Không tìm thấy file wordlemenu.fxml!");
+                    showGameMenu(); // Quay lại menu trước đó nếu lỗi
+                    return;
+                }
+                FXMLLoader menuLoader = new FXMLLoader(menuFxmlUrl);
+                Parent menuRoot = menuLoader.load();
+                this.wordleMenuControllerInstance = menuLoader.getController();
 
-            primaryStage.setScene(this.gameMenuScene); // Sử dụng gameMenuScene
-            primaryStage.setTitle("Games"); // Tiêu đề cho màn hình Game Menu
-            System.out.println("Đã chuyển sang màn hình game (Menu).");
+                if (this.wordleMenuControllerInstance != null) {
+                    wordleMenuControllerInstance.setOnGoBackToGames(this::showGameMenu); // Quay lại Games Menu
+                    wordleMenuControllerInstance.setOnLaunchWordle(() -> showSpecificGame("wordle"));       // Chơi Wordle Thường
+                    wordleMenuControllerInstance.setOnLaunchDailyWordle(() -> showSpecificGame("daily_wordle")); // Chơi Daily Wordle
+                } else {
+                    System.err.println("Lỗi: wordleMenuControllerInstance is null!");
+                }
+                this.wordleMenuScene = new Scene(menuRoot);
+            }
+            // Không gọi resetOtherViews
+            primaryStage.setScene(this.wordleMenuScene);
+            primaryStage.setTitle("Wordle Menu");
+            System.out.println("Đã chuyển sang Wordle Menu.");
 
-        } catch (IOException e) { System.err.println("Lỗi khi load màn hình game menu: " + e.getMessage()); e.printStackTrace(); /* ... */ }
+        } catch (IOException e) {
+            System.err.println("Lỗi khi load Wordle Menu: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void showSpecificGame(String gameId) {
         try {
-            URL specificGameFxmlUrl;
-            if ("wordle".equals(gameId)) {
-                specificGameFxmlUrl = getClass().getResource("/com/application/test/view/wordle_view.fxml");
-                if (specificGameFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file wordle_view.fxml!"); System.exit(1); }
+            String fxmlFile = null;
+            String title = "Game";
+            Scene targetScene = null;
+            Object controllerInstance = null; // Dùng Object để linh hoạt
+
+            if ("wordle".equalsIgnoreCase(gameId)) {
+                fxmlFile = "/com/application/test/view/wordle_view.fxml";
+                title = "Wordle Game";
+                if (this.wordleScene == null) {
+                    URL gameFxmlUrl = getClass().getResource(fxmlFile);
+                    if (gameFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy " + fxmlFile + "!"); return; }
+                    FXMLLoader loader = new FXMLLoader(gameFxmlUrl);
+                    Parent root = loader.load();
+                    this.wordleControllerInstance = loader.getController();
+                    this.wordleScene = new Scene(root);
+                }
+                targetScene = this.wordleScene;
+                controllerInstance = this.wordleControllerInstance;
+
+            } else if ("daily_wordle".equalsIgnoreCase(gameId)) {
+                fxmlFile = "/com/application/test/view/daily_wordle_view.fxml";
+                title = "Daily Wordle Game";
+                if (this.dailyWordleScene == null) {
+                    URL gameFxmlUrl = getClass().getResource(fxmlFile);
+                    if (gameFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy " + fxmlFile + "!"); return; }
+                    FXMLLoader loader = new FXMLLoader(gameFxmlUrl);
+                    Parent root = loader.load();
+                    this.dailyWordleControllerInstance = loader.getController();
+                    this.dailyWordleScene = new Scene(root);
+                }
+                targetScene = this.dailyWordleScene;
+                controllerInstance = this.dailyWordleControllerInstance;
+
             } else {
                 System.err.println("Game ID không hợp lệ: " + gameId);
+                showGameMenu(); // Quay lại menu game nếu ID không đúng
                 return;
             }
 
-
-            if (this.wordleScene == null) { // Chỉ load Wordle FXML lần đầu
-                FXMLLoader specificGameLoader = new FXMLLoader(specificGameFxmlUrl);
-                Parent specificGameRoot = specificGameLoader.load();
-                this.wordleControllerInstance = specificGameLoader.getController();
-
-                // *** Thiết lập callback quay lại Game Menu cho WordleController ***
-                wordleControllerInstance.setOnGoBackToGames(this::showGameMenu);
-                System.out.println("setOnGoBackToGames called on WordleController instance.");
-
-                this.wordleScene = new Scene(specificGameRoot); // Sử dụng wordleScene
+            // Thiết lập callback "Back" và reset game
+            if (controllerInstance instanceof WordleController) { // Áp dụng cho WordleController và DailyWordleController
+                WordleController wc = (WordleController) controllerInstance;
+                // Nút back trong game sẽ quay lại Wordle Menu
+                wc.setOnGoBackToMenu(() -> showSpecificGameMenu("wordle"));
+                wc.resetGame(); // Reset game mỗi khi vào màn hình
+                System.out.println("Đã reset và thiết lập callback back cho " + gameId);
             } else {
-                if (wordleControllerInstance != null) {
-                    wordleControllerInstance.resetGame();
-                }
+                System.err.println("Lỗi: Controller instance không phải là WordleController hoặc null cho gameId: " + gameId);
+                if (controllerInstance == null) System.err.println("Controller instance thực sự là NULL.");
+                else System.err.println("Actual controller type: " + controllerInstance.getClass().getName());
+                // Có thể quay lại menu trước nếu controller không đúng
+                // showSpecificGameMenu("wordle");
+                // return;
             }
 
-            // *** Reset trạng thái màn hình trước khi chuyển ***
-            if (welcomeControllerInstance != null) { welcomeControllerInstance.resetView(); }
-            if (dictionaryControllerInstance != null) { dictionaryControllerInstance.resetScene(); }
 
-            // Set the specific game Scene (Wordle) on the primary stage
-            primaryStage.setScene(this.wordleScene); // Sử dụng wordleScene
-            primaryStage.setTitle("Wordle Game"); // Tiêu đề cho màn hình Wordle
-            System.out.println("Đã chuyển sang màn hình game: " + gameId);
+            if (targetScene == null) {
+                System.err.println("Lỗi: targetScene là null, không thể chuyển màn hình cho " + gameId);
+                return;
+            }
+            // Không gọi resetOtherViews
+            primaryStage.setScene(targetScene);
+            primaryStage.setTitle(title);
+            System.out.println("Đã chuyển sang màn chơi " + title + ".");
 
-        } catch (IOException e) { System.err.println("Lỗi khi load màn hình game cụ thể: " + e.getMessage()); e.printStackTrace(); /* ... */ }
+        } catch (IOException e) {
+            System.err.println("IOException when loading Game (" + gameId + "): " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) { // Bắt cả các lỗi khác
+            System.err.println("Unexpected error when loading Game (" + gameId + "): " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void showThesaurusView() {

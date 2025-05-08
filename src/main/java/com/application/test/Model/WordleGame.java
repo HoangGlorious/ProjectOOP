@@ -10,37 +10,45 @@ import java.util.List;
 import java.util.Random;
 
 public class WordleGame implements Games {
-    private static final int WORD_LENGTH = 5;
-    private static final int MAX_ATTEMPTS = 6;
+    protected static final int WORD_LENGTH = 5;
+    protected static final int MAX_ATTEMPTS = 6;
 
-    private String targetWord;
-    private final List<String> validWords;
-    private int currentAttempt;
-    private final List<String> attempts;
-    private final List<List<LetterState>> attemptsStates;
+    protected String targetWord;
+    protected final List<String> validWords;
+    protected int currentAttempt;
+    protected final List<String> attempts;
+    protected final List<List<LetterState>> attemptsStates;
+
+    @Override
+    public void startGame() {
+        resetGame();
+        System.out.println("Wordle game has started!");
+    }
+
+    @Override
+    public void endGame() {
+        System.out.println("Wordle game has ended.");
+    }
 
     public enum LetterState {
         CORRECT, PRESENT, ABSENT
     }
 
-    /** Constructor không tham số, tự động load từ điển từ resources */
     public WordleGame() {
         this.validWords = loadDictionaryFromResource("/five_letter_words.txt");
+        if (validWords.isEmpty()) {
+            throw new IllegalStateException("Word dictionary is empty!");
+        }
         this.attempts = new ArrayList<>();
         this.attemptsStates = new ArrayList<>();
         resetGame();
-    }
-
-    /** (Nếu vẫn cần) Constructor có đường dẫn, sẽ chuyển về constructor không tham số */
-    public WordleGame(String unusedPath) {
-        this();
     }
 
     private List<String> loadDictionaryFromResource(String resourcePath) {
         List<String> words = new ArrayList<>();
         try (InputStream in = getClass().getResourceAsStream(resourcePath)) {
             if (in == null) {
-                throw new IOException("Không tìm thấy resource: " + resourcePath);
+                throw new IOException("Resource not found: " + resourcePath);
             }
             try (BufferedReader reader = new BufferedReader(
                     new InputStreamReader(in, StandardCharsets.UTF_8))) {
@@ -53,21 +61,21 @@ public class WordleGame implements Games {
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException("Lỗi khi load từ điển từ resource", e);
+            throw new RuntimeException("Error loading dictionary from resource: " + e.getMessage(), e);
         }
-        System.out.println("Đã tải " + words.size() + " từ từ điển.");
+        System.out.println("Loaded " + words.size() + " words from dictionary.");
+        if (words.isEmpty()) {
+            System.err.println("Warning: Dictionary is empty!");
+        }
         return words;
     }
 
     public void resetGame() {
-        if (!validWords.isEmpty()) {
-            targetWord = validWords.get(new Random().nextInt(validWords.size()));
-        } else {
-            targetWord = "apple";
-        }
+        targetWord = validWords.get(new Random().nextInt(validWords.size()));
         currentAttempt = 0;
         attempts.clear();
         attemptsStates.clear();
+        System.out.println("Game reset with target word: " + targetWord);
     }
 
     public boolean isValidGuess(String word) {
@@ -91,8 +99,8 @@ public class WordleGame implements Games {
     private List<LetterState> checkGuess(String guess) {
         List<LetterState> states = new ArrayList<>();
         char[] targetChars = targetWord.toCharArray();
-        char[] guessChars  = guess.toCharArray();
-        boolean[] marked   = new boolean[WORD_LENGTH];
+        char[] guessChars = guess.toCharArray();
+        boolean[] marked = new boolean[WORD_LENGTH];
 
         for (int i = 0; i < WORD_LENGTH; i++) {
             if (guessChars[i] == targetChars[i]) {
@@ -127,22 +135,23 @@ public class WordleGame implements Games {
         return isGameWon() || currentAttempt >= MAX_ATTEMPTS;
     }
 
-    public int getCurrentAttempt()    { return currentAttempt; }
-    public int getMaxAttempts()       { return MAX_ATTEMPTS; }
-    public String getTargetWord()     { return targetWord; }
-    public List<String> getAttempts() { return new ArrayList<>(attempts); }
+    public int getCurrentAttempt() {
+        return currentAttempt;
+    }
+
+    public int getMaxAttempts() {
+        return MAX_ATTEMPTS;
+    }
+
+    public String getTargetWord() {
+        return targetWord;
+    }
+
+    public List<String> getAttempts() {
+        return new ArrayList<>(attempts);
+    }
+
     public List<List<LetterState>> getAttemptsStates() {
         return new ArrayList<>(attemptsStates);
-    }
-
-    @Override
-    public void startGame() {
-        resetGame();
-        System.out.println("Wordle game has started!");
-    }
-
-    @Override
-    public void endGame() {
-        System.out.println("Wordle game has ended.");
     }
 }
