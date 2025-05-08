@@ -1,8 +1,6 @@
 package com.application.test.Controller;
 
-import com.application.test.Model.DictionaryEntry;
-import com.application.test.Model.GeneralManagement;
-import com.application.test.Model.DictionarySource;
+import com.application.test.Model.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -18,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
+import java.awt.geom.GeneralPath;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +50,11 @@ public class WelcomeController implements Initializable {
     @FXML private ImageView backgroundImageView;
     @FXML private ImageView icon1;
     @FXML private ComboBox<String> sourceComboBox;
+    @FXML private Hyperlink WordOfTheDay;
+
+    //Setup cho WordOfTheDay
+    private WordOfTheDay wotd= new WordOfTheDay();
+    private GeneralManagement wotdManagement;
 
     // Callbacks để báo hiệu cho DictionaryApplication
     private Consumer<String> onSearchInitiated; // Callback khi người dùng tìm kiếm từ tồn tại
@@ -58,6 +62,7 @@ public class WelcomeController implements Initializable {
     private GeneralManagement dictionaryManagement;
     private Runnable onGoToGame;
     private Runnable onGoToThesaurus;
+
 
     public void setOnGoToGame(Runnable onGoToGame) {
         this.onGoToGame = onGoToGame;
@@ -99,7 +104,7 @@ public class WelcomeController implements Initializable {
             }
         });
         suggestionListView.setFocusTraversable(false);
-
+        initializeWOTD();
     }
 
     private void initializeSourceComboBox() {
@@ -276,6 +281,20 @@ public class WelcomeController implements Initializable {
             // Người dùng chọn "Đóng" hoặc đóng alert, không làm gì thêm
             System.out.println("Người dùng không muốn thêm từ.");
         }
+    }
+
+    //Hàm khởi tạo WordOfTheDay
+    private void initializeWOTD() {
+        wotd.setWotdManagement(wotdManagement);
+        wotd.loadWords();
+        wotd.updateWOTD();
+        WordOfTheDay.setText(wotd.getTodayWord());
+        WordOfTheDay.setStyle("-fx-text-fill: #0066cc; -fx-underline: true; -fx-font-size: 16px;");
+        //Khi click vào WordOfTheDay sẽ dẫn đến Dictionary Entry của từ đó
+        WordOfTheDay.setOnAction(actionEvent -> {
+            welcomeSearchTextField.setText(WordOfTheDay.getText());
+            handleWelcomeSearchAction(actionEvent);
+        });
     }
 
 
