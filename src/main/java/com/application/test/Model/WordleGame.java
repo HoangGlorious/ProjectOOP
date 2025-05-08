@@ -154,4 +154,96 @@ public class WordleGame implements Games {
     public List<List<LetterState>> getAttemptsStates() {
         return new ArrayList<>(attemptsStates);
     }
+
+    /**
+     * Cố gắng lấy dạng cơ bản (lemma) của một từ.
+     * Lưu ý: Hàm này đơn giản hóa và không thể bao quát hết các trường hợp bất quy tắc
+     * hoặc phức tạp của tiếng Anh.
+     * @param word Từ cần lấy dạng cơ bản.
+     * @return Dạng cơ bản ước tính của từ.
+     */
+    public String getBaseForm(String word) {
+        if (word == null || word.length() < 2) {
+            return word;
+        }
+
+        String lowerWord = word.toLowerCase();
+
+        // Ưu tiên các hậu tố đặc biệt và dài hơn trước
+        if (lowerWord.length() == 5 && lowerWord.endsWith("ies")) {
+            char charBeforeIes = lowerWord.charAt(lowerWord.length() - 4);
+            if (!isVowel(charBeforeIes)) {
+                return lowerWord.substring(0, lowerWord.length() - 3) + "y";
+            }
+        }
+
+        if (lowerWord.length() == 5 && lowerWord.endsWith("ied")) {
+            char charBeforeIed = lowerWord.charAt(lowerWord.length() - 4);
+            if (!isVowel(charBeforeIed)) {
+                return lowerWord.substring(0, lowerWord.length() - 3) + "y";
+            }
+        }
+
+        if (lowerWord.endsWith("ed")) {
+            String stem = lowerWord.substring(0, lowerWord.length() - 2);
+            if (stem.length() == 0) return lowerWord;
+
+            if (stem.endsWith("e")) {
+                return stem;
+            }
+
+            if (stem.length() >= 2 && stem.charAt(stem.length() - 1) == stem.charAt(stem.length() - 2) &&
+                    !isVowel(stem.charAt(stem.length() - 1)) &&
+                    !(stem.endsWith("ll") || stem.endsWith("ss") || stem.endsWith("ff") || stem.endsWith("zz"))) {
+                return stem.substring(0, stem.length() - 1);
+            }
+
+            if (lowerWord.equals("need") || lowerWord.equals("feed") || lowerWord.equals("bed") ||
+                    lowerWord.equals("bleed") || lowerWord.equals("speed") || lowerWord.equals("breed")) {
+                return lowerWord;
+            }
+            return stem;
+        }
+
+        if (lowerWord.endsWith("es")) {
+            String stem = lowerWord.substring(0, lowerWord.length() - 2);
+            if (stem.length() == 0) return lowerWord;
+
+            if (stem.endsWith("s") || stem.endsWith("x") || stem.endsWith("z") ||
+                    (stem.length() >= 2 && (stem.substring(stem.length()-2).equals("ch") || stem.substring(stem.length()-2).equals("sh")))) {
+                return stem;
+            }
+
+            if (lowerWord.equals("goes")) return "go";
+            if (lowerWord.equals("does")) return "do";
+
+            if (stem.endsWith("e")) {
+                return stem;
+            }
+            return lowerWord;
+        }
+
+        if (lowerWord.endsWith("s")) {
+            if (lowerWord.endsWith("ss")) {
+                return lowerWord;
+            }
+            String stem = lowerWord.substring(0, lowerWord.length() - 1);
+            if (stem.length() == 0) return lowerWord;
+
+            if (lowerWord.equals("bus") || lowerWord.equals("lens") || lowerWord.equals("always") ||
+                    lowerWord.equals("is") || lowerWord.equals("as") || lowerWord.equals("this") ||
+                    lowerWord.equals("its") || lowerWord.equals("his") || lowerWord.equals("us") ||
+                    lowerWord.equals("plus")) {
+                return lowerWord;
+            }
+
+            return stem;
+        }
+
+        return lowerWord;
+    }
+
+    private boolean isVowel(char c) {
+        return "aeiou".indexOf(Character.toLowerCase(c)) != -1;
+    }
 }

@@ -36,10 +36,13 @@ public class DictionaryApplication extends Application {
     private WordleMenuController wordleMenuControllerInstance;
 
     private DailyWordleController dailyWordleControllerInstance;
-
+    public GeneralManagement getDictionaryManagement() {
+        return dictionaryManagement;
+    }
     @Override
     public void start(Stage stage) throws IOException {
         this.primaryStage = stage;
+        stage.setUserData(this);
         stage.setTitle("Ứng dụng Từ điển");
 
         // *** Khởi tạo DictionaryManager và nạp dữ liệu cho TẤT CẢ các nguồn ***
