@@ -454,9 +454,6 @@ public class DictionaryController implements Initializable {
 
     @FXML
     protected void handleAddButtonAction(ActionEvent event) {
-        // TODO: Mở dialog thêm từ, truyền dictionaryManager và active source info nếu cần
-        // initiateAddWordDialog("", (Stage)((Node)event.getSource()).getScene().getWindow()); // Cần sửa initiateAddWordDialog để nhận DictionaryManager
-        // Hoặc dialogController nhận DictionaryManager và tự lấy active source
         Stage ownerStage = (Stage)((Node)event.getSource()).getScene().getWindow();
         initiateAddWordDialog("", ownerStage); // Hàm này cần truyền dictionaryManager cho dialogController
     }
@@ -469,8 +466,6 @@ public class DictionaryController implements Initializable {
             DictionarySource activeSource = dictionaryManagement.getActiveSource();
             Optional<DictionaryEntry> entryToEdit = activeSource.lookupEntry(selectedHeadword); // Lookup trên nguồn active
             if (entryToEdit.isPresent()) {
-                // TODO: Mở dialog sửa từ, truyền dictionaryManager, entryToEdit, và active source info nếu cần
-                // initiateEditWordDialog(entryToEdit.get(), (Stage)((Node)event.getSource()).getScene().getWindow()); // Cần sửa initiateEditWordDialog
                 Stage ownerStage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 initiateEditWordDialog(entryToEdit.get(), ownerStage); // Hàm này cần truyền dictionaryManager cho dialogController
             } else { showAlert(Alert.AlertType.ERROR, "Lỗi", "Không tìm thấy thông tin chi tiết cho từ đã chọn trong nguồn đang hoạt động."); }
@@ -509,8 +504,7 @@ public class DictionaryController implements Initializable {
         String selectedHeadword = wordListView.getSelectionModel().getSelectedItem();
         if (selectedHeadword != null) {
             System.out.println("Speak button clicked for: " + selectedHeadword);
-
-            //Gọi hàm speak của TextToSpeech để phát âm từ.
+            // Gọi hàm speak của TextToSpeech để phát âm từ.
             try {
                 speak(selectedHeadword);
             } catch (Exception e){
