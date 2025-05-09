@@ -502,7 +502,7 @@ public class DictionaryApplication extends Application {
     private void showWelcomeView() {
         if (this.welcomeScene != null) {
             primaryStage.setScene(this.welcomeScene);
-            primaryStage.setTitle("Ứng dụng Từ điển");
+            primaryStage.setTitle("LingoTemple");
             if (welcomeControllerInstance != null) {
                 welcomeControllerInstance.resetView();
             } else {

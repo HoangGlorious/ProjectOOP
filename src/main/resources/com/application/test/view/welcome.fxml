@@ -25,7 +25,10 @@
                     <Insets bottom="15" left="15" right="15" top="15" />
                 </padding>
                 <ImageView fx:id="icon1" fitHeight="45.0" fitWidth="45.0" />
-                <Label styleClass="logo" text="UETèo Dictionary" />
+                <Label styleClass="logo" text="LingualTemple">
+               <font>
+                  <Font size="19.0" />
+               </font></Label>
 
                 <Region HBox.hgrow="ALWAYS" />
 
@@ -56,14 +59,14 @@
       <bottom>
          <AnchorPane prefHeight="90.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
             <children>
-               <Label fx:id="wotdLabel" alignment="CENTER" layoutX="513.0" layoutY="32.0" text="Today's word of the day:" textFill="#0066cc">
+               <Label fx:id="wotdLabel" alignment="CENTER" layoutX="482.0" layoutY="30.0" text="Today's word of the day:" textFill="#f5ad42">
                   <font>
-                     <Font name="Comic Sans MS Bold Italic" size="18.0" />
+                     <Font name="Comic Sans MS Bold Italic" size="24.0" />
                   </font>
                </Label>
-               <Hyperlink fx:id="WordOfTheDay" alignment="CENTER" layoutX="759.0" layoutY="28.0" textAlignment="CENTER" textFill="#0066cc">
+               <Hyperlink fx:id="WordOfTheDay" alignment="CENTER" layoutX="802.0" layoutY="23.0" textAlignment="CENTER" textFill="#f5ad42">
                   <font>
-                     <Font name="Comic Sans MS Bold" size="18.0" />
+                     <Font name="Comic Sans MS Bold" size="28.0" />
                   </font>
                </Hyperlink>
             </children>
