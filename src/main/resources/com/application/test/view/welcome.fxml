@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="mainPane" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.test.Controller.WelcomeController">
-    <ImageView fx:id="backgroundImageView" fitHeight="700.0" fitWidth="1400.0" />
+    <ImageView fx:id="backgroundImageView" fitHeight="700.0" fitWidth="1460.0" />
     <BorderPane>
         <top>
             <HBox alignment="CENTER_LEFT" spacing="15" styleClass="top-nav">

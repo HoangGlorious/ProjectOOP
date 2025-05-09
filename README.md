@@ -46,7 +46,7 @@ Câc chức năng chính của LingualTemple như sau:
 
 
  ## Demo
-- Vid hướng dẫn sử dụng ở 
+- Vid hướng dẫn sử dụng ở https://youtu.be/2fYFR6KXUco
 
  ## Phát triển trong tương lai
 
