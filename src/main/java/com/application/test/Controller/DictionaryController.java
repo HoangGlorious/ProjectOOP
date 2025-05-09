@@ -3,12 +3,11 @@ package com.application.test.Controller;
 import com.application.test.Model.DictionaryEntry;
 import com.application.test.Model.DictionarySource;
 import com.application.test.Model.GeneralManagement;
+import com.application.test.Model.FavoriteManagement;
 
 
 
-import com.application.test.Model.TextToSpeech;
 import javafx.application.Platform;
-
 import javafx.scene.control.ComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +20,7 @@ import javafx.scene.Parent; // Import Parent
 import javafx.scene.Scene; // Import Scene
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -74,13 +74,17 @@ public class DictionaryController implements Initializable {
     private ListView<String> suggestionListView;
     @FXML
     private ComboBox<String> sourceComboBox;
+    @FXML
+    private ToggleButton favoriteButton;
 
     private GeneralManagement dictionaryManagement;
+    private FavoriteManagement favoriteManagement;
     private ObservableList<String> wordListObservable;
     private Runnable onGoBackToWelcome;
     private Runnable onDictionaryDataChanged;
     private Consumer<String> onSearchInitiated;
     private Consumer<String> onAddWordInitiated;
+    private String currentDisplayedHeadword; // Lưu từ đang hiển thị để thao tác yêu thích
     private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
 
     public void setOnGoBackToWelcome(Runnable onGoBackToWelcome) {
@@ -91,6 +95,10 @@ public class DictionaryController implements Initializable {
         this.dictionaryManagement = dictionaryManagement;
         initializeSourceComboBox();
         System.out.println("DictionaryManagement set in DictionaryController.");
+    }
+
+    public void setFavoriteManagement(FavoriteManagement favoriteManagement) {
+        this.favoriteManagement = favoriteManagement;
     }
 
     public void performSearch(String searchTerm) {
@@ -186,6 +194,13 @@ public class DictionaryController implements Initializable {
                     updateButtonStates(newValue);
                 }
         );
+
+        // *** Xử lý sự kiện khi nhấn nút Yêu thích ***
+        if (favoriteButton != null) {
+            favoriteButton.setOnAction(event -> handleFavoriteToggle());
+        }
+        // Ban đầu vô hiệu hóa nút Yêu thích
+        if (favoriteButton != null) favoriteButton.setDisable(true);
 
         // Thiết lập callback khi dữ liệu từ điển thay đổi
         this.onDictionaryDataChanged = this::loadAndDisplayInitialData;
@@ -346,8 +361,33 @@ public class DictionaryController implements Initializable {
         Optional<DictionaryEntry> entry = activeSource.lookupEntry(headword);
         if (entry.isPresent()) {
             definitionTextArea.setText(entry.get().getFormattedExplanation());
+            this.currentDisplayedHeadword = headword; // Lưu lại từ đang hiển thị
+
+            // *** Cập nhật trạng thái nút Yêu thích ***
+            if (favoriteManagement != null && favoriteButton != null) {
+                favoriteButton.setSelected(favoriteManagement.isFavorite(headword));
+                favoriteButton.setDisable(false); // Enable nút khi có từ được hiển thị
+            }
+
         } else {
             definitionTextArea.setText("Không tìm thấy thông tin chi tiết cho '" + headword + "'.");
+            this.currentDisplayedHeadword = null;
+            if (favoriteButton != null) favoriteButton.setDisable(true); // Disable nếu không tìm thấy từ
+        }
+    }
+
+    private void handleFavoriteToggle() {
+        if (favoriteManagement == null || currentDisplayedHeadword == null || currentDisplayedHeadword.isEmpty()) {
+            return;
+        }
+        if (favoriteButton.isSelected()) {
+            // Người dùng muốn thêm vào yêu thích
+            favoriteManagement.addFavorite(currentDisplayedHeadword);
+            System.out.println("Đã đánh dấu yêu thích: " + currentDisplayedHeadword);
+        } else {
+            // Người dùng muốn bỏ yêu thích
+            favoriteManagement.removeFavorite(currentDisplayedHeadword);
+            System.out.println("Đã bỏ yêu thích: " + currentDisplayedHeadword);
         }
     }
 
@@ -548,7 +588,15 @@ public class DictionaryController implements Initializable {
         boolean isWordSelected = (selectedHeadword != null && !selectedHeadword.isEmpty());
         editButton.setDisable(!isWordSelected);
         deleteButton.setDisable(!isWordSelected);
-
+        if (favoriteButton != null) {
+            if (isWordSelected && favoriteManagement != null) {
+                favoriteButton.setSelected(favoriteManagement.isFavorite(selectedHeadword));
+                favoriteButton.setDisable(false);
+            } else {
+                favoriteButton.setSelected(false);
+                favoriteButton.setDisable(true);
+            }
+        }
     }
 
     /**
