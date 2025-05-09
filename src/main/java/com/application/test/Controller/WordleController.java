@@ -2,6 +2,9 @@ package com.application.test.Controller;
 
 import com.application.test.DictionaryApplication;
 import com.application.test.Model.WordleGame;
+import com.application.test.Model.GeneralManagement;
+import com.application.test.Model.DictionarySource;
+import com.application.test.Model.DictionaryEntry;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -30,6 +33,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 
 public class WordleController {
     protected static final int WORD_LENGTH = 5;
@@ -218,8 +222,13 @@ public class WordleController {
     protected void learnWord(ActionEvent event) {
         System.out.println("learnWord() called in WordleController");
         String targetWord = game.getTargetWord();
-        String baseWord = game.getBaseForm(targetWord);
-        System.out.println("Target word: " + targetWord + ", Base word: " + baseWord);
+
+        // Kiểm tra targetWord có null hoặc rỗng
+        if (targetWord == null || targetWord.isEmpty()) {
+            System.err.println("Target word is null or empty!");
+            showAlert("Lỗi", "Không thể học từ: Từ mục tiêu không hợp lệ!");
+            return;
+        }
 
         try {
             // Tải dictionary_view.fxml
@@ -245,8 +254,35 @@ public class WordleController {
             }
             System.out.println("DictionaryApplication found: " + app);
 
+            // Lấy GeneralManagement
+            GeneralManagement dictionaryManagement = app.getDictionaryManagement();
+            if (dictionaryManagement == null) {
+                System.err.println("DictionaryManagement is null!");
+                showAlert("Lỗi", "Không thể truy cập từ điển!");
+                return;
+            }
+
+            // Lấy nguồn từ điển đang hoạt động
+            DictionarySource activeSource = dictionaryManagement.getActiveSource();
+            if (activeSource == null) {
+                System.err.println("Active dictionary source is null!");
+                showAlert("Lỗi", "Không có nguồn từ điển nào đang hoạt động!");
+                return;
+            }
+
+            // Kiểm tra targetWord có trong từ điển hay không
+            String searchWord;
+            Optional<DictionaryEntry> foundEntry = activeSource.lookupEntry(targetWord);
+            if (foundEntry.isPresent()) {
+                searchWord = targetWord; // Sử dụng targetWord nếu có trong từ điển
+                System.out.println("Target word found in dictionary: " + targetWord);
+            } else {
+                searchWord = game.getBaseForm(targetWord); // Sử dụng base form nếu không có
+                System.out.println("Target word not found in dictionary, using base form: " + searchWord);
+            }
+
             // Thiết lập DictionaryManagement và callback
-            dictionaryController.setDictionaryManagement(app.getDictionaryManagement());
+            dictionaryController.setDictionaryManagement(dictionaryManagement);
             dictionaryController.setOnGoBackToWelcome(() -> {
                 try {
                     if (onGoBackToMenu != null) {
@@ -258,14 +294,14 @@ public class WordleController {
             });
 
             // Thiết lập từ cần tìm kiếm
-            dictionaryController.triggerInitialState(baseWord);
+            dictionaryController.triggerInitialState(searchWord);
 
             // Chuyển sang màn hình từ điển
             Scene dictionaryScene = new Scene(root, 1200, 640);
             dictionaryScene.getStylesheets().add(getClass().getResource("/com/application/test/CSS/style.css").toExternalForm());
             stage.setScene(dictionaryScene);
             stage.setTitle("📚 Dictionary Lookup");
-            System.out.println("Switched to dictionary view with search term: " + baseWord);
+            System.out.println("Switched to dictionary view with search term: " + searchWord);
         } catch (IOException e) {
             System.err.println("Error loading dictionary_view.fxml: " + e.getMessage());
             e.printStackTrace();
@@ -370,7 +406,6 @@ public class WordleController {
             showAlert("Thông báo", "Bạn đã hoàn thành wordle hôm nay rồi ");
         }
     }
-
 
     private void restoreGameScene(Stage stage, Scene originalScene) {
         if (stage == null || originalScene == null) {
