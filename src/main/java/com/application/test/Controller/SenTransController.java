@@ -22,14 +22,14 @@ public class SenTransController {
     public void setOnGoBackToWelcome(Runnable onGoBackToWelcome) {
         this.onGoBackToWelcome = onGoBackToWelcome;
     }
+
     @FXML
     private void initialize() {
         langSource.getItems().addAll("Eng-Vie", "Vie-Eng");
         langSource.setValue("Eng-Vie");
         sentenceInput.clear();
         translationArea.clear();
-
-        translateButton.setOnAction(event -> handleSenTranslation() );
+        translateButton.setOnAction(event -> handleSenTranslation());
     }
 
     @FXML
@@ -54,4 +54,31 @@ public class SenTransController {
             status.setText("Translation failed!");
         }
     }
+
+    public void resetScene() {
+        System.out.println("Resetting SenTran scene... ");
+        if (sentenceInput != null) {
+            sentenceInput.clear();
+        }
+        if (translationArea != null) {
+            translationArea.clear();
+        }
+    }
+
+    @FXML
+    protected void senBackToWelcome() {
+        System.out.println("Back to Welcome button clicked in SenTran." +
+                " Signaling DictionaryApplication.");
+        if (onGoBackToWelcome != null) {
+            try {
+                onGoBackToWelcome.run();
+            } catch (RuntimeException e) {
+                System.err.println("Error executing go back to Welcome callback: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Callback onGoBackToWelcome is not set in SenTran!");
+        }
+    }
 }
+
