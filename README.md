@@ -23,7 +23,6 @@ Dev team UETèo bao gồm:
 - Ứng dụng này được Develop bằng ngôn ngữ Java mà chúng ta rất thích (thử cãi trước mặt anh Tuyên xem), và 
 giao diện thì được xây bằng JavaFX.
 - Từ điển này còn có tích hợp game Wordle cho những bạn cảm thấy việc vừa học vừa chơi là phong cách của mình.
-
  ## Chức năng chính
 
 Câc chức năng chính của LingualTemple như sau:
@@ -38,7 +37,7 @@ Câc chức năng chính của LingualTemple như sau:
 - Grammar: Ứng dụng có các cấu trúc câu và các thì cơ bản với đầy đủ cách dùng, ví dụ,... để giúp các bạn làm chủ các khía cạnh cơ bản của tiếng Anh.
 - Game Wordle: Implementation của game Wordle nổi tiếng, giúp bạn thử thách vốn từ vựng của mình và có thể là tìm ra được những từ mới.
 - Word Of The Day: Mỗi ngày, màn hình chính sẽ chọn 1 từ ngẫu nhiên làm WOTD.
-
+  ![AppScreenshot2](src/main/resources/com/application/test/images/AppScreenshot2.png)
  ## Biểu đồ UML
 
 - Biểu đồ UML của app như sau:
