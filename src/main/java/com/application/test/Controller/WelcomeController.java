@@ -28,20 +28,6 @@ import java.util.function.Consumer;
 
 import com.application.test.Model.DictionaryEntry;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.event.ActionEvent;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import java.io.IOException;
-
-
 public class WelcomeController implements Initializable {
 
     @FXML
@@ -72,6 +58,7 @@ public class WelcomeController implements Initializable {
     private GeneralManagement dictionaryManagement;
     private Runnable onGoToGame;
     private Runnable onGoToThesaurus;
+    private Runnable onGoToSentenceTranslation;
 
 
     public void setOnGoToGame(Runnable onGoToGame) {
@@ -81,6 +68,8 @@ public class WelcomeController implements Initializable {
     public void setOnGoToThesaurus(Runnable onGoToThesaurus) {
         this.onGoToThesaurus = onGoToThesaurus;
     }
+
+    public void setOnGoToSentenceTranslation(Runnable onGoToSentenceTranslation) { this.onGoToSentenceTranslation = onGoToSentenceTranslation; }
 
     public void setOnSearchInitiated(Consumer<String> onSearchInitiated) {
         this.onSearchInitiated = onSearchInitiated;
@@ -339,7 +328,16 @@ public class WelcomeController implements Initializable {
     @FXML
     protected void handleSentenceTranslation(ActionEvent event) {
         System.out.println("Sentence Translation clicked.");
-        // TODO: Nếu có màn hình dịch câu riêng, gọi callback khác hoặc load Stage/Scene mới
+        if (onGoToSentenceTranslation != null) {
+            try {
+                onGoToSentenceTranslation.run();
+            } catch (RuntimeException e) {
+                System.err.println("Error executing go to SentenceTranslation callback: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Callback onGoToSentenceTranslation chưa được thiết lập!");
+        }
     }
 
     @FXML

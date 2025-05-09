@@ -10,37 +10,45 @@ import java.util.List;
 import java.util.Random;
 
 public class WordleGame implements Games {
-    private static final int WORD_LENGTH = 5;
-    private static final int MAX_ATTEMPTS = 6;
+    protected static final int WORD_LENGTH = 5;
+    protected static final int MAX_ATTEMPTS = 6;
 
-    private String targetWord;
-    private final List<String> validWords;
-    private int currentAttempt;
-    private final List<String> attempts;
-    private final List<List<LetterState>> attemptsStates;
+    protected String targetWord;
+    protected final List<String> validWords;
+    protected int currentAttempt;
+    protected final List<String> attempts;
+    protected final List<List<LetterState>> attemptsStates;
+
+    @Override
+    public void startGame() {
+        resetGame();
+        System.out.println("Wordle game has started!");
+    }
+
+    @Override
+    public void endGame() {
+        System.out.println("Wordle game has ended.");
+    }
 
     public enum LetterState {
         CORRECT, PRESENT, ABSENT
     }
 
-    /** Constructor không tham số, tự động load từ điển từ resources */
     public WordleGame() {
         this.validWords = loadDictionaryFromResource("/five_letter_words.txt");
+        if (validWords.isEmpty()) {
+            throw new IllegalStateException("Word dictionary is empty!");
+        }
         this.attempts = new ArrayList<>();
         this.attemptsStates = new ArrayList<>();
         resetGame();
-    }
-
-    /** (Nếu vẫn cần) Constructor có đường dẫn, sẽ chuyển về constructor không tham số */
-    public WordleGame(String unusedPath) {
-        this();
     }
 
     private List<String> loadDictionaryFromResource(String resourcePath) {
         List<String> words = new ArrayList<>();
         try (InputStream in = getClass().getResourceAsStream(resourcePath)) {
             if (in == null) {
-                throw new IOException("Không tìm thấy resource: " + resourcePath);
+                throw new IOException("Resource not found: " + resourcePath);
             }
             try (BufferedReader reader = new BufferedReader(
                     new InputStreamReader(in, StandardCharsets.UTF_8))) {
@@ -53,21 +61,21 @@ public class WordleGame implements Games {
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException("Lỗi khi load từ điển từ resource", e);
+            throw new RuntimeException("Error loading dictionary from resource: " + e.getMessage(), e);
         }
-        System.out.println("Đã tải " + words.size() + " từ từ điển.");
+        System.out.println("Loaded " + words.size() + " words from dictionary.");
+        if (words.isEmpty()) {
+            System.err.println("Warning: Dictionary is empty!");
+        }
         return words;
     }
 
     public void resetGame() {
-        if (!validWords.isEmpty()) {
-            targetWord = validWords.get(new Random().nextInt(validWords.size()));
-        } else {
-            targetWord = "apple";
-        }
+        targetWord = validWords.get(new Random().nextInt(validWords.size()));
         currentAttempt = 0;
         attempts.clear();
         attemptsStates.clear();
+        System.out.println("Game reset with target word: " + targetWord);
     }
 
     public boolean isValidGuess(String word) {
@@ -91,8 +99,8 @@ public class WordleGame implements Games {
     private List<LetterState> checkGuess(String guess) {
         List<LetterState> states = new ArrayList<>();
         char[] targetChars = targetWord.toCharArray();
-        char[] guessChars  = guess.toCharArray();
-        boolean[] marked   = new boolean[WORD_LENGTH];
+        char[] guessChars = guess.toCharArray();
+        boolean[] marked = new boolean[WORD_LENGTH];
 
         for (int i = 0; i < WORD_LENGTH; i++) {
             if (guessChars[i] == targetChars[i]) {
@@ -127,22 +135,115 @@ public class WordleGame implements Games {
         return isGameWon() || currentAttempt >= MAX_ATTEMPTS;
     }
 
-    public int getCurrentAttempt()    { return currentAttempt; }
-    public int getMaxAttempts()       { return MAX_ATTEMPTS; }
-    public String getTargetWord()     { return targetWord; }
-    public List<String> getAttempts() { return new ArrayList<>(attempts); }
+    public int getCurrentAttempt() {
+        return currentAttempt;
+    }
+
+    public int getMaxAttempts() {
+        return MAX_ATTEMPTS;
+    }
+
+    public String getTargetWord() {
+        return targetWord;
+    }
+
+    public List<String> getAttempts() {
+        return new ArrayList<>(attempts);
+    }
+
     public List<List<LetterState>> getAttemptsStates() {
         return new ArrayList<>(attemptsStates);
     }
 
-    @Override
-    public void startGame() {
-        resetGame();
-        System.out.println("Wordle game has started!");
+    /**
+     * Cố gắng lấy dạng cơ bản (lemma) của một từ.
+     * Lưu ý: Hàm này đơn giản hóa và không thể bao quát hết các trường hợp bất quy tắc
+     * hoặc phức tạp của tiếng Anh.
+     * @param word Từ cần lấy dạng cơ bản.
+     * @return Dạng cơ bản ước tính của từ.
+     */
+    public String getBaseForm(String word) {
+        if (word == null || word.length() < 2) {
+            return word;
+        }
+
+        String lowerWord = word.toLowerCase();
+
+        // Ưu tiên các hậu tố đặc biệt và dài hơn trước
+        if (lowerWord.length() == 5 && lowerWord.endsWith("ies")) {
+            char charBeforeIes = lowerWord.charAt(lowerWord.length() - 4);
+            if (!isVowel(charBeforeIes)) {
+                return lowerWord.substring(0, lowerWord.length() - 3) + "y";
+            }
+        }
+
+        if (lowerWord.length() == 5 && lowerWord.endsWith("ied")) {
+            char charBeforeIed = lowerWord.charAt(lowerWord.length() - 4);
+            if (!isVowel(charBeforeIed)) {
+                return lowerWord.substring(0, lowerWord.length() - 3) + "y";
+            }
+        }
+
+        if (lowerWord.endsWith("ed")) {
+            String stem = lowerWord.substring(0, lowerWord.length() - 2);
+            if (stem.length() == 0) return lowerWord;
+
+            if (stem.endsWith("e")) {
+                return stem;
+            }
+
+            if (stem.length() >= 2 && stem.charAt(stem.length() - 1) == stem.charAt(stem.length() - 2) &&
+                    !isVowel(stem.charAt(stem.length() - 1)) &&
+                    !(stem.endsWith("ll") || stem.endsWith("ss") || stem.endsWith("ff") || stem.endsWith("zz"))) {
+                return stem.substring(0, stem.length() - 1);
+            }
+
+            if (lowerWord.equals("need") || lowerWord.equals("feed") || lowerWord.equals("bed") ||
+                    lowerWord.equals("bleed") || lowerWord.equals("speed") || lowerWord.equals("breed")) {
+                return lowerWord;
+            }
+            return stem;
+        }
+
+        if (lowerWord.endsWith("es")) {
+            String stem = lowerWord.substring(0, lowerWord.length() - 2);
+            if (stem.length() == 0) return lowerWord;
+
+            if (stem.endsWith("s") || stem.endsWith("x") || stem.endsWith("z") ||
+                    (stem.length() >= 2 && (stem.substring(stem.length()-2).equals("ch") || stem.substring(stem.length()-2).equals("sh")))) {
+                return stem;
+            }
+
+            if (lowerWord.equals("goes")) return "go";
+            if (lowerWord.equals("does")) return "do";
+
+            if (stem.endsWith("e")) {
+                return stem;
+            }
+            return lowerWord;
+        }
+
+        if (lowerWord.endsWith("s")) {
+            if (lowerWord.endsWith("ss")) {
+                return lowerWord;
+            }
+            String stem = lowerWord.substring(0, lowerWord.length() - 1);
+            if (stem.length() == 0) return lowerWord;
+
+            if (lowerWord.equals("bus") || lowerWord.equals("lens") || lowerWord.equals("always") ||
+                    lowerWord.equals("is") || lowerWord.equals("as") || lowerWord.equals("this") ||
+                    lowerWord.equals("its") || lowerWord.equals("his") || lowerWord.equals("us") ||
+                    lowerWord.equals("plus")) {
+                return lowerWord;
+            }
+
+            return stem;
+        }
+
+        return lowerWord;
     }
 
-    @Override
-    public void endGame() {
-        System.out.println("Wordle game has ended.");
+    private boolean isVowel(char c) {
+        return "aeiou".indexOf(Character.toLowerCase(c)) != -1;
     }
 }
