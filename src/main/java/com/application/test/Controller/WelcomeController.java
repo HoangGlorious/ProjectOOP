@@ -59,6 +59,7 @@ public class WelcomeController implements Initializable {
     private Runnable onGoToThesaurus;
     private Runnable onGoToSentenceTranslation;
     private Runnable onGoToGrammar;
+    private Runnable onGoToFavorites;
 
 
     public void setOnGoToGame(Runnable onGoToGame) {
@@ -75,6 +76,10 @@ public class WelcomeController implements Initializable {
 
     public void setOnGoToGrammar(Runnable onGoToGrammar) {
         this.onGoToGrammar = onGoToGrammar;
+    }
+
+    public void setOnGoToFavorites(Runnable onGoToFavorites) {
+        this.onGoToFavorites = onGoToFavorites;
     }
 
     public void setOnSearchInitiated(Consumer<String> onSearchInitiated) {
@@ -390,6 +395,21 @@ public class WelcomeController implements Initializable {
             }
         } else {
             System.err.println("Callback onGoToGame chưa được thiết lập!");
+        }
+    }
+
+    @FXML
+    protected void handleFavorites(ActionEvent event) {
+        System.out.println("Favorites clicked. Signaling to go to Favorites screen.");
+        if (onGoToFavorites != null) {
+            try {
+                onGoToFavorites.run();
+            } catch (RuntimeException e) {
+                System.err.println("Error executing go to Favorites callback: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Callback onGoToFavorites chưa được thiết lập!");
         }
     }
 }
