@@ -4,14 +4,8 @@ package com.application.test.Model;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -19,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public class TextToSpeech {
+    // Hàm TextToSpeech sử dụng Google Translate API
     public static void speak(String text) throws Exception {
         try {
             //Encode từ thành URL để thuận tiện cho việc gọi api.

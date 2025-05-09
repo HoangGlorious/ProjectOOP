@@ -26,7 +26,8 @@ public class EditWordDialogController implements Initializable, SenseContainerCo
     private GeneralManagement dictionaryManagement;
     private Runnable onWordUpdated; // Callback khi sửa thành công
     private DictionaryEntry originalEntry; // Lưu trữ entry gốc đang được sửa
-    private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
+    private static final Pattern INVALID_CHARACTERS_PATTERN =
+            Pattern.compile("[^\\p{IsLatin}\\d\\s-]", Pattern.UNICODE_CHARACTER_CLASS);
 
 
     // List tạm để lưu trữ dữ liệu của các senses đang chỉnh sửa

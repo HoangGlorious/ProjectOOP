@@ -257,7 +257,7 @@ public class DailyWordleController extends WordleController implements Initializ
             });
 
             // Thiết lập từ cần tìm kiếm
-            dictionaryController.setInitialSearchTerm(baseWord);
+            dictionaryController.triggerInitialState(baseWord);
 
             // Chuyển sang màn hình từ điển
             Scene dictionaryScene = new Scene(root, 1200, 640);

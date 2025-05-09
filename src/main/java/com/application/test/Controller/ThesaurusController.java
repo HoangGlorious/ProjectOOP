@@ -36,12 +36,12 @@ public class ThesaurusController {
 
     @FXML
     private void initialize() {
+        // Hàm initialize sẽ xóa text trong phần kết quả của những lần tra trước
         thesaurusResultContainer.getChildren().clear();
     }
 
 
     private Runnable onGoBackToWelcome;
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
 
     public void setOnGoBackToWelcome(Runnable onGoBackToWelcome) {
@@ -49,19 +49,23 @@ public class ThesaurusController {
     }
 
     @FXML
-
+    // Hàm xử lý việc tìm thesaurus
     private void handleThesaurusSearch() {
+        // Lấy từ khóa từ phần thanh tìm kiếm và thông báo nếu thanh tìm kiếm trống
         String word = thesaurusSearchBar.getText().trim();
         if (word.isEmpty()) {
             showResultText("Please enter a word");
             return;
         }
 
-        showResultText("Searching for: " + word + "...");
+        // Cập nhật trạng thái đang tìm thesaurus cho từ
+        showResultText("Searching for thesaurus of word: " + word + "...");
 
+        // Tìm thesaurus trong nền bằng executor
         executor.execute(() -> {
             ThesaurusResult result = null;
             try {
+                // Gọi hàm lookup thesaurus của từ
                 result = Thesaurus.lookup(word);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -72,27 +76,34 @@ public class ThesaurusController {
                 });
             }
 
+            // Khai báo kết quả tìm thesaurus
             ThesaurusResult finalResult = result;
+
+            // Trả về lỗi nếu có hoặc trưng bày kết quả nếu không có lỗi
             javafx.application.Platform.runLater(() -> {
                 if (finalResult.hasError()) {
                     showResultText("Error: " + finalResult.getError());
                     return;
                 }
 
+                // Gọi hàm trưng bày kết quả
                 displayThesaurusResult(finalResult);
             });
         });
     }
 
+
+    // Hàm trưng bày kết quả
+    // Mỗi từ đông nghĩa và trái nghĩa đều là các hyperlink dẫn đến thesaurus của chúng
     private void displayThesaurusResult(ThesaurusResult result) {
         thesaurusResultContainer.getChildren().clear();
 
         // Thêm title
-        Text title = new Text("Results for: " + result.getWord() + "\n\n");
+        Text title = new Text("Thesaurus for: " + result.getWord() + "\n\n");
         title.setStyle("-fx-font-weight: bold; -fx-font-size: 14;");
         thesaurusResultContainer.getChildren().add(title);
 
-        // Thêm synonym
+        // Thêm synonym và trưng bày dưới dạng TextFlow
         if (!result.getSynonyms().isEmpty()) {
             Text synTitle = new Text("Synonyms:\n");
             synTitle.setStyle("-fx-font-weight: bold;");
@@ -113,7 +124,7 @@ public class ThesaurusController {
             thesaurusResultContainer.getChildren().add(synonymsFlow);
         }
 
-        // Thêm antonym
+        // Thêm antonym và trưng bày dưới dạng TextFlow
         if (!result.getAntonyms().isEmpty()) {
             Text antTitle = new Text("Antonyms:\n");
             antTitle.setStyle("-fx-font-weight: bold;");
@@ -133,11 +144,13 @@ public class ThesaurusController {
             thesaurusResultContainer.getChildren().add(antonymsFlow);
         }
 
+        // Xử lý trường hợp không có dữ liệu thesaurus
         if (result.getSynonyms().isEmpty() && result.getAntonyms().isEmpty()) {
             showResultText("No thesaurus data found");
         }
     }
 
+    // Hàm phụ để cập nhật vùng kết quả thesaurus
     private void showResultText(String message) {
         thesaurusResultContainer.getChildren().clear();
         thesaurusResultContainer.getChildren().add(new Text(message));

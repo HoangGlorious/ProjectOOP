@@ -1,12 +1,11 @@
 package com.application.test.Controller;
 
-import com.application.test.Model.DictionaryEntry;
-import com.application.test.Model.GeneralManagement;
-import com.application.test.Model.DictionarySource;
+import com.application.test.Model.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
+import java.awt.geom.GeneralPath;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -46,6 +46,10 @@ public class WelcomeController implements Initializable {
     private ImageView icon1;
     @FXML
     private ComboBox<String> sourceComboBox;
+    @FXML
+    private Hyperlink WordOfTheDay;
+
+    private WordOfTheDay wotd;
 
     // Callbacks để báo hiệu cho DictionaryApplication
     private Consumer<String> onSearchInitiated; // Callback khi người dùng tìm kiếm từ tồn tại
@@ -55,6 +59,7 @@ public class WelcomeController implements Initializable {
     private Runnable onGoToThesaurus;
     private Runnable onGoToSentenceTranslation;
     private Runnable onGoToGrammar;
+
 
     public void setOnGoToGame(Runnable onGoToGame) {
         this.onGoToGame = onGoToGame;
@@ -104,6 +109,7 @@ public class WelcomeController implements Initializable {
             }
         });
         suggestionListView.setFocusTraversable(false);
+
 
     }
 
@@ -287,6 +293,39 @@ public class WelcomeController implements Initializable {
             // Người dùng chọn "Đóng" hoặc đóng alert, không làm gì thêm
             System.out.println("Người dùng không muốn thêm từ.");
         }
+    }
+
+    // Hàm set WOTD
+    public void setWotd(WordOfTheDay wotd) {
+        this.wotd = wotd;
+        updateWOTDDisplay();
+    }
+
+
+    // Hàm cập nhật trưng bày WordOfTheDay
+    // WordOfTheDay được trưng bày dưới dạng hyperlink thực hiện hoạt động tra cứu từ điển khi nhấn vào WOTD
+    private void updateWOTDDisplay() {
+        Platform.runLater(() -> {
+            try {
+                // Cập nhật WordOfTheDay hyperlink
+                String todayWord = wotd.getTodayWord();
+                if (todayWord != null && !todayWord.isEmpty()) {
+                    WordOfTheDay.setText(todayWord);
+
+                    // Set hành động đưa đến entry từ điển khi click vào hyperlink
+                    WordOfTheDay.setOnAction(e -> {
+                        welcomeSearchTextField.setText(todayWord);
+                        handleWelcomeSearchAction(e);
+                    });
+                } else {
+                    // Nếu không có từ để hiển thị, ẩn hyperlink
+                    WordOfTheDay.setVisible(false);
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to update WOTD: " + e.getMessage());
+                WordOfTheDay.setVisible(false);
+            }
+        });
     }
 
 
