@@ -46,6 +46,7 @@ public class DictionaryApplication extends Application {
     private boolean pendingAddAction = false;
 
 
+
     public GeneralManagement getDictionaryManagement() {
         return dictionaryManagement;
     }
@@ -141,7 +142,8 @@ public class DictionaryApplication extends Application {
                     System.err.println("Lỗi: Không tìm thấy file dictionary_view.fxml trong classpath!");
                     System.exit(1);
                 }
-                FXMLLoader dictionaryLoader = new FXMLLoader(dictionaryFmlUrl);
+
+              FXMLLoader dictionaryLoader = new FXMLLoader(dictionaryFmlUrl);
 
                 // Load FXML first, THEN get the controller
                 Parent dictionaryRoot = dictionaryLoader.load(); // @FXML injection happens during load()
@@ -157,6 +159,9 @@ public class DictionaryApplication extends Application {
 
             this.pendingAddAction = false; // Reset pending add flag in Application
 
+            primaryStage.setScene(this.dictionaryScene); // Set the Dictionary scene
+            primaryStage.setTitle("📚 Dictionary Lookup");
+            System.out.println("Đã chuyển sang màn hình từ điển.");
 
             primaryStage.setScene(this.dictionaryScene); // Set the Dictionary scene
             primaryStage.setTitle("📚 Dictionary Lookup");
