@@ -49,7 +49,6 @@ public class WelcomeController implements Initializable {
     @FXML
     private Hyperlink WordOfTheDay;
 
-
     private WordOfTheDay wotd;
 
     // Callbacks để báo hiệu cho DictionaryApplication

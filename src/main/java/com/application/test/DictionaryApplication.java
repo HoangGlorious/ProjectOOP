@@ -38,6 +38,7 @@ public class DictionaryApplication extends Application {
     private DailyWordleController dailyWordleControllerInstance;
     private Scene grammarScene;
     private GrammarController grammarControllerInstance;
+
     public GeneralManagement getDictionaryManagement() {
         return dictionaryManagement;
     }
