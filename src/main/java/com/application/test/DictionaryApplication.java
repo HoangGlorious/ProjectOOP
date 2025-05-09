@@ -296,6 +296,7 @@ public class DictionaryApplication extends Application {
                     FXMLLoader loader = new FXMLLoader(gameFxmlUrl);
                     Parent root = loader.load();
                     this.dailyWordleControllerInstance = loader.getController();
+                    this.dailyWordleControllerInstance.setPrimaryStage(this.primaryStage); // ✅ THÊM DÒNG NÀY
                     this.dailyWordleScene = new Scene(root);
                 }
                 targetScene = this.dailyWordleScene;

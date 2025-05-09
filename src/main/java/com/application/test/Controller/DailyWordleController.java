@@ -45,6 +45,10 @@ public class DailyWordleController extends WordleController implements Initializ
 
     private Stage primaryStage;
 
+    public void setPrimaryStage(Stage stage) {
+        this.primaryStage = stage;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize();

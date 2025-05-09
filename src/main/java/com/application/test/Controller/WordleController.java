@@ -51,9 +51,11 @@ public class WordleController {
         game = new WordleGame();
         letterLabels = new Label[MAX_ATTEMPTS][WORD_LENGTH];
         setupWordleGrid();
+
         guessInput.setOnKeyPressed(this::handleKeyPress);
-        guessButton.setOnAction(event -> makeGuess());
-        newGameButton.setOnAction(event -> resetGame());
+        guessButton.setOnAction(e -> makeGuess());
+        newGameButton.setOnAction(e -> resetGame());
+
         messageLabel.setText("Hãy đoán từ có 5 chữ cái!");
 
         if (learnButton != null) {
@@ -149,7 +151,7 @@ public class WordleController {
                 learnButton.setVisible(true);
                 learnButton.setManaged(true);
             }
-            playCutscene(true); // Phát cutscene thắng
+//            playCutscene(true); // Phát cutscene thắng
         } else if (game.isGameOver()) {
             messageLabel.setText("Hết lượt! Từ cần đoán là: " + game.getTargetWord().toUpperCase());
             guessInput.setDisable(true);
@@ -158,7 +160,7 @@ public class WordleController {
                 learnButton.setVisible(true);
                 learnButton.setManaged(true);
             }
-            playCutscene(false); // Phát cutscene thua
+//            playCutscene(false); // Phát cutscene thua
         } else {
             messageLabel.setText("Lượt đoán " + (game.getCurrentAttempt()) + "/" + MAX_ATTEMPTS);
         }
@@ -302,10 +304,10 @@ public class WordleController {
                 showAlert("Lỗi", "Không thể truy cập cửa sổ chính!");
                 return;
             }
-            Scene originalScene = guessInput.getScene(); // Lưu scene gốc
+            Scene originalScene = guessInput != null ? guessInput.getScene() : null;
             if (originalScene == null) {
-                System.err.println("Original scene is null in playCutscene!");
-                showAlert("Lỗi", "Không thể lưu scene trò chơi!");
+                System.err.println("Original scene is null or guessInput is null in playCutscene!");
+                showAlert("Lỗi", "Không thể lưu lại giao diện trò chơi!");
                 return;
             }
 
