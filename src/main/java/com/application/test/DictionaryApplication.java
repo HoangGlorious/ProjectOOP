@@ -2,6 +2,7 @@ package com.application.test;
 
 import com.application.test.Controller.*;
 import com.application.test.Model.GeneralManagement;
+import com.application.test.Model.WordOfTheDay;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -39,6 +40,12 @@ public class DictionaryApplication extends Application {
         this.dictionaryManagement = new GeneralManagement();
         dictionaryManagement.loadAllSourcesData();
 
+        // Tạo WOTD
+        WordOfTheDay wotd = new WordOfTheDay(dictionaryManagement);
+        wotd.loadWords();
+        wotd.updateWOTD();
+
+
         // --- Load màn hình Welcome ---
         URL welcomeFxmlUrl = getClass().getResource("/com/application/test/view/welcome.fxml"); // Kiểm tra lại đường dẫn
         if (welcomeFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file welcome.fxml trong classpath!"); System.exit(1); }
@@ -48,6 +55,7 @@ public class DictionaryApplication extends Application {
         this.welcomeControllerInstance = welcomeLoader.getController();
 
         WelcomeController welcomeController = welcomeLoader.getController();
+        welcomeController.setWotd(wotd);
         welcomeController.setDictionaryManagement(this.dictionaryManagement);
         welcomeController.setOnSearchInitiated(this::handleSearchInitiated);
         welcomeController.setOnAddWordInitiated(this::handleAddWordInitiated);

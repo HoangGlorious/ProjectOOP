@@ -5,6 +5,7 @@ import com.application.test.Model.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,6 +25,7 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.function.Consumer;
+
 import com.application.test.Model.DictionaryEntry;
 
 import javafx.fxml.FXML;
@@ -42,19 +44,27 @@ import java.io.IOException;
 
 public class WelcomeController implements Initializable {
 
-    @FXML private StackPane mainPane;
-    @FXML private TextField welcomeSearchTextField;
-    @FXML private Button welcomeSearchButton;
-    @FXML private ListView<String> suggestionListView;
-    @FXML private Label welcomeLabel;
-    @FXML private ImageView backgroundImageView;
-    @FXML private ImageView icon1;
-    @FXML private ComboBox<String> sourceComboBox;
-    @FXML private Hyperlink WordOfTheDay;
+    @FXML
+    private StackPane mainPane;
+    @FXML
+    private TextField welcomeSearchTextField;
+    @FXML
+    private Button welcomeSearchButton;
+    @FXML
+    private ListView<String> suggestionListView;
+    @FXML
+    private Label welcomeLabel;
+    @FXML
+    private ImageView backgroundImageView;
+    @FXML
+    private ImageView icon1;
+    @FXML
+    private ComboBox<String> sourceComboBox;
+    @FXML
+    private Hyperlink WordOfTheDay;
 
-    //Setup cho WordOfTheDay
-    private WordOfTheDay wotd= new WordOfTheDay();
-    private GeneralManagement wotdManagement;
+
+    private WordOfTheDay wotd;
 
     // Callbacks để báo hiệu cho DictionaryApplication
     private Consumer<String> onSearchInitiated; // Callback khi người dùng tìm kiếm từ tồn tại
@@ -104,7 +114,8 @@ public class WelcomeController implements Initializable {
             }
         });
         suggestionListView.setFocusTraversable(false);
-        initializeWOTD();
+
+
     }
 
     private void initializeSourceComboBox() {
@@ -149,6 +160,7 @@ public class WelcomeController implements Initializable {
             {
                 getStyleClass().add("WcomboBoxCell");
             }
+
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -176,6 +188,7 @@ public class WelcomeController implements Initializable {
 
     /**
      * Hiển thị danh sách gợi ý dựa trên tiền tố trong search text field.
+     *
      * @param prefix Tiền tố để tìm gợi ý.
      */
     private void showSuggestions(String prefix) {
@@ -214,10 +227,12 @@ public class WelcomeController implements Initializable {
     @FXML
     protected void handleWelcomeSearchAction(ActionEvent event) {
         String searchTerm = welcomeSearchTextField.getText().trim();
-        if (dictionaryManagement == null) { return ; }
+        if (dictionaryManagement == null) {
+            return;
+        }
         if (searchTerm.isEmpty()) {
             showNotFoundAlert();
-            return ;
+            return;
         }
 
         // *** Lấy nguồn từ điển đang hoạt động và lookup trên nguồn đó ***
@@ -226,7 +241,9 @@ public class WelcomeController implements Initializable {
 
         if (foundEntry.isPresent()) {
             // Báo hiệu cho DictionaryApplication để chuyển sang màn hình từ điển và hiển thị từ này
-            if (onSearchInitiated != null) { onSearchInitiated.accept(searchTerm); }
+            if (onSearchInitiated != null) {
+                onSearchInitiated.accept(searchTerm);
+            }
         } else {
             // Hiển thị thông báo không tìm thấy và hỏi thêm từ
             showNotFoundAlertWithAddOption(searchTerm); // Hàm này gọi onAddWordInitiated
@@ -283,17 +300,34 @@ public class WelcomeController implements Initializable {
         }
     }
 
-    //Hàm khởi tạo WordOfTheDay
-    private void initializeWOTD() {
-        wotd.setWotdManagement(wotdManagement);
-        wotd.loadWords();
-        wotd.updateWOTD();
-        WordOfTheDay.setText(wotd.getTodayWord());
-        WordOfTheDay.setStyle("-fx-text-fill: #0066cc; -fx-underline: true; -fx-font-size: 16px;");
-        //Khi click vào WordOfTheDay sẽ dẫn đến Dictionary Entry của từ đó
-        WordOfTheDay.setOnAction(actionEvent -> {
-            welcomeSearchTextField.setText(WordOfTheDay.getText());
-            handleWelcomeSearchAction(actionEvent);
+    // Hàm set WOTD
+    public void setWotd(WordOfTheDay wotd) {
+        this.wotd = wotd;
+        updateWOTDDisplay();
+    }
+
+
+    //Hàm cập nhật trưng bày WordOfTheDay
+    private void updateWOTDDisplay() {
+        Platform.runLater(() -> {
+            try {
+                // Cập nhật WordOfTheDay hyperlink
+                String todayWord = wotd.getTodayWord();
+                if (todayWord != null && !todayWord.isEmpty()) {
+                    WordOfTheDay.setText(todayWord);
+
+                    // Set hành động đưa đến entry từ điển khi click vào hyperlink
+                    WordOfTheDay.setOnAction(e -> {
+                        welcomeSearchTextField.setText(todayWord);
+                        handleWelcomeSearchAction(e);
+                    });
+                } else {
+                    WordOfTheDay.setVisible(false);
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to update WOTD: " + e.getMessage());
+                WordOfTheDay.setVisible(false);
+            }
         });
     }
 

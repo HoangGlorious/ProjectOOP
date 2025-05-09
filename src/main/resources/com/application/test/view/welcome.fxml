@@ -8,11 +8,13 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="mainPane" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.test.Controller.WelcomeController">
     <ImageView fx:id="backgroundImageView" fitHeight="640.0" fitWidth="1200.0" />
@@ -51,7 +53,20 @@
             </VBox>
         </center>
       <bottom>
-         <Hyperlink fx:id="WordOfTheDay" BorderPane.alignment="CENTER" />
+         <AnchorPane prefHeight="90.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+            <children>
+               <Label fx:id="wotdLabel" layoutX="350.0" layoutY="33.0" text="Today's word of the day:" textFill="#0066cc">
+                  <font>
+                     <Font name="Comic Sans MS Bold Italic" size="18.0" />
+                  </font>
+               </Label>
+               <Hyperlink fx:id="WordOfTheDay" layoutX="588.0" layoutY="29.0" textAlignment="CENTER" textFill="#0066cc">
+                  <font>
+                     <Font name="Comic Sans MS Bold" size="18.0" />
+                  </font>
+               </Hyperlink>
+            </children>
+         </AnchorPane>
       </bottom>
     </BorderPane>
 </StackPane>
