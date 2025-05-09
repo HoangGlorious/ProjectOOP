@@ -3,6 +3,7 @@ package com.application.test;
 import com.application.test.Controller.*;
 import com.application.test.Model.GeneralManagement;
 import com.application.test.Model.WordOfTheDay;
+import com.application.test.Model.FavoriteManagement;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,26 +19,32 @@ public class DictionaryApplication extends Application {
 
     private Stage primaryStage;
     private GeneralManagement dictionaryManagement;
+    private FavoriteManagement favoriteManagement;
     private Scene welcomeScene;
     private Scene dictionaryScene;
     private Scene gameMenuScene;
     private Scene wordleScene;
     private Scene thesaurusScene;
     private Scene senTranScene;
+    private Scene favoritesScene;
+    private Scene wordleMenuScene;
+    private Scene dailyWordleScene;
+    private Scene grammarScene;
+
     private WelcomeController welcomeControllerInstance;
     private DictionaryController dictionaryControllerInstance;
     private ThesaurusController thesaurusControllerInstance;
     private SenTransController senTransControllerInstance;
     private GamesController gamesControllerInstance;
     private WordleController wordleControllerInstance;
-    private String pendingActionWord = null;
-    private boolean pendingAddAction = false;
-    private Scene wordleMenuScene;
-    private Scene dailyWordleScene;
+    private FavoritesController favoritesControllerInstance;
     private WordleMenuController wordleMenuControllerInstance;
     private DailyWordleController dailyWordleControllerInstance;
-    private Scene grammarScene;
     private GrammarController grammarControllerInstance;
+
+    private String pendingActionWord = null;
+    private boolean pendingAddAction = false;
+
 
     public GeneralManagement getDictionaryManagement() {
         return dictionaryManagement;
@@ -49,9 +56,10 @@ public class DictionaryApplication extends Application {
         stage.setUserData(this);
         stage.setTitle("Ứng dụng Từ điển");
 
-        // *** Khởi tạo DictionaryManager và nạp dữ liệu cho TẤT CẢ các nguồn ***
+        // *** Khởi tạo DictionaryManagement, FavManagement và nạp dữ liệu cho TẤT CẢ các nguồn ***
         this.dictionaryManagement = new GeneralManagement();
         dictionaryManagement.loadAllSourcesData();
+        this.favoriteManagement = new FavoriteManagement();
 
         // Tạo WOTD
         WordOfTheDay wotd = new WordOfTheDay(dictionaryManagement);
@@ -79,6 +87,7 @@ public class DictionaryApplication extends Application {
         welcomeController.setOnGoToThesaurus(this::showThesaurusView);
         welcomeController.setOnGoToSentenceTranslation(this::showSenTranView);
         welcomeController.setOnGoToGrammar(this::showGrammarView);
+        welcomeController.setOnGoToFavorites(this::showFavoritesView);
 
         this.welcomeScene = new Scene(welcomeRoot);
         stage.setScene(welcomeScene);
@@ -91,6 +100,9 @@ public class DictionaryApplication extends Application {
             System.out.println("Đang đóng ứng dụng...");
             if (dictionaryManagement != null) {
                 dictionaryManagement.saveAllSourcesData(); // Lưu dữ liệu cho TẤT CẢ các nguồn
+            }
+            if (favoriteManagement != null) {
+                favoriteManagement.saveFavorites(); // Lưu từ yêu thích
             }
             if (dictionaryControllerInstance != null) {
                 dictionaryControllerInstance.resetScene(); // Reset Dictionary view
@@ -125,7 +137,10 @@ public class DictionaryApplication extends Application {
         try {
             if (this.dictionaryScene == null) {
                 URL dictionaryFmlUrl = getClass().getResource("/com/application/test/view/dictionary_view.fxml");
-                if (dictionaryFmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file dictionary_view.fxml trong classpath!"); System.exit(1); }
+                if (dictionaryFmlUrl == null) {
+                    System.err.println("Lỗi: Không tìm thấy file dictionary_view.fxml trong classpath!");
+                    System.exit(1);
+                }
                 FXMLLoader dictionaryLoader = new FXMLLoader(dictionaryFmlUrl);
 
                 // Load FXML first, THEN get the controller
@@ -134,6 +149,8 @@ public class DictionaryApplication extends Application {
 
                 // Set properties on the controller instance
                 dictionaryControllerInstance.setDictionaryManagement(this.dictionaryManagement);
+                dictionaryControllerInstance.setFavoriteManagement(this.favoriteManagement);
+
                 dictionaryControllerInstance.setOnGoBackToWelcome(this::showWelcomeView);
                 this.dictionaryScene = new Scene(dictionaryRoot);
             }
@@ -360,6 +377,7 @@ public class DictionaryApplication extends Application {
             e.printStackTrace(); /* ... */
         }
     }
+
     private void showGrammarView() {
         try {
             if (this.grammarScene == null) {
@@ -395,6 +413,7 @@ public class DictionaryApplication extends Application {
             e.printStackTrace();
         }
     }
+
     private void showSenTranView() {
         try {
             if (this.senTranScene == null) {
@@ -431,6 +450,52 @@ public class DictionaryApplication extends Application {
         }
     }
 
+    public void showFavoritesView() {
+        try {
+            if (this.favoritesScene == null) {
+                URL favoritesFxmlUrl = getClass().getResource("/com/application/test/view/favorites.fxml");
+                if (favoritesFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file favorites.fxml trong classpath!"); System.exit(1); }
+                FXMLLoader favoritesLoader = new FXMLLoader(favoritesFxmlUrl);
+                Parent favoritesRoot = favoritesLoader.load();
+                this.favoritesControllerInstance = favoritesLoader.getController();
+
+                favoritesControllerInstance.setFavoriteManagement(this.favoriteManagement);
+                favoritesControllerInstance.setDictionaryManager(this.dictionaryManagement); // Nếu cần tra cứu nghĩa
+
+                // *** Thiết lập các callbacks cho FavoritesController ***
+                // Ví dụ: quay lại màn hình Welcome (hoặc màn hình trước đó)
+                favoritesControllerInstance.setOnGoBackToWelcome(this::showWelcomeView); // Hoặc showPreviousScreen() nếu có
+
+                // Callback khi muốn xem nghĩa của từ yêu thích (chuyển sang Dictionary view)
+                favoritesControllerInstance.setOnViewWordDefinition(searchTerm -> {
+                    // Khi click vào từ yêu thích, đặt searchTerm và chuyển sang Dictionary
+                    this.pendingActionWord = searchTerm;
+                    this.pendingAddAction = false;
+                    showDictionaryView(); // Chuyển sang Dictionary và tìm từ này
+                });
+
+
+                this.favoritesScene = new Scene(favoritesRoot);
+            } else {
+                // Nếu scene đã tồn tại, chỉ cần refresh danh sách
+                if (favoritesControllerInstance != null) {
+                    favoritesControllerInstance.refreshFavoritesList(); // Load lại danh sách
+                }
+            }
+
+            // Reset các scene khác nếu cần trước khi chuyển
+            if (welcomeControllerInstance != null) { welcomeControllerInstance.resetView(); }
+            if (dictionaryControllerInstance != null) { dictionaryControllerInstance.resetScene(); }
+
+
+            primaryStage.setScene(this.favoritesScene);
+            primaryStage.setTitle("❤️ Từ Yêu Thích");
+            System.out.println("Đã chuyển sang màn hình Từ Yêu Thích.");
+
+        } catch (IOException e) { System.err.println("Lỗi khi load màn hình Từ Yêu Thích: " + e.getMessage()); e.printStackTrace(); /* ... */ }
+    }
+
+
     /**
      * Chuyển về màn hình Welcome View.
      */
@@ -447,7 +512,6 @@ public class DictionaryApplication extends Application {
             System.err.println("Welcome scene chưa được tạo!");
         }
     }
-
 
     public static void main(String[] args) {
         launch();

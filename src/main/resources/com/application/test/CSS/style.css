@@ -12,7 +12,7 @@
 #welcomeLabel {
     -fx-font-size: 48px;
     -fx-font-weight: bold;
-    -fx-text-fill: linear-gradient(to right, #20b516, #d9c811);
+    -fx-text-fill: linear-gradient(to right, #D4C839, #D34A51);
     -fx-font-family: "Roboto", sans-serif;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 4, 0, 0, 2);
     -fx-background-color: transparent;
@@ -268,6 +268,45 @@
 
 .Gbutton:hover {
     -fx-background-color: #3367d6;
+}
+
+.toggle-button {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #333;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5;
+    -fx-padding: 5 10;
+    -fx-font-weight: bold;
+}
+
+.toggle-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #ff6b6b;
+    -fx-text-fill: white;
+    -fx-border-color: #ff6b6b;
+}
+
+.toggle-button:selected:hover {
+    -fx-background-color: #ff4757;
+}
+
+.remove-button {
+    -fx-background-color: #ff7eb3;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 3, 0, 0, 1);
+}
+
+.remove-button:hover {
+    -fx-background-color: #ff5e9c;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
 }
 
 
