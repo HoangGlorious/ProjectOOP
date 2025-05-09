@@ -7,24 +7,23 @@
  - [UML Diagram](#biểu-đồ-uml)
  - [How to use](#demo)
  - [Future Updates](#phát-triển-trong-tương-lai)
-
+ - [Installation](#cách-cài-đặt)
  ## Những người phát triển app:
 
 Dev team UETèo bao gồm:
-- Nguyễn Bảo Duy (aseancoin1967)            #24022312
-- Trịnh Tuấn Hải (TrinhTuanHai)    #24022318
-- Hoàng Huy Hoàng (HoangGlorious)  #24022336
+- Nguyễn Bảo Duy (aseancoin1967)    24022312
+- Trịnh Tuấn Hải (TrinhTuanHai)   24022318
+- Hoàng Huy Hoàng (HoangGlorious)   24022336
 
-## Giới thiệu chung
+ ## Giới thiệu chung
 
 - LingualTemple là ngôi đền để bạn trau dồi những kiến thức cơ bản về tiếng Anh.
 - Ở đây, bạn có thể tra cứu từ vựng, học ngữ pháp, thậm chí là trau dồi thêm nguồn từ đồng và trái nghĩa
-  để phục vụ cho việc học IELTS (hoặc TOEIC hay n thứ chứng chỉ ngoài kia) của bạn (hoặc bạn có thể tra Cambridge nếu muốn chắc chắn).
-- Ứng dụng này được Develop bằng ngôn ngữ Java mà chúng ta rất thích (thử cãi trước mặt anh Tuyên xem), và
-  giao diện thì được xây bằng JavaFX.
+để phục vụ cho việc học IELTS của bạn (hoặc bạn có thể tra Cambridge nếu muốn chắc chắn).
+- Ứng dụng này được Develop bằng ngôn ngữ Java mà chúng ta rất thích (thử cãi trước mặt anh Tuyên xem), và 
+giao diện thì được xây bằng JavaFX.
 - Từ điển này còn có tích hợp game Wordle cho những bạn cảm thấy việc vừa học vừa chơi là phong cách của mình.
-
-## Chức năng chính
+ ## Chức năng chính
 
 Câc chức năng chính của LingualTemple như sau:
 
@@ -38,14 +37,25 @@ Câc chức năng chính của LingualTemple như sau:
 - Grammar: Ứng dụng có các cấu trúc câu và các thì cơ bản với đầy đủ cách dùng, ví dụ,... để giúp các bạn làm chủ các khía cạnh cơ bản của tiếng Anh.
 - Game Wordle: Implementation của game Wordle nổi tiếng, giúp bạn thử thách vốn từ vựng của mình và có thể là tìm ra được những từ mới.
 - Word Of The Day: Mỗi ngày, màn hình chính sẽ chọn 1 từ ngẫu nhiên làm WOTD.
-
-
-## Biểu đồ UML
+  ![AppScreenshot2](src/main/resources/com/application/test/images/AppScreenshot2.png)
+ ## Biểu đồ UML
 
 - Biểu đồ UML của app như sau:
-  ![UML Diagram](src/main/resources/com/application/test/images/main.png)
+  ![UML Diagram](src/main/resources/com/application/test/images/UMLDiagram.png)
 
 
-## Demo Video
-- Video hướng dẫn sử dụng ở (updating, theo dõi kênh @ASEANcoin and his random videos trên YouTube để biết thêm chi tiết)
 
+ ## Demo
+- Vid hướng dẫn sử dụng ở 
+
+ ## Phát triển trong tương lai
+
+- Thêm nhiều từ và từ điển hơn.
+- Thêm game thứ 2.
+- Phát triển thêm các chức năng khác.
+
+ ## Cách cài đặt
+
+- Clone project từ repo về.u
+- Mở trong Intellij.
+- Tìm đến DictionaryApplication.java và run (hoặc tạo configuration).
