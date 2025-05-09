@@ -45,6 +45,7 @@ public class DictionaryApplication extends Application {
     private String pendingActionWord = null;
     private boolean pendingAddAction = false;
 
+
     public GeneralManagement getDictionaryManagement() {
         return dictionaryManagement;
     }
