@@ -1,0 +1,129 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 15px;
+    -fx-background-color: #f9f9f9;
+}
+
+.section-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.sub-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.top-bar {
+    -fx-background-color: linear-gradient(to right, #152b56, #750202);
+}
+
+.bottom-bar {
+    -fx-background-color: #e0e0e0;
+    -fx-padding: 10;
+}
+
+.logo {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.dnav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.dnav-button:hover {
+    -fx-underline: true;
+    -fx-text-fill: #ffc107;
+}
+
+.search-bar {
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a3cef1;
+    -fx-border-width: 2;
+    -fx-padding: 8 12;
+    -fx-font-size: 16px;
+    -fx-effect: dropshadow(gaussian, transparent, 0, 0.5, 0, 0);
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.search-bar:focused {
+    -fx-border-color: #61045f;
+    -fx-effect: dropshadow(gaussian, #7b2cbf, 20, 0.3, 0, 0);
+}
+
+.WsearchButton {
+    -fx-background-color: red;
+    -fx-padding: 10 12;
+}
+
+.WsearchButton:hover {
+    -fx-background-color: #fc0000;
+}
+
+.WcomboBox {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-background-color: linear-gradient(to right, #d3e0ea, #a3cef1);
+    -fx-border-color: #61045f;
+    -fx-border-width: 2;
+    -fx-padding: 4 8 4 8;
+    -fx-font-weight: bold;
+}
+
+.WcomboBox .list-cell {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-font-size: 14px;
+    -fx-padding: 6 12 6 12;
+    -fx-text-fill: #333333;
+}
+
+.WcomboBox .list-cell:hover {
+    -fx-background-color: linear-gradient(to right, #61045f, #7b2cbf);
+    -fx-text-fill: #ffffff;
+}
+
+.WcomboBox .list-cell:selected {
+    -fx-background-color: linear-gradient(to right, #ff4b5c, #ff6f91);
+    -fx-text-fill: #ffffff;
+}
+
+.text-area {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+}
+
+.list-view {
+    -fx-background-radius: 5;
+    -fx-border-color: #cccccc;
+}
+
+.suggestion-list {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.suggestion-list .list-cell {
+    -fx-padding: 5 10;
+}
+
+.suggestion-list .list-cell:selected {
+    -fx-background-color: #e0e0e0;
+}

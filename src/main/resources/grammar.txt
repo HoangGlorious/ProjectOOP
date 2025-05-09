@@ -1,0 +1,1082 @@
+@Tense Thì Hiện tại đơn.
+=Diễn tả một thói quen hoặc hành động lặp đi lặp lại trong hiện tại.
+=Diễn tả một chân lý, sự thật hiển nhiên.
+=Nói về một lịch trình có sẵn, chương trình, thời gian biểu cố định.
+=Sử dụng trong câu điều kiện loại I.
+>>S + am/ is/ are+ N/ Adj
+>>S + V(s/es)
+><S + am/are/is + not +N/ Adj (với to be)
+><S + do/ does + not + V(nguyên thể)
+>?Am/ Are/ Is (not) + S + N/Adj?
+>?Do/ Does (not) + S + V (nguyên thể)?
+?>We go shopping every weekend.(Nói về một lịch trình có sẵn, chương trình, thời gian biểu cố định.)
+?>It rains every afternoon in the hot season.(Diễn tả một chân lý, sự thật hiển nhiên.)
+@Tense Thì Hiện tại tiếp diễn.
+=Diễn tả hành động đang xảy ra ngay lúc nói.
+=Diễn tả hành động đang diễn ra xung quanh thời điểm nói (không nhất thiết đúng lúc nói).
+=Diễn tả hành động sắp xảy ra trong tương lai gần (thường với kế hoạch đã định trước).
+=Diễn tả sự thay đổi hoặc phát triển dần theo thời gian.
+>>S + am/ is/ are + V-ing
+><S + am/ is/ are + not + V-ing
+>?Am/ Is/ Are + S + V-ing?
+?>She is watching TV now. (Diễn tả hành động đang xảy ra ngay lúc nói.)
+?>They are moving to a new house next week. (Diễn tả hành động sắp xảy ra trong tương lai gần.)
+@Tense Thì Hiện tại hoàn thành.
+=Diễn tả hành động đã xảy ra trong quá khứ nhưng còn liên quan đến hiện tại.
+=Diễn tả hành động vừa mới xảy ra.
+=Diễn tả kinh nghiệm, trải nghiệm cho tới thời điểm hiện tại.
+=Diễn tả hành động đã xảy ra nhiều lần trong quá khứ.
+>>S + have/ has + V(p2)
+><S + have/ has + not + V(p2)
+>?Have/ Has + S + V(p2)?
+?>I have visited Da Nang three times. (Diễn tả kinh nghiệm, trải nghiệm.)
+?>She has just finished her homework. (Diễn tả hành động vừa mới xảy ra.)
+@Tense Thì Hiện tại hoàn thành tiếp diễn.
+=Diễn tả hành động bắt đầu trong quá khứ, vẫn đang tiếp diễn ở hiện tại và có tính liên tục.
+=Nhấn mạnh khoảng thời gian hành động đã diễn ra cho tới hiện tại.
+=Diễn tả hành động vừa kết thúc và để lại dấu hiệu rõ ràng ở hiện tại.
+>>S + have/ has + been + V-ing
+><S + have/ has + not + been + V-ing
+>?Have/ Has + S + been + V-ing?
+?>They have been working here for five years. (Nhấn mạnh thời gian làm việc đến hiện tại.)
+?>She has been crying. (Hành động vừa kết thúc và còn dấu hiệu như mắt đỏ.)
+@Tense Thì Quá khứ đơn.
+=Diễn tả hành động đã xảy ra và kết thúc trong quá khứ, có mốc thời gian xác định.
+=Diễn tả một loạt hành động xảy ra liên tiếp trong quá khứ.
+=Diễn tả thói quen trong quá khứ.
+>>S + V(p2)/ V-ed
+><S + did not + V(nguyên thể)
+>?Did + S + V(nguyên thể)?
+?>He visited his grandparents last weekend. (Hành động xảy ra và kết thúc trong quá khứ.)
+?>She didn’t go to school yesterday. (Phủ định trong quá khứ.)
+@Tense Thì Quá khứ tiếp diễn.
+=Diễn tả hành động đang xảy ra tại một thời điểm xác định trong quá khứ.
+=Diễn tả hành động đang xảy ra thì hành động khác xen vào.
+=Diễn tả hai hành động xảy ra song song trong quá khứ.
+>>S + was/ were + V-ing
+><S + was/ were + not + V-ing
+>?Was/ Were + S + V-ing?
+?>I was watching TV at 8 p.m. last night. (Hành động đang xảy ra tại thời điểm cụ thể trong quá khứ.)
+?>While she was studying, her brother came home. (Một hành động đang diễn ra thì hành động khác xen vào.)
+@Tense Thì Quá khứ hoàn thành.
+=Diễn tả một hành động đã hoàn thành trước một hành động hoặc thời điểm khác trong quá khứ.
+=Nhấn mạnh tính trước sau giữa hai hành động trong quá khứ.
+>>S + had + V(p2)
+><S + had not + V(p2)
+>?Had + S + V(p2)?
+?>She had left before I arrived. (Hành động rời đi xảy ra trước khi tôi đến.)
+?>They had finished the test by 10 a.m. (Nhấn mạnh thời điểm hoàn thành trong quá khứ.)
+@Tense Thì Quá khứ hoàn thành tiếp diễn.
+=Diễn tả một hành động bắt đầu trước một thời điểm hoặc hành động khác trong quá khứ và vẫn đang tiếp diễn cho tới thời điểm đó.
+=Nhấn mạnh tính liên tục hoặc kéo dài của hành động trong quá khứ.
+>>S + had + been + V-ing
+><S + had not + been + V-ing
+>?Had + S + been + V-ing?
+?>She had been waiting for two hours before the bus arrived. (Nhấn mạnh sự chờ đợi kéo dài.)
+?>They had been working all day when the manager checked in. (Hành động kéo dài trước một thời điểm khác.)
+@Tense Thì Tương lai đơn.
+=Diễn tả hành động sẽ xảy ra trong tương lai, không có kế hoạch trước.
+=Dự đoán, phỏng đoán một điều gì đó trong tương lai.
+=Đưa ra quyết định tại thời điểm nói.
+=Đưa ra lời hứa, đề nghị, lời cảnh báo.
+>>S + will + V(nguyên thể)
+><S + will not (won’t) + V(nguyên thể)
+>?Will + S + V(nguyên thể)?
+?>I will call you later. (Quyết định tại thời điểm nói.)
+?>It will rain tomorrow. (Dự đoán tương lai.)
+@Tense Thì Tương lai gần (be going to).
+=Diễn tả hành động sẽ xảy ra trong tương lai gần, đã có kế hoạch hoặc dự định trước.
+=Diễn tả dự đoán có cơ sở rõ ràng ở hiện tại.
+>>S + am/ is/ are + going to + V(nguyên thể)
+><S + am/ is/ are + not + going to + V(nguyên thể)
+>?Am/ Is/ Are + S + going to + V(nguyên thể)?
+?>We are going to visit our grandparents this weekend. (Kế hoạch đã định trước.)
+?>Look at those dark clouds! It’s going to rain. (Dự đoán có cơ sở.)
+@Tense Thì Tương lai tiếp diễn.
+=Diễn tả hành động sẽ đang diễn ra tại một thời điểm xác định trong tương lai.
+=Diễn tả hành động xảy ra trong tương lai và kéo dài liên tục trong một khoảng thời gian.
+=Hỏi lịch trình hoặc kế hoạch đã được xác định trong tương lai.
+>>S + will be + V-ing
+><S + will not (won’t) be + V-ing
+>?Will + S + be + V-ing?
+?>At 9 a.m. tomorrow, I will be meeting with the team. (Hành động đang diễn ra tại thời điểm tương lai.)
+?>They won’t be staying here for long. (Phủ định hành động kéo dài trong tương lai.)
+@Tense Thì Tương lai hoàn thành.
+=Diễn tả một hành động sẽ hoàn thành trước một thời điểm hoặc hành động khác trong tương lai.
+=Nhấn mạnh tính hoàn tất của hành động trong tương lai.
+>>S + will have + V(p2)
+><S + will not (won’t) have + V(p2)
+>?Will + S + have + V(p2)?
+?>By this time next year, she will have graduated. (Hành động hoàn tất trước thời điểm tương lai.)
+?>They won’t have finished the project by Friday. (Phủ định hành động hoàn tất trong tương lai.)
+@Tense Thì Tương lai hoàn thành tiếp diễn.
+=Diễn tả hành động sẽ đang diễn ra và tiếp tục cho đến một thời điểm trong tương lai.
+=Nhấn mạnh tính liên tục của hành động trong tương lai cho đến thời điểm xác định.
+>>S + will have been + V-ing
+><S + will not (won’t) have been + V-ing
+>?Will + S + have been + V-ing?
+?>By next year, they will have been working here for 10 years. (Hành động tiếp tục kéo dài cho đến một thời điểm trong tương lai.)
+?>I won’t have been studying for long by 9 p.m. (Phủ định hành động liên tục trong tương lai.)
+@PartOfSpeech Danh từ (Noun)
+=Danh từ (Noun) là từ hoặc cụm từ dùng để định danh một người, địa điểm, sự vật, hoặc ý tưởng.
+=Trong câu, danh từ có thể đóng nhiều vai trò ngữ pháp khác nhau.
+=
+=Các loại danh từ phổ biến:
+=1. Danh từ chung (Common Nouns): Gọi tên chung cho một loại.
+=2. Danh từ riêng (Proper Nouns): Gọi tên riêng, cụ thể, luôn viết hoa.
+=3. Danh từ đếm được (Countable Nouns): Có thể đếm được, có dạng số ít/nhiều.
+=4. Danh từ không đếm được (Uncountable Nouns): Không đếm trực tiếp, không có dạng số nhiều.
+=5. Danh từ trừu tượng (Abstract Nouns): Chỉ ý tưởng, phẩm chất không chạm vào được.
+=6. Danh từ cụ thể (Concrete Nouns): Chỉ những gì cảm nhận bằng giác quan.
+=
+=Quy tắc tạo danh từ số nhiều (Plural Nouns):
+= (Áp dụng cho danh từ đếm được)
+=1. Thông thường: Thêm -s.
+=2. Kết thúc bằng -s, -x, -z, -ch, -sh: Thêm -es.
+=3. Kết thúc bằng Phụ âm + y: Đổi y thành i, rồi thêm -es.
+=4. Kết thúc bằng Phụ âm + o: Thường thêm -es.
+=5. Kết thúc bằng -f hoặc -fe: Đổi -f/-fe thành -v, rồi thêm -es.
+=6. Bất quy tắc (Irregular plurals): Có dạng đặc biệt.
+=7. Giữ nguyên dạng: Một số danh từ có dạng số ít và số nhiều giống nhau.
+
+>>Vị trí và Chức năng chính của Danh từ (Noun) trong câu:
+>>1. Làm Chủ ngữ (Subject): Đứng đầu câu, thực hiện hành động.
+>>   Noun + Verb ...
+>>2. Làm Tân ngữ trực tiếp (Direct Object): Đứng sau động từ hành động, nhận tác động.
+>>   Subject + Verb + Noun
+>>3. Làm Tân ngữ gián tiếp (Indirect Object): Đứng sau động từ, chỉ người/vật nhận lợi ích.
+>>   Subject + Verb + Noun (indirect) + Noun (direct)
+>>4. Làm Bổ ngữ Chủ ngữ (Subject Complement): Đứng sau động từ nối, mô tả chủ ngữ.
+>>   Subject + Linking Verb + Noun
+>>5. Làm Bổ ngữ Tân ngữ (Object Complement): Đứng sau tân ngữ trực tiếp, mô tả tân ngữ đó.
+>>   Subject + Verb + Noun (direct) + Noun (object complement)
+>>6. Làm Tân ngữ của Giới từ (Object of a Preposition): Đứng sau một giới từ.
+>>   ... Preposition + Noun
+?>- Danh từ làm chủ ngữ: **Dogs** are loyal animals.
+?>- Danh từ làm tân ngữ: I bought **some apples**.
+?>- Danh từ làm bổ ngữ: My father is **an engineer**.
+?>- Danh từ sau giới từ: She put the keys in **her bag**.
+?>- Loại danh từ: She showed great **bravery** (abstract noun). We need **water** (uncountable noun).
+?>- Số nhiều: There are three **buses**. **book** → **books**; **man** → **men**.
+
+@PartOfSpeech Đại từ (Pronoun)
+=Đại từ (Pronoun) là từ dùng để thay thế cho một danh từ hoặc cụm danh từ đã được đề cập trước đó để tránh lặp từ.
+=Các loại đại từ chính:
+=1. Đại từ nhân xưng (Personal Pronouns): Thay thế người/vật (I, you, he, she, it, we, they; me, you, him, her, it, us, them).
+=2. Tính từ sở hữu (Possessive Adjectives): Chỉ sự sở hữu, đứng trước danh từ (my, your, his, her, its, our, their).
+=3. Đại từ sở hữu (Possessive Pronouns): Chỉ sự sở hữu, thay thế "tính từ sở hữu + danh từ" (mine, yours, his, hers, its, ours, theirs).
+=4. Đại từ phản thân (Reflexive Pronouns): Chủ ngữ tự tác động lên mình hoặc nhấn mạnh (myself, yourself, himself...).
+=(Còn có: đại từ chỉ định (demonstrative), bất định (indefinite), nghi vấn (interrogative), quan hệ (relative)).
+>>Các dạng đại từ phổ biến và cách dùng:
+>>- Đại từ nhân xưng (chủ ngữ): Pronoun (subject) + Verb ...
+>>- Đại từ nhân xưng (tân ngữ): Subject + Verb + Pronoun (object)
+>>- Tính từ sở hữu: Possessive Adjective + Noun
+>>- Đại từ sở hữu: ... (is/are) Possessive Pronoun
+>>- Đại từ phản thân (tân ngữ): Subject + Verb + Reflexive Pronoun
+>>- Đại từ phản thân (nhấn mạnh): Subject + Reflexive Pronoun + Verb ... / Subject + Verb ... + Reflexive Pronoun
+?>John is tall, and **he** plays basketball.
+?>I saw **her** yesterday. Please give **it** to **us**.
+?>This is **my** car. **Their** house is new.
+?>The red car is **mine**. This book is **yours**, not **his**.
+?>She hurt **herself**. We enjoyed **ourselves** at the party.
+?>I built this **myself**. The queen **herself** attended the event.
+
+@PartOfSpeech Mạo từ (Article)
+=Mạo từ (Articles) là từ đứng trước danh từ để chỉ danh từ đó xác định hay không xác định, chung chung hay cụ thể.
+=Gồm: a, an, the, và trường hợp không dùng mạo từ (zero article).
+=
+=1. Mạo từ bất định (Indefinite Articles): A / AN
+=   - Dùng trước danh từ đếm được số ít.
+=   - "A" + phụ âm; "AN" + nguyên âm (u,e,o,a,i) hoặc âm 'h' câm.
+=   - Khi đối tượng chung chung, chưa xác định, hoặc nhắc đến lần đầu.
+=
+=2. Mạo từ xác định (Definite Article): THE
+=   - Dùng khi đối tượng đã xác định rõ.
+=   - Trước tên sông, biển, đại dương, dãy núi, một số quốc gia.
+=   - Trước nhạc cụ, so sánh nhất.
+=
+=3. Không dùng mạo từ (Zero Article)
+=   - Trước danh từ không đếm được/số nhiều nói chung.
+=   - Trước tên riêng người, hầu hết quốc gia, thành phố, bữa ăn, môn thể thao.
+=   - Trong một số cụm từ cố định.
+
+>>Cấu trúc cơ bản:
+>>- A/AN + Noun (đếm được, số ít, không xác định)
+>>- THE + Noun (xác định, hoặc trường hợp đặc biệt)
+>>- (Không mạo từ) + Noun (không đếm được/số nhiều nói chung, hoặc trường hợp đặc biệt)
+?>I saw **a** bird in the garden. **The** bird was singing beautifully.
+?>She wants to be **an** astronaut.
+?>**The** Pacific Ocean is the largest ocean.
+?>We usually have **breakfast** at 7 AM.
+?>He plays **the guitar** very well, but he doesn't like **football**.
+
+@PartOfSpeech Động từ (Verb)
+=Động từ (Verb) là từ hoặc cụm từ diễn tả hành động, trạng thái, hoặc quá trình của chủ ngữ.
+=Là thành phần cốt lõi của câu.
+=
+=Các loại động từ chính (ngoài các thì):
+=1. Động từ hành động (Action Verbs): Diễn tả hành động thể chất hoặc tinh thần.
+=2. Động từ trạng thái (Stative Verbs / Linking Verbs): Diễn tả trạng thái, cảm xúc, giác quan, sự tồn tại, nối chủ ngữ với bổ ngữ. (Thường không dùng ở thì tiếp diễn).
+=3. Động từ nội động (Intransitive Verbs): Không cần tân ngữ trực tiếp.
+=4. Động từ ngoại động (Transitive Verbs): Cần tân ngữ trực tiếp.
+=5. Động từ khuyết thiếu (Modal Verbs): Bổ nghĩa cho động từ chính (can, could, may, might, must...).
+
+>>Cấu trúc cơ bản với động từ:
+>>- Subject + Verb (Intransitive)
+>>- Subject + Verb (Transitive) + Object
+>>- Subject + Linking Verb + Subject Complement (Noun/Adjective)
+?>The children **play** in the yard.
+?>My mother **is cooking** dinner.
+?>This food **tastes** delicious.
+?>He **can swim** very well.
+?>**Birds fly**.
+?>The dog **chased** the cat.
+?>She **is** a teacher. He **seems** tired.
+
+@PartOfSpeech Tính từ (Adjective)
+=Tính từ (Adjective) là từ dùng để mô tả hoặc bổ nghĩa cho danh từ hoặc đại từ, cung cấp thêm thông tin về đặc điểm, tính chất, trạng thái của chúng.
+=Tính từ giúp làm cho câu văn trở nên cụ thể và sinh động hơn.
+=
+=Các loại tính từ phổ biến:
+=1. Tính từ mô tả (Descriptive Adjectives): Chỉ màu sắc, kích thước, chất lượng (ví dụ: red, big, beautiful).
+=2. Tính từ chỉ số lượng (Quantitative Adjectives): Chỉ số lượng không xác định (ví dụ: some, many, few, little).
+=3. Tính từ chỉ định (Demonstrative Adjectives): Chỉ rõ danh từ nào đang được nói đến (this, that, these, those).
+=4. Tính từ sở hữu (Possessive Adjectives): Chỉ sự sở hữu (my, your, his, her, its, our, their).
+=5. Tính từ nghi vấn (Interrogative Adjectives): Dùng để hỏi (which, what, whose).
+=
+=Vị trí của tính từ:
+=1. Đứng trước danh từ mà nó bổ nghĩa.
+=2. Đứng sau động từ nối (linking verbs) như to be, seem, look, feel, become...
+=
+=Trật tự của nhiều tính từ trước một danh từ (OSASCOMP):
+=Opinion (ý kiến) → Size (kích cỡ) → Age (tuổi) → Shape (hình dáng) → Color (màu sắc) → Origin (xuất xứ) → Material (chất liệu) → Purpose (mục đích).
+
+>>Cấu trúc cơ bản với tính từ:
+>>- Adjective + Noun
+>>- Subject + Linking Verb + Adjective
+?>- Tính từ đứng trước danh từ: She has a **beautiful** dress. He is a **tall** boy.
+?>- Tính từ đứng sau động từ nối: The weather **is nice** today. She **looks tired**.
+?>- Nhiều tính từ: a **small round wooden** table.
+?>- Ví dụ về loại: I have **some** books. **Which** color do you prefer?
+
+@PartOfSpeech Trạng từ (Adverb)
+=Trạng từ (Adverb) là từ dùng để bổ nghĩa cho động từ, tính từ, một trạng từ khác, hoặc cả một câu.
+=Trạng từ cung cấp thêm thông tin về cách thức, địa điểm, thời gian, tần suất, hoặc mức độ.
+=Nhiều trạng từ được hình thành bằng cách thêm đuôi "-ly" vào tính từ.
+=
+=Các loại trạng từ phổ biến:
+=1. Trạng từ chỉ cách thức (Adverbs of Manner): Trả lời "How?". (ví dụ: slowly, carefully, well).
+=2. Trạng từ chỉ địa điểm (Adverbs of Place): Trả lời "Where?". (ví dụ: here, there, everywhere).
+=3. Trạng từ chỉ thời gian (Adverbs of Time): Trả lời "When?". (ví dụ: now, yesterday, soon).
+=4. Trạng từ chỉ tần suất (Adverbs of Frequency): Trả lời "How often?". (ví dụ: always, often, sometimes).
+=5. Trạng từ chỉ mức độ (Adverbs of Degree): Bổ nghĩa cho tính từ/trạng từ khác. (ví dụ: very, too, extremely).
+=6. Trạng từ nghi vấn (Interrogative Adverbs): Dùng để hỏi (where, when, why, how).
+=
+=Vị trí của trạng từ: Linh hoạt, tùy loại trạng từ và điều muốn nhấn mạnh.
+=- Trạng từ chỉ cách thức: Thường sau động từ hoặc tân ngữ.
+=- Trạng từ chỉ địa điểm/thời gian: Đầu, giữa, hoặc cuối câu.
+=- Trạng từ chỉ tần suất: Thường trước động từ thường, sau "to be", giữa trợ động từ và động từ chính.
+=- Trạng từ chỉ mức độ: Thường trước tính từ/trạng từ mà nó bổ nghĩa.
+
+>>Cách hình thành trạng từ từ tính từ (phổ biến):
+>>- Adjective + ly → Adverb
+>>Một số trạng từ bất quy tắc:
+>>- Good (adj) → Well (adv)
+>>- Fast (adj) → Fast (adv)
+>>- Hard (adj) → Hard (adv) / Hardly (adv - hiếm khi)
+>>- Late (adj) → Late (adv) / Lately (adv - gần đây)
+
+>>Vị trí phổ biến của trạng từ:
+>>- Subject + Verb + Adverb (manner)
+>>- Subject + Adverb (frequency) + Verb (thường)
+>>- Subject + Verb (to be) + Adverb (frequency)
+>>- Adverb (degree) + Adjective / Adverb
+?>- Trạng từ chỉ cách thức: He drives **carefully**. She sings **beautifully**.
+?>- Trạng từ chỉ thời gian: I will see you **tomorrow**. **Now** is the time to act.
+?>- Trạng từ chỉ địa điểm: Please come **here**. The keys are **everywhere**.
+?>- Trạng từ chỉ tần suất: She **always** arrives on time. We **often** go to the cinema.
+?>- Trạng từ chỉ mức độ: It is **very** hot today. He speaks English **extremely** fluently.
+?>- Tính từ "quick", trạng từ "quickly": He is a **quick** learner. He learns **quickly**.
+
+@PartOfSpeech Giới từ (Preposition)
+=Giới từ (Preposition) là từ hoặc nhóm từ thường được dùng trước danh từ, đại từ, hoặc cụm danh từ để chỉ mối quan hệ về địa điểm, thời gian, phương hướng, nguyên nhân, mục đích, v.v.
+=Giới từ tạo thành cụm giới từ (prepositional phrase).
+=
+=Các loại giới từ phổ biến:
+=1. Giới từ chỉ địa điểm (Prepositions of Place): IN, ON, AT, UNDER, ABOVE, NEAR, BETWEEN, AMONG, BEHIND, IN FRONT OF.
+=2. Giới từ chỉ thời gian (Prepositions of Time): IN, ON, AT, SINCE, FOR, DURING, BEFORE, AFTER, UNTIL, BY.
+=3. Giới từ chỉ phương hướng/sự di chuyển (Prepositions of Direction/Movement): TO, FROM, INTO, OUT OF, ACROSS, THROUGH, UP, DOWN, TOWARDS.
+=4. Các giới từ khác: OF, WITH, WITHOUT, BY, ABOUT, FOR, AS.
+
+>>Cấu trúc cơ bản với giới từ:
+>>- Preposition + Noun / Pronoun / Gerund (V-ing)
+>>  (Tạo thành cụm giới từ - Prepositional Phrase)
+>>Cụm giới từ có thể đóng vai trò như tính từ hoặc trạng từ.
+?>- Địa điểm: The cat is **on** the roof. He lives **in** Paris. I am **at** home.
+?>- Thời gian: The meeting is **at** 3 PM **on** Friday. I will see you **in** an hour. We have studied English **for** five years.
+?>- Phương hướng: She walked **to** the park. The bird flew **out of** the cage.
+?>- Khác: A piece **of** cake. He went **by** bus. This book is **about** history.
+
+@PartOfSpeech Liên từ (Conjunction)
+=Liên từ (Conjunction) là từ dùng để nối các từ, cụm từ, hoặc mệnh đề lại với nhau.
+=Liên từ giúp tạo ra các câu phức tạp hơn và thể hiện mối quan hệ logic giữa các ý.
+=
+=Có hai loại liên từ chính:
+=1. Liên từ kết hợp (Coordinating Conjunctions): Nối các thành phần có vai trò ngữ pháp tương đương (FANBOYS: For, And, Nor, But, Or, Yet, So).
+=2. Liên từ phụ thuộc (Subordinating Conjunctions): Nối một mệnh đề phụ thuộc với một mệnh đề chính (when, while, because, although, if...).
+=3. Tương liên từ (Correlative Conjunctions): Đi theo cặp (either...or, neither...nor, both...and, not only...but also...).
+
+>>Cấu trúc với liên từ kết hợp:
+>>- Word1 + Coordinating Conjunction + Word2
+>>- Independent Clause1 + , + Coordinating Conjunction + Independent Clause2
+>>Cấu trúc với liên từ phụ thuộc:
+>>- Independent Clause + Subordinating Conjunction + Dependent Clause
+>>- Subordinating Conjunction + Dependent Clause + , + Independent Clause
+>>Cấu trúc với tương liên từ:
+>>- Correlative Conjunction (part 1) + Element1 + Correlative Conjunction (part 2) + Element2
+?>- Liên từ kết hợp (FANBOYS):
+?>  I like tea, **and** my brother likes coffee.
+?>  She studied hard, **but** she failed the exam.
+?>  You can pay by cash, **or** you can use a credit card.
+?>- Liên từ phụ thuộc:
+?>  I will call you **when** I arrive.
+?>  **Although** it was raining, they went for a walk.
+?>  He didn't go to school **because** he was sick.
+?>- Tương liên từ:
+?>  You can have **either** tea **or** coffee.
+?>  **Both** my parents **and** my sister are coming.
+?>  **Not only** is he smart, **but also** he is kind.
+
+@SentenceStructure Câu đơn (Simple Sentence)
+=Câu đơn (Simple Sentence) là câu chỉ chứa một mệnh đề độc lập.
+=Một mệnh đề độc lập có một chủ ngữ (subject) và một động từ (verb) và diễn tả một ý hoàn chỉnh.
+
+>>Cấu trúc cơ bản của câu đơn:
+>>- Chủ ngữ + Động từ (S + V)
+>>- Chủ ngữ + Động từ + Tân ngữ (S + V + O)
+>>- Chủ ngữ + Động từ + Bổ ngữ (S + V + C)
+>>- Chủ ngữ + Động từ + Trạng ngữ (S + V + A)
+
+?>**Con chó sủa.** (S + V)
+?>**Mai đọc sách.** (S + V + O)
+?>**Cô ấy là giáo viên.** (S + V + C)
+?>**Anh ấy chạy nhanh.** (S + V + A)
+
+@SentenceStructure Câu ghép (Compound Sentence)
+=Câu ghép (Compound Sentence) là câu chứa ít nhất hai mệnh đề độc lập được nối với nhau.
+=Các mệnh đề độc lập có ý nghĩa ngang hàng và có thể đứng một mình.
+=
+=Cách nối:
+=1. Dùng Liên từ kết hợp (Coordinating Conjunctions - FANBOYS).
+=2. Dùng Dấu chấm phẩy (;).
+=3. Dùng Dấu chấm phẩy (;) cùng Trạng từ liên kết (Conjunctive Adverb) và dấu phẩy (,).
+
+>>Cấu trúc phổ biến:
+>>- Mệnh đề độc lập 1 + , + Liên từ kết hợp + Mệnh đề độc lập 2
+>>- Mệnh đề độc lập 1 + ; + Mệnh đề độc lập 2
+>>- Mệnh đề độc lập 1 + ; + Trạng từ liên kết, + Mệnh đề độc lập 2
+
+?>- Dùng liên từ kết hợp:
+?>  **Tôi thích cà phê, và em gái tôi thích trà.**
+?>  **Cô ấy học chăm chỉ, nhưng cô ấy không qua kỳ thi.**
+?>- Dùng dấu chấm phẩy:
+?>  **Trời mưa to; đường phố nhanh chóng ngập lụt.**
+?>- Dùng trạng từ liên kết:
+?>  **Đó là một bài kiểm tra khó; tuy nhiên, cô ấy đã đạt điểm tốt.**
+
+@SentenceStructure Câu phức (Complex Sentence)
+=Câu phức (Complex Sentence) là câu chứa một mệnh đề độc lập (mệnh đề chính) và ít nhất một mệnh đề phụ thuộc.
+=Mệnh đề phụ thuộc không thể đứng một mình, thường bắt đầu bằng Liên từ phụ thuộc (Subordinating Conjunction) hoặc Đại từ quan hệ (Relative Pronoun).
+=
+=Vị trí mệnh đề phụ thuộc:
+=- Nếu đứng trước mệnh đề chính, thường có dấu phẩy (,).
+=- Nếu đứng sau mệnh đề chính, thường không cần dấu phẩy.
+
+>>Cấu trúc phổ biến:
+>>- Mệnh đề chính + Liên từ phụ thuộc/Đại từ quan hệ + Mệnh đề phụ thuộc
+>>- Liên từ phụ thuộc + Mệnh đề phụ thuộc + , + Mệnh đề chính
+
+?>- Mệnh đề phụ thuộc đứng sau:
+?>  **Anh ấy đến bữa tiệc mặc dù anh ấy mệt.**
+?>  **Tôi biết người đàn ông mà sống ở nhà bên cạnh.**
+?>- Mệnh đề phụ thuộc đứng trước:
+?>  **Khi cô ấy đến nơi, cô ấy sẽ gọi cho bạn.**
+?>  **Bởi vì trời mưa, chúng tôi ở trong nhà.**
+
+@SentenceStructure Câu phức ghép (Compound-Complex Sentence)
+=Câu phức ghép (Compound-Complex Sentence) là câu chứa ít nhất hai mệnh đề độc lập và ít nhất một mệnh đề phụ thuộc.
+
+>>Cấu trúc ví dụ:
+>>- (Mệnh đề chính 1 + Mệnh đề phụ thuộc) + Liên từ kết hợp + Mệnh đề chính 2
+
+?>**Mặc dù tôi thích đi cắm trại (MĐ Phụ), tôi đã không có thời gian để đi gần đây (MĐ Chính 1), và tôi cũng không tìm được ai để đi cùng (MĐ Chính 2).**
+?>**Lan không thích phim hoạt hình (MĐ Chính 1) bởi vì chúng ồn ào (MĐ Phụ), vì vậy cô ấy không xem chúng (MĐ Chính 2).**
+
+@SentenceStructure Mệnh đề Danh từ (Noun Clause)
+=Mệnh đề danh từ (Noun Clause) là một mệnh đề phụ thuộc có chức năng như một danh từ.
+=Có thể làm chủ ngữ, tân ngữ trực tiếp, tân ngữ của giới từ, hoặc bổ ngữ.
+=Thường bắt đầu bằng các từ để hỏi (what, where, when, why, who...), hoặc if, whether, that.
+
+>>Các từ bắt đầu mệnh đề danh từ và chức năng:
+>>1. **That:** (rằng) - Giới thiệu sự thật, ý kiến. (Làm chủ ngữ/tân ngữ)
+>>2. **Từ để hỏi (Wh-words):** (Làm chủ ngữ/tân ngữ/tân ngữ của giới từ)
+>>3. **If / Whether:** (liệu, có...không) - Giới thiệu câu hỏi Yes/No gián tiếp. (Làm tân ngữ/chủ ngữ)
+
+?>- Làm chủ ngữ:
+?>  **What he did** was wrong.
+?>  **That the world is round** is a fact.
+?>- Làm tân ngữ trực tiếp:
+?>  She knows **who broke the window**.
+?>  I believe **that he will succeed**.
+?>- Làm tân ngữ của giới từ:
+?>  We talked about **where we should go for holiday**.
+?>- Làm bổ ngữ:
+?>  The problem is **that we don't have enough money**.
+
+@SentenceStructure Mệnh đề Tính từ (Adjective Clause / Relative Clause)
+=Mệnh đề tính từ (Adjective Clause), hay Mệnh đề quan hệ (Relative Clause), là một mệnh đề phụ thuộc có chức năng như một tính từ, bổ nghĩa cho danh từ/đại từ đứng trước (tiền ngữ).
+=Thường bắt đầu bằng Đại từ quan hệ (who, whom, whose, which, that) hoặc Trạng từ quan hệ (where, when, why).
+=
+=Các loại:
+=1. Mệnh đề quan hệ xác định (Defining): Cần thiết, không có dấu phẩy.
+=2. Mệnh đề quan hệ không xác định (Non-defining): Thêm thông tin, có dấu phẩy.
+
+>>Đại từ/Trạng từ quan hệ và cách dùng:
+>>- **WHO:** Người (chủ ngữ/tân ngữ).
+>>- **WHOM:** Người (tân ngữ - trang trọng).
+>>- **WHICH:** Vật/Sự việc (chủ ngữ/tân ngữ); cả mệnh đề (MĐQH không xác định).
+>>- **THAT:** Người/Vật (MĐQH xác định).
+>>- **WHOSE:** Sở hữu (người/vật).
+>>- **WHERE:** Nơi chốn.
+>>- **WHEN:** Thời gian.
+>>- **WHY:** Lý do.
+
+?>- Mệnh đề quan hệ xác định:
+?>  The girl **who sits next to me** is very smart.
+?>  The keys **that I lost** were new.
+?>- Mệnh đề quan hệ không xác định:
+?>  My brother, **who is a doctor**, lives in London.
+?>  Hanoi, **which is the capital of Vietnam**, is a beautiful city.
+
+@SentenceStructure Mệnh đề Trạng ngữ (Adverbial Clause)
+=Mệnh đề trạng ngữ (Adverbial Clause) là một mệnh đề phụ thuộc có chức năng như một trạng từ, bổ nghĩa cho động từ, tính từ, hoặc trạng từ khác trong mệnh đề chính.
+=Cung cấp thông tin về thời gian, địa điểm, cách thức, nguyên nhân, kết quả, mục đích, điều kiện, sự nhượng bộ.
+=Thường bắt đầu bằng Liên từ phụ thuộc.
+=
+=Các loại mệnh đề trạng ngữ:
+=1. Thời gian (Time): when, while, as, since, before, after, until...
+=2. Nơi chốn (Place): where, wherever...
+=3. Cách thức (Manner): as, as if, as though...
+=4. Nguyên nhân/Lý do (Reason/Cause): because, since, as...
+=5. Kết quả (Result): so...that, such...that.
+=6. Mục đích (Purpose): so that, in order that, to (V)...
+=7. Điều kiện (Condition): if, unless, provided that...
+=8. Sự nhượng bộ/Tương phản (Concession/Contrast): although, though, even though...
+
+>>Cấu trúc:
+>>- Mệnh đề chính + Liên từ phụ thuộc + Mệnh đề trạng ngữ
+>>- Liên từ phụ thuộc + Mệnh đề trạng ngữ + , + Mệnh đề chính
+
+?>- Thời gian: **When the rain stopped**, we went out.
+?>- Nơi chốn: You can sit **wherever you like**.
+?>- Cách thức: She sings **as if she were a professional singer**.
+?>- Nguyên nhân: He failed the exam **because he didn't study hard**.
+?>- Kết quả: It was **so cold that** the lake froze.
+?>- Mục đích: He studies hard **so that he can pass the exam**.
+?>- Điều kiện: **If you help me**, I will help you.
+?>- Nhượng bộ: **Although he is rich**, he is not happy.
+@Voice Câu bị động - Giới thiệu chung (Passive Voice - General Introduction)
+=Câu bị động (Passive Voice) được sử dụng khi chúng ta muốn nhấn mạnh hành động hoặc đối tượng của hành động (tân ngữ của câu chủ động) hơn là chủ thể thực hiện hành động (chủ ngữ của câu chủ động).
+=Chủ thể thực hiện hành động có thể được lược bỏ hoặc được giới thiệu bằng cụm "by + agent".
+=Câu bị động thường được sử dụng trong văn viết trang trọng, khoa học, hoặc khi không biết/không muốn đề cập đến người thực hiện hành động.
+=
+=Nguyên tắc chung khi chuyển từ câu chủ động (Active) sang câu bị động (Passive):
+=1. Tân ngữ (Object) của câu chủ động trở thành Chủ ngữ (Subject) của câu bị động.
+=2. Động từ "to be" được chia theo thì của động từ chính trong câu chủ động và theo ngôi của chủ ngữ mới (trong câu bị động).
+=3. Động từ chính trong câu chủ động được chuyển thành dạng Quá khứ phân từ (Past Participle - V3/Ved).
+=4. Chủ ngữ (Subject) của câu chủ động trở thành tân ngữ của giới từ "by" trong câu bị động (có thể lược bỏ nếu không quan trọng hoặc không rõ).
+
+>>Cấu trúc chung của câu bị động:
+>>Subject (tân ngữ của câu chủ động) + be (chia theo thì) + Past Participle (V3/Ved) (+ by + Agent (chủ ngữ của câu chủ động))
+
+?>- Câu chủ động: Alexander Fleming **discovered** penicillin in 1928.
+?>- Câu bị động: Penicillin **was discovered** by Alexander Fleming in 1928.
+?>- Câu chủ động: Someone **stole** my bike.
+?>- Câu bị động: My bike **was stolen**. (Người thực hiện không rõ/không quan trọng)
+?>- Câu chủ động: People **speak** English all over the world.
+?>- Câu bị động: English **is spoken** all over the world.
+
+@Voice Câu bị động - Thì Hiện tại đơn (Passive Voice - Present Simple)
+=Dùng để diễn tả hành động thường xuyên, lặp đi lặp lại hoặc một sự thật hiển nhiên mà đối tượng bị tác động.
+>>Khẳng định: S + am/is/are + V3/Ved (+ by O)
+>>Phủ định: S + am/is/are + not + V3/Ved (+ by O)
+>>Nghi vấn: Am/Is/Are + S + V3/Ved (+ by O)?
+?>- Chủ động: They **build** many houses in this area every year.
+?>- Bị động (KĐ): Many houses **are built** in this area every year.
+?>- Bị động (PĐ): Rice **is not grown** in cold countries.
+?>- Bị động (NV): **Is** this room **cleaned** every day?
+
+@Voice Câu bị động - Thì Hiện tại tiếp diễn (Passive Voice - Present Continuous)
+=Dùng để diễn tả một hành động đang diễn ra mà đối tượng bị tác động ngay tại thời điểm nói hoặc xung quanh thời điểm nói.
+>>Khẳng định: S + am/is/are + being + V3/Ved (+ by O)
+>>Phủ định: S + am/is/are + not + being + V3/Ved (+ by O)
+>>Nghi vấn: Am/Is/Are + S + being + V3/Ved (+ by O)?
+?>- Chủ động: The workers **are repairing** the bridge.
+?>- Bị động (KĐ): The bridge **is being repaired**.
+?>- Bị động (PĐ): The problem **is not being discussed** at the moment.
+?>- Bị động (NV): **Are** the new computers **being installed** now?
+
+@Voice Câu bị động - Thì Hiện tại hoàn thành (Passive Voice - Present Perfect)
+=Dùng để diễn tả một hành động đã xảy ra (hoặc chưa xảy ra) mà đối tượng bị tác động, và kết quả còn liên quan đến hiện tại.
+>>Khẳng định: S + have/has + been + V3/Ved (+ by O)
+>>Phủ định: S + have/has + not + been + V3/Ved (+ by O)
+>>Nghi vấn: Have/Has + S + been + V3/Ved (+ by O)?
+?>- Chủ động: Someone **has broken** the window.
+?>- Bị động (KĐ): The window **has been broken**.
+?>- Bị động (PĐ): The letters **have not been sent** yet.
+?>- Bị động (NV): **Has** this car **been washed**?
+
+@Voice Câu bị động - Thì Quá khứ đơn (Passive Voice - Past Simple)
+=Dùng để diễn tả một hành động đã xảy ra và kết thúc trong quá khứ mà đối tượng bị tác động.
+>>Khẳng định: S + was/were + V3/Ved (+ by O)
+>>Phủ định: S + was/were + not + V3/Ved (+ by O)
+>>Nghi vấn: Was/Were + S + V3/Ved (+ by O)?
+?>- Chủ động: Christopher Columbus **discovered** America.
+?>- Bị động (KĐ): America **was discovered** by Christopher Columbus.
+?>- Bị động (PĐ): The homework **was not done** yesterday.
+?>- Bị động (NV): **Was** the telephone **invented** by Alexander Graham Bell?
+
+@Voice Câu bị động - Thì Quá khứ tiếp diễn (Passive Voice - Past Continuous)
+=Dùng để diễn tả một hành động đang diễn ra tại một thời điểm xác định trong quá khứ mà đối tượng bị tác động.
+>>Khẳng định: S + was/were + being + V3/Ved (+ by O)
+>>Phủ định: S + was/were + not + being + V3/Ved (+ by O)
+>>Nghi vấn: Was/Were + S + being + V3/Ved (+ by O)?
+?>- Chủ động: They **were building** a new school when I passed by.
+?>- Bị động (KĐ): A new school **was being built** when I passed by.
+?>- Bị động (PĐ): The food **was not being prepared** at that time.
+?>- Bị động (NV): **Were** the documents **being typed** when the manager arrived?
+
+@Voice Câu bị động - Thì Quá khứ hoàn thành (Passive Voice - Past Perfect)
+=Dùng để diễn tả một hành động đã hoàn thành trước một hành động hoặc thời điểm khác trong quá khứ mà đối tượng bị tác động.
+>>Khẳng định: S + had + been + V3/Ved (+ by O)
+>>Phủ định: S + had + not + been + V3/Ved (+ by O)
+>>Nghi vấn: Had + S + been + V3/Ved (+ by O)?
+?>- Chủ động: They **had finished** the report before the deadline.
+?>- Bị động (KĐ): The report **had been finished** before the deadline.
+?>- Bị động (PĐ): The door **had not been locked** before they left.
+?>- Bị động (NV): **Had** all the arrangements **been made** before the guests arrived?
+
+@Voice Câu bị động - Thì Tương lai đơn (Passive Voice - Simple Future)
+=Dùng để diễn tả một hành động sẽ xảy ra trong tương lai mà đối tượng bị tác động.
+>>Khẳng định: S + will + be + V3/Ved (+ by O)
+>>Phủ định: S + will + not + be + V3/Ved (+ by O)
+>>Nghi vấn: Will + S + be + V3/Ved (+ by O)?
+?>- Chủ động: They **will build** a new hospital here.
+?>- Bị động (KĐ): A new hospital **will be built** here.
+?>- Bị động (PĐ): The results **will not be announced** until next week.
+?>- Bị động (NV): **Will** the package **be delivered** tomorrow?
+
+@Voice Câu bị động - Tương lai gần "be going to" (Passive Voice - "be going to")
+=Dùng để diễn tả một hành động sẽ xảy ra trong tương lai gần (có kế hoạch, dự định) mà đối tượng bị tác động.
+>>Khẳng định: S + am/is/are + going to + be + V3/Ved (+ by O)
+>>Phủ định: S + am/is/are + not + going to + be + V3/Ved (+ by O)
+>>Nghi vấn: Am/Is/Are + S + going to + be + V3/Ved (+ by O)?
+?>- Chủ động: She **is going to write** a book.
+?>- Bị động (KĐ): A book **is going to be written** by her.
+?>- Bị động (PĐ): The old house **is not going to be demolished**.
+?>- Bị động (NV): **Is** a new policy **going to be implemented**?
+
+@Voice Câu bị động - Động từ khuyết thiếu (Passive Voice - Modal Verbs)
+=Câu bị động với các động từ khuyết thiếu (can, could, may, might, must, should, ought to, have to...).
+>>Khẳng định: S + modal verb + be + V3/Ved (+ by O)
+>>Phủ định: S + modal verb + not + be + V3/Ved (+ by O)
+>>Nghi vấn: Modal verb + S + be + V3/Ved (+ by O)?
+?>- Chủ động: You **must finish** this work today.
+?>- Bị động (KĐ): This work **must be finished** today.
+?>- Bị động (PĐ): This secret **should not be told** to anyone.
+?>- Bị động (NV): **Can** this problem **be solved** easily?
+?>- Bị động (KĐ): The rules **have to be obeyed**.
+@ReportedSpeech Câu tường thuật - Giới thiệu chung (Reported Speech - General Introduction)
+=Câu tường thuật (Reported Speech), hay Lời nói gián tiếp (Indirect Speech), là cách chúng ta thuật lại lời nói của người khác mà không trích dẫn nguyên văn.
+=Khi chuyển từ lời nói trực tiếp (Direct Speech) sang lời nói gián tiếp, thường có những thay đổi về thì của động từ, đại từ, tính từ sở hữu, và các trạng từ chỉ thời gian/nơi chốn.
+=Động từ giới thiệu thường dùng: say, tell, ask, advise, suggest, order, promise, etc.
+=
+=Những thay đổi chính khi chuyển sang câu tường thuật:
+=1. **Thay đổi về Thì (Tense changes):** Thường lùi một thì về quá khứ nếu động từ tường thuật ở quá khứ (ví dụ: said, told, asked).
+=   - Hiện tại đơn (Present Simple) → Quá khứ đơn (Past Simple)
+=   - Hiện tại tiếp diễn (Present Continuous) → Quá khứ tiếp diễn (Past Continuous)
+=   - Hiện tại hoàn thành (Present Perfect) → Quá khứ hoàn thành (Past Perfect)
+=   - Quá khứ đơn (Past Simple) → Quá khứ hoàn thành (Past Perfect)
+=   - Quá khứ tiếp diễn (Past Continuous) → Quá khứ hoàn thành tiếp diễn (Past Perfect Continuous)
+=   - Tương lai đơn (will) → would
+=   - Can → could; May → might; Must → had to (hoặc giữ nguyên must)
+=   (Lưu ý: Không lùi thì nếu động từ tường thuật ở hiện tại, hoặc khi diễn tả một sự thật hiển nhiên, một thói quen không đổi, hoặc lời nói trực tiếp vẫn còn đúng ở hiện tại).
+=2. **Thay đổi về Đại từ và Tính từ sở hữu (Pronouns and Possessive Adjectives):** Thay đổi cho phù hợp với người nói và người nghe.
+=   (Ví dụ: "I" → he/she; "my" → his/her; "you" → I/me/we/us/they/them; "your" → my/our/their).
+=3. **Thay đổi về Trạng từ chỉ thời gian và nơi chốn (Adverbs of Time and Place):**
+=   - now → then, at that moment
+=   - today → that day
+=   - yesterday → the day before, the previous day
+=   - tomorrow → the next day, the following day
+=   - last night/week/year → the night/week/year before, the previous night/week/year
+=   - next night/week/year → the following night/week/year, the night/week/year after
+=   - here → there
+=   - this → that; these → those
+=   - ago → before
+
+>>Cấu trúc cơ bản (cho câu trần thuật):
+>>S + said (+ to O) + (that) + S' + V' (lùi thì)...
+>>S + told + O + (that) + S' + V' (lùi thì)...
+
+?>- Trực tiếp: John said, "I **am** busy **now**."
+?>- Gián tiếp: John said (that) **he was** busy **then**.
+?>- Trực tiếp: Mary told me, "**My** brother **will visit** me **tomorrow**."
+?>- Gián tiếp: Mary told me (that) **her** brother **would visit** her **the next day**.
+
+@ReportedSpeech Tường thuật Câu trần thuật (Reported Statements)
+=Khi tường thuật câu trần thuật (statements), chúng ta thường dùng động từ "say" hoặc "tell".
+="Tell" luôn cần có tân ngữ theo sau (tell someone), "say" có thể có "to someone" hoặc không.
+=Liên từ "that" có thể được dùng hoặc bỏ qua.
+=Áp dụng các quy tắc chung về lùi thì, thay đổi đại từ và trạng từ.
+
+>>Khẳng định: S + said/told (O) + (that) + S' + V' (lùi thì)...
+>>Phủ định: (Giữ nguyên cấu trúc, động từ trong mệnh đề tường thuật ở dạng phủ định đã lùi thì)
+
+?>- Trực tiếp: He said, "I **like** coffee."
+?>- Gián tiếp: He said (that) **he liked** coffee.
+?>- Trực tiếp: She said to me, "I **don't want** to go **here**."
+?>- Gián tiếp: She told me (that) **she didn't want** to go **there**.
+?>- Trực tiếp: They said, "We **have finished** our homework."
+?>- Gián tiếp: They said (that) **they had finished** their homework.
+
+@ReportedSpeech Tường thuật Câu hỏi Yes/No (Reported Yes/No Questions)
+=Khi tường thuật câu hỏi Yes/No, chúng ta dùng động từ giới thiệu như "ask", "wonder", "want to know".
+=Sử dụng "if" hoặc "whether" để bắt đầu mệnh đề tường thuật.
+=Mệnh đề tường thuật có trật tự từ của câu trần thuật (S + V), không đảo ngữ.
+=Áp dụng các quy tắc chung về lùi thì, thay đổi đại từ và trạng từ.
+
+>>Cấu trúc: S + asked (O) / wondered / wanted to know + if/whether + S' + V' (lùi thì, không đảo ngữ)...
+
+?>- Trực tiếp: He asked me, "**Do** you **like** pop music?"
+?>- Gián tiếp: He asked me **if/whether I liked** pop music.
+?>- Trực tiếp: She said, "**Are** you coming to the party **tonight**?"
+?>- Gián tiếp: She asked **if/whether I was** coming to the party **that night**.
+?>- Trực tiếp: "Can you help me?" Tom asked.
+?>- Gián tiếp: Tom wanted to know **if/whether I could** help him.
+
+@ReportedSpeech Tường thuật Câu hỏi Wh- (Reported Wh-Questions)
+=Khi tường thuật câu hỏi có từ để hỏi (What, Where, When, Why, Who, Whom, Whose, Which, How), chúng ta dùng động từ giới thiệu như "ask", "wonder", "want to know".
+=Giữ lại từ để hỏi (Wh-word) để bắt đầu mệnh đề tường thuật.
+=Mệnh đề tường thuật có trật tự từ của câu trần thuật (S + V), không đảo ngữ.
+=Áp dụng các quy tắc chung về lùi thì, thay đổi đại từ và trạng từ.
+
+>>Cấu trúc: S + asked (O) / wondered / wanted to know + Wh-word + S' + V' (lùi thì, không đảo ngữ)...
+
+?>- Trực tiếp: She asked, "**What is your name**?"
+?>- Gián tiếp: She asked **what my name was**.
+?>- Trực tiếp: He said to her, "**Where did you go yesterday**?"
+?>- Gián tiếp: He asked her **where she had gone the day before**.
+?>- Trực tiếp: "Why are you crying?" my mother asked.
+?>- Gián tiếp: My mother wanted to know **why I was crying**.
+
+@ReportedSpeech Tường thuật Câu mệnh lệnh (Reported Commands/Requests/Suggestions)
+=Khi tường thuật câu mệnh lệnh, yêu cầu, lời khuyên, đề nghị, chúng ta dùng các động từ giới thiệu phù hợp như: tell, ask, order, command, advise, warn, beg, remind, suggest, offer, invite...
+=Cấu trúc tường thuật thay đổi tùy theo động từ giới thiệu.
+=
+=1. **Mệnh lệnh/Yêu cầu/Khuyên bảo khẳng định:**
+=   - Động từ giới thiệu + (O) + to + V (nguyên thể)
+=   (Ví dụ: tell, ask, order, advise, remind, warn, invite, encourage, beg)
+=
+=2. **Mệnh lệnh/Yêu cầu/Khuyên bảo phủ định:**
+=   - Động từ giới thiệu + (O) + not + to + V (nguyên thể)
+=
+=3. **Đề nghị (Suggestions):**
+=   - S + suggest + V-ing...
+=   - S + suggest + (that) + S' + (should) + V (nguyên thể)...
+=   - (Không dùng: S + suggest + O + to V)
+=
+=4. **Lời mời (Offers/Invitations với "Will/Shall/Can/Could you...?" hoặc "Would you like...?"):**
+=   - S + offered + to V...
+=   - S + invited + O + to V...
+
+>>Cấu trúc với "tell/ask/order/advise/warn...":
+>>- S + V(intro) + (O) + (not) + to + V(infinitive)...
+>>Cấu trúc với "suggest":
+>>- S + suggest + V-ing
+>>- S + suggest + (that) + S' + (should) + V(infinitive)
+>>Cấu trúc với "offer/invite":
+>>- S + offer/invite + (O) + to + V(infinitive)
+
+?>- Trực tiếp (Mệnh lệnh): The teacher said to the students, "**Be quiet!**"
+?>- Gián tiếp: The teacher **told/ordered** the students **to be quiet**.
+?>- Trực tiếp (Yêu cầu): "Please **help** me," she said.
+?>- Gián tiếp: She **asked** me **to help** her.
+?>- Trực tiếp (Khuyên bảo phủ định): My father said, "**Don't stay** out late."
+?>- Gián tiếp: My father **advised/told** me **not to stay** out late.
+?>- Trực tiếp (Đề nghị): "Let's **go** to the cinema," he said.
+?>- Gián tiếp: He **suggested going** to the cinema. / He **suggested (that) we (should) go** to the cinema.
+?>- Trực tiếp (Mời): "Would you like **to have** dinner with me?" Tom asked.
+?>- Gián tiếp: Tom **invited** me **to have** dinner with him.
+@ModalVerbs Động từ khuyết thiếu - Giới thiệu chung (Modal Verbs - General Introduction)
+=Động từ khuyết thiếu (Modal Verbs hay Modals) là một loại trợ động từ đặc biệt được sử dụng để thay đổi hoặc bổ sung ý nghĩa cho động từ chính trong câu.
+=Chúng diễn tả các ý nghĩa như khả năng, sự cho phép, nghĩa vụ, sự cần thiết, dự đoán, lời khuyên, lời mời, yêu cầu, v.v.
+=
+=Đặc điểm chung của động từ khuyết thiếu:
+=1. Không thay đổi hình thức theo ngôi hay số của chủ ngữ (không thêm -s, -es, -ing, -ed).
+=2. Theo sau là một động từ nguyên thể không "to" (bare infinitive), trừ "ought to" và "have to/has to/had to".
+=3. Để tạo câu phủ định, thêm "not" sau động từ khuyết thiếu (ví dụ: can not/cannot/can't, should not/shouldn't).
+=4. Để tạo câu nghi vấn, đảo động từ khuyết thiếu lên trước chủ ngữ (ví dụ: Can you swim? Should I go?).
+=5. Thường không có dạng quá khứ phân từ (V3) hay hiện tại phân từ (V-ing) riêng biệt (trừ một số trường hợp như "be able to", "have to").
+=6. Một động từ khuyết thiếu có thể có nhiều ý nghĩa khác nhau tùy theo ngữ cảnh.
+=
+=Các động từ khuyết thiếu phổ biến: can, could, may, might, shall, should, will, would, must, ought to.
+=Các cụm từ bán khuyết thiếu (semi-modals) thường được coi như động từ khuyết thiếu: have to, need to, be able to.
+
+>>Cấu trúc chung:
+>>Khẳng định: Subject + Modal Verb + Verb (bare infinitive)...
+>>Phủ định: Subject + Modal Verb + not + Verb (bare infinitive)...
+>>Nghi vấn: Modal Verb + Subject + Verb (bare infinitive)...?
+
+?>- Khả năng: She **can speak** three languages.
+?>- Xin phép: **May I borrow** your pen?
+?>- Nghĩa vụ: You **must finish** your homework.
+?>- Lời khuyên: You **should see** a doctor.
+
+@ModalVerbs CAN
+=Động từ khuyết thiếu "CAN" chủ yếu diễn tả:
+=1. **Khả năng (Ability):** Khả năng làm gì đó ở hiện tại.
+=2. **Sự cho phép (Permission):** Xin phép hoặc cho phép làm gì (ít trang trọng hơn "may").
+=3. **Khả năng có thể xảy ra (Possibility):** Một điều gì đó có thể xảy ra (chung chung, theo lý thuyết).
+=4. **Yêu cầu (Request):** Yêu cầu ai đó làm gì (thân mật).
+
+>>Khẳng định: S + can + V (bare infinitive)
+>>Phủ định: S + cannot / can't + V (bare infinitive)
+>>Nghi vấn: Can + S + V (bare infinitive)?
+
+?>- Khả năng: I **can swim**. He **can play** the guitar.
+?>- Cho phép: You **can use** my phone. **Can I go** out now?
+?>- Khả năng xảy ra: Smoking **can cause** cancer. It **can be** very cold in winter here.
+?>- Yêu cầu: **Can you help** me with this bag?
+
+@ModalVerbs COULD
+=Động từ khuyết thiếu "COULD" chủ yếu diễn tả:
+=1. **Khả năng trong quá khứ (Past Ability):** Khả năng làm gì đó trong quá khứ.
+=2. **Sự cho phép trong quá khứ/hiện tại (Permission - more polite):** Xin phép lịch sự hơn "can".
+=3. **Khả năng có thể xảy ra (Possibility - weaker than "can"):** Một điều gì đó có thể xảy ra nhưng không chắc chắn bằng "can" hoặc "may".
+=4. **Yêu cầu lịch sự (Polite Request):** Yêu cầu lịch sự hơn "can".
+=5. **Đề nghị (Suggestion):** Đưa ra một gợi ý.
+=6. **Dạng quá khứ của "can" trong câu tường thuật.**
+
+>>Khẳng định: S + could + V (bare infinitive)
+>>Phủ định: S + could not / couldn't + V (bare infinitive)
+>>Nghi vấn: Could + S + V (bare infinitive)?
+
+?>- Khả năng quá khứ: When I was young, I **could run** very fast. He **couldn't speak** English five years ago.
+?>- Xin phép lịch sự: **Could I use** your computer for a moment?
+?>- Khả năng xảy ra (yếu): It **could rain** later, so take an umbrella.
+?>- Yêu cầu lịch sự: **Could you please open** the window?
+?>- Đề nghị: We **could go** to the cinema tonight.
+?>- Tường thuật: He said he **could swim**. (Direct: "I can swim.")
+
+@ModalVerbs MAY
+=Động từ khuyết thiếu "MAY" chủ yếu diễn tả:
+=1. **Sự cho phép (Permission - formal):** Xin phép hoặc cho phép làm gì (trang trọng hơn "can").
+=2. **Khả năng có thể xảy ra (Possibility - stronger than "might", similar to "could"):** Một điều gì đó có thể xảy ra ở hiện tại hoặc tương lai.
+=3. **Lời chúc (Wish/Hope):** Dùng trong câu chúc.
+
+>>Khẳng định: S + may + V (bare infinitive)
+>>Phủ định: S + may not + V (bare infinitive) (Không có dạng rút gọn "mayn't" phổ biến)
+>>Nghi vấn: May + S + V (bare infinitive)?
+
+?>- Cho phép (trang trọng): You **may leave** the room now. **May I ask** a question?
+?>- Khả năng xảy ra: It **may rain** this afternoon. He **may not come** to the party.
+?>- Lời chúc: **May you have** a long and happy life!
+
+@ModalVerbs MIGHT
+=Động từ khuyết thiếu "MIGHT" chủ yếu diễn tả:
+=1. **Khả năng có thể xảy ra (Possibility - weaker than "may"):** Một điều gì đó có thể xảy ra ở hiện tại hoặc tương lai nhưng mức độ chắc chắn thấp hơn "may".
+=2. **Sự cho phép (Permission - very polite/rare):** Xin phép rất lịch sự, ít dùng.
+=3. **Đề nghị lịch sự (Polite Suggestion):** Đưa ra gợi ý một cách dè dặt.
+=4. **Dạng quá khứ của "may" trong câu tường thuật.**
+
+>>Khẳng định: S + might + V (bare infinitive)
+>>Phủ định: S + might not / mightn't + V (bare infinitive)
+>>Nghi vấn: Might + S + V (bare infinitive)? (Ít phổ biến trong câu hỏi trực tiếp)
+
+?>- Khả năng xảy ra (yếu): She **might be** at home, but I'm not sure. It **might not snow** this year.
+?>- Đề nghị lịch sự: You **might try** calling him again later.
+?>- Tường thuật: He said he **might be** late. (Direct: "I may be late.")
+
+@ModalVerbs WILL
+=Động từ khuyết thiếu "WILL" chủ yếu diễn tả:
+=1. **Hành động/Sự việc trong tương lai (Future Action/Event):** Dự đoán, quyết định tức thời, lời hứa, lời đề nghị, lời đe dọa. (Đây là cách dùng chính của thì Tương lai đơn).
+=2. **Sự sẵn lòng (Willingness):** Thể hiện sự sẵn lòng làm gì đó.
+=3. **Lời yêu cầu/mời (Request/Invitation):** (Thường dùng "Will you...?").
+=4. **Thói quen hoặc hành động lặp đi lặp lại (Habitual Action - nhấn mạnh sự cố chấp, thường gây khó chịu):**
+
+>>Khẳng định: S + will / 'll + V (bare infinitive)
+>>Phủ định: S + will not / won't + V (bare infinitive)
+>>Nghi vấn: Will + S + V (bare infinitive)?
+
+?>- Tương lai: It **will rain** tomorrow. I **will help** you.
+?>- Sẵn lòng: If you ask him, he **will do** it for you.
+?>- Yêu cầu/Mời: **Will you marry** me? **Will you close** the door, please?
+?>- Thói quen (cố chấp): He **will leave** his dirty socks on the floor, no matter how many times I tell him not to.
+
+@ModalVerbs WOULD
+=Động từ khuyết thiếu "WOULD" chủ yếu diễn tả:
+=1. **Dạng quá khứ của "will" trong câu tường thuật.**
+=2. **Lời yêu cầu/mời lịch sự (Polite Request/Invitation):** (Thường dùng "Would you...?", "Would you like...?").
+=3. **Thói quen trong quá khứ (Past Habit - tương tự "used to"):** Hành động thường xuyên xảy ra trong quá khứ nhưng giờ không còn.
+=4. **Ước muốn, sở thích (Preference/Desire):** (Thường với "would like", "would rather", "would prefer").
+=5. **Trong câu điều kiện (Conditional Sentences):** Diễn tả kết quả giả định.
+
+>>Khẳng định: S + would / 'd + V (bare infinitive)
+>>Phủ định: S + would not / wouldn't + V (bare infinitive)
+>>Nghi vấn: Would + S + V (bare infinitive)?
+
+?>- Tường thuật: She said she **would come** later. (Direct: "I will come later.")
+?>- Yêu cầu/Mời lịch sự: **Would you mind opening** the window? **Would you like** some coffee?
+?>- Thói quen quá khứ: When we were kids, we **would play** in the park every day.
+?>- Ước muốn: I **would like** to travel around the world. I **'d rather stay** home tonight.
+?>- Câu điều kiện: If I had money, I **would buy** a new car.
+
+@ModalVerbs SHALL
+=Động từ khuyết thiếu "SHALL" hiện nay ít phổ biến hơn "will", chủ yếu dùng trong các ngữ cảnh sau:
+=1. **Đề nghị hoặc hỏi ý kiến (Suggestion/Offer - với I/We):** Thường trong câu hỏi "Shall I...?" hoặc "Shall we...?".
+=2. **Trong các văn bản pháp lý hoặc quy định (Legal/Formal Language):** Diễn tả nghĩa vụ hoặc sự bắt buộc.
+=3. **Dùng thay "will" với ngôi I/We trong một số trường hợp trang trọng (Anh-Anh).**
+
+>>Khẳng định: S (I/We) + shall + V (bare infinitive)
+>>Phủ định: S (I/We) + shall not / shan't + V (bare infinitive)
+>>Nghi vấn: Shall + S (I/We) + V (bare infinitive)?
+
+?>- Đề nghị/Hỏi ý kiến: **Shall I open** the window? **Shall we go** for a walk?
+?>- Văn bản pháp lý: The tenant **shall pay** the rent on the first day of each month.
+?>- Trang trọng (Anh-Anh): I **shall be** there at 7 o'clock.
+
+@ModalVerbs SHOULD
+=Động từ khuyết thiếu "SHOULD" chủ yếu diễn tả:
+=1. **Lời khuyên (Advice):** Nên làm gì.
+=2. **Nghĩa vụ/Bổn phận (Obligation/Duty - nhẹ hơn "must"):** Điều được cho là đúng hoặc phù hợp để làm.
+=3. **Sự mong đợi/Khả năng xảy ra hợp lý (Expectation/Probability):** Một điều gì đó được cho là sẽ xảy ra.
+=4. **Trong mệnh đề "that" sau một số động từ/tính từ (Subjunctive mood):** (Ví dụ: It is important that he should..., I suggest that you should...).
+
+>>Khẳng định: S + should + V (bare infinitive)
+>>Phủ định: S + should not / shouldn't + V (bare infinitive)
+>>Nghi vấn: Should + S + V (bare infinitive)?
+
+?>- Lời khuyên: You **should study** harder for the exam. You **shouldn't smoke**.
+?>- Nghĩa vụ/Bổn phận: We **should respect** our elders.
+?>- Mong đợi: He **should be** here by now. The train **should arrive** on time.
+?>- Mệnh đề "that": It is essential that everyone **should understand** the rules.
+
+@ModalVerbs OUGHT TO
+="OUGHT TO" có ý nghĩa tương tự như "SHOULD", diễn tả lời khuyên hoặc nghĩa vụ đạo đức.
+=Luôn đi kèm với "to" trước động từ nguyên thể.
+=Ít phổ biến hơn "should" trong văn nói hiện đại.
+
+>>Khẳng định: S + ought to + V (bare infinitive)
+>>Phủ định: S + ought not to / oughtn't to + V (bare infinitive)
+>>Nghi vấn: Ought + S + to + V (bare infinitive)? (Ít dùng, thường dùng "Should" thay thế)
+
+?>- Lời khuyên/Nghĩa vụ: You **ought to apologize** for what you said. We **ought to help** those in need.
+?>- Phủ định: You **ought not to speak** like that.
+
+@ModalVerbs MUST
+=Động từ khuyết thiếu "MUST" chủ yếu diễn tả:
+=1. **Sự bắt buộc/Nghĩa vụ mạnh (Strong Obligation/Necessity - thường do người nói áp đặt hoặc quy định):** Phải làm gì.
+=2. **Sự suy luận chắc chắn (Logical Certainty/Deduction):** Một điều gì đó chắc chắn đúng dựa trên bằng chứng.
+=3. **Lời khuyên nhấn mạnh (Strong Advice).**
+=
+="MUST" không có dạng quá khứ. Để diễn tả sự bắt buộc trong quá khứ, dùng "had to".
+=Phủ định "must not / mustn't" diễn tả sự cấm đoán mạnh.
+
+>>Khẳng định: S + must + V (bare infinitive)
+>>Phủ định (cấm đoán): S + must not / mustn't + V (bare infinitive)
+>>Suy luận chắc chắn: S + must + be/V (bare infinitive)...
+
+?>- Bắt buộc/Nghĩa vụ: You **must wear** a seatbelt in the car. Students **must complete** all assignments.
+?>- Suy luận chắc chắn: He hasn't eaten all day. He **must be** hungry. She looks very pale, she **must be** ill.
+?>- Lời khuyên nhấn mạnh: You **must see** this film, it's fantastic!
+?>- Cấm đoán: You **mustn't smoke** in here.
+
+@ModalVerbs HAVE TO / HAS TO / HAD TO (Semi-modal)
+="HAVE TO" (và các dạng của nó) là một cụm từ bán khuyết thiếu, diễn tả sự bắt buộc hoặc cần thiết, thường do yếu tố bên ngoài quy định (luật lệ, hoàn cảnh).
+=Thay đổi theo ngôi và thì.
+=Phủ định "don't/doesn't/didn't have to" có nghĩa là "không cần phải", khác với "mustn't" (cấm).
+
+>>Hiện tại:
+>>- Khẳng định: S (I/You/We/They) + have to + V / S (He/She/It) + has to + V
+>>- Phủ định: S (I/You/We/They) + don't have to + V / S (He/She/It) + doesn't have to + V
+>>- Nghi vấn: Do + S (I/You/We/They) + have to + V? / Does + S (He/She/It) + have to + V?
+>>Quá khứ:
+>>- Khẳng định: S + had to + V
+>>- Phủ định: S + didn't have to + V
+>>- Nghi vấn: Did + S + have to + V?
+
+?>- Bắt buộc (hiện tại): I **have to get up** early tomorrow. She **has to work** on Saturdays.
+?>- Không cần thiết (hiện tại): You **don't have to pay** for this, it's free. He **doesn't have to wear** a uniform.
+?>- Bắt buộc (quá khứ): We **had to cancel** the trip because of the bad weather.
+?>- Không cần thiết (quá khứ): I **didn't have to go** to school yesterday because it was a holiday.
+?>- Câu hỏi: **Do you have to** finish this today?
+@Conditionals Câu điều kiện - Giới thiệu chung (Conditional Sentences - General Introduction)
+=Câu điều kiện (Conditional Sentences) được sử dụng để diễn tả một giả thuyết, một điều kiện và kết quả hoặc hệ quả của điều kiện đó.
+=Một câu điều kiện thường bao gồm hai mệnh đề:
+=1. **Mệnh đề IF (If-clause / Conditional clause):** Nêu lên điều kiện, giả thuyết. Thường bắt đầu bằng "if".
+=2. **Mệnh đề chính (Main clause / Result clause):** Nêu lên kết quả hoặc hệ quả nếu điều kiện ở mệnh đề IF xảy ra.
+=
+=Thứ tự của hai mệnh đề có thể thay đổi:
+=- Nếu mệnh đề IF đứng trước, thường có dấu phẩy (,) ngăn cách hai mệnh đề.
+=- Nếu mệnh đề chính đứng trước, thường không cần dấu phẩy.
+=
+=Các loại câu điều kiện chính được phân biệt dựa trên mức độ thực tế của điều kiện và thời gian của hành động.
+
+>>Cấu trúc chung:
+>>- If + Mệnh đề điều kiện (S + V...), + Mệnh đề chính (S + V...)
+>>- Mệnh đề chính (S + V...) + if + Mệnh đề điều kiện (S + V...)
+
+?>- If it **rains**, I **will stay** at home. (Điều kiện có thể xảy ra ở tương lai)
+?>- I **would travel** around the world if I **won** the lottery. (Điều kiện không có thật ở hiện tại)
+
+@Conditionals Câu điều kiện loại 0 (Type 0 Conditional)
+=Câu điều kiện loại 0 dùng để diễn tả một sự thật hiển nhiên, một quy luật tự nhiên, một thói quen luôn đúng, hoặc một sự việc luôn xảy ra khi điều kiện được đáp ứng.
+=Cả hai mệnh đề (mệnh đề IF và mệnh đề chính) đều dùng thì Hiện tại đơn (Present Simple).
+="If" có thể được thay thế bằng "when" hoặc "whenever" mà không làm thay đổi nhiều ý nghĩa.
+
+>>Cấu trúc:
+>>If + S + V (hiện tại đơn), S + V (hiện tại đơn)
+>>(When/Whenever + S + V (hiện tại đơn), S + V (hiện tại đơn))
+
+?>- If you **heat** ice, it **melts**. (Sự thật hiển nhiên)
+?>- When the sun **goes down**, it **gets** dark. (Quy luật tự nhiên)
+?>- If I **am** late for work, my boss **gets** angry. (Thói quen, sự việc thường xảy ra)
+?>- Plants **die** if they **don't get** enough water.
+
+@Conditionals Câu điều kiện loại 1 (Type 1 Conditional)
+=Câu điều kiện loại 1 dùng để diễn tả một điều kiện có thể xảy ra ở hiện tại hoặc tương lai và kết quả có thể xảy ra của nó.
+=Điều kiện là có thật và có khả năng xảy ra.
+=
+=Mệnh đề IF: Thì Hiện tại đơn (Present Simple).
+=Mệnh đề chính: Thì Tương lai đơn (Simple Future - will + V) hoặc động từ khuyết thiếu khác (can, may, should + V).
+
+>>Cấu trúc:
+>>If + S + V (hiện tại đơn), S + will/can/may/should + V (nguyên thể)
+
+?>- If it **rains** tomorrow, we **will cancel** the picnic. (Điều kiện có thể xảy ra ở tương lai)
+?>- If you **study** hard, you **will pass** the exam.
+?>- If I **have** enough money, I **can buy** a new car.
+?>- If you **see** John, **tell** him to call me. (Mệnh đề chính có thể là câu mệnh lệnh)
+?>- You **should go** to the doctor if you **feel** unwell.
+
+@Conditionals Câu điều kiện loại 2 (Type 2 Conditional)
+=Câu điều kiện loại 2 dùng để diễn tả một điều kiện không có thật hoặc không thể xảy ra ở hiện tại, và kết quả giả định của nó.
+=Dùng để nói về một tình huống tưởng tượng, một giả thuyết trái ngược với thực tế hiện tại.
+=
+=Mệnh đề IF: Thì Quá khứ đơn (Past Simple).
+=   - Với động từ "to be", thường dùng "were" cho tất cả các ngôi (I were, you were, he/she/it were, we were, they were), đặc biệt trong văn viết trang trọng. "Was" vẫn được chấp nhận trong văn nói thân mật với ngôi I/he/she/it.
+=Mệnh đề chính: would/could/might + V (nguyên thể).
+
+>>Cấu trúc:
+>>If + S + V (quá khứ đơn / were), S + would/could/might + V (nguyên thể)
+
+?>- If I **had** a lot of money, I **would travel** around the world. (Thực tế: Tôi không có nhiều tiền)
+?>- If she **studied** more, she **could get** better grades. (Thực tế: Cô ấy không học nhiều)
+?>- If I **were** you, I **would accept** the offer. (Lời khuyên - giả định mình là người khác)
+?>- What **would** you **do** if you **won** the lottery?
+?>- He **might come** if he **wasn't** so busy. (Thực tế: Anh ấy rất bận)
+
+@Conditionals Câu điều kiện loại 3 (Type 3 Conditional)
+=Câu điều kiện loại 3 dùng để diễn tả một điều kiện không có thật trong quá khứ (trái ngược với những gì đã xảy ra) và kết quả giả định của nó trong quá khứ.
+=Dùng để nói về sự hối tiếc hoặc những khả năng đã không xảy ra trong quá khứ.
+=
+=Mệnh đề IF: Thì Quá khứ hoàn thành (Past Perfect - had + V3/Ved).
+=Mệnh đề chính: would/could/might + have + V3/Ved.
+
+>>Cấu trúc:
+>>If + S + had + V3/Ved, S + would/could/might + have + V3/Ved
+
+?>- If I **had studied** harder, I **would have passed** the exam. (Thực tế: Tôi đã không học chăm và đã trượt)
+?>- If she **hadn't missed** the train, she **could have arrived** on time. (Thực tế: Cô ấy đã lỡ tàu và đã đến muộn)
+?>- What **would** you **have done** if you **had known** the truth?
+?>- They **might have won** the game if they **had played** better.
+
+@Conditionals Câu điều kiện hỗn hợp (Mixed Conditionals)
+=Câu điều kiện hỗn hợp là sự kết hợp giữa các loại câu điều kiện khác nhau, thường là loại 2 và loại 3.
+=Dùng để diễn tả một điều kiện không thật trong quá khứ và kết quả giả định của nó ở hiện tại, hoặc ngược lại.
+=
+=Hai dạng phổ biến:
+=1. **Điều kiện quá khứ, kết quả hiện tại:**
+=   - Mệnh đề IF: Loại 3 (Quá khứ hoàn thành - had + V3/Ved)
+=   - Mệnh đề chính: Loại 2 (would/could/might + V (nguyên thể))
+=   (Diễn tả nếu một việc gì đó khác đi trong quá khứ, thì hiện tại sẽ như thế nào)
+=2. **Điều kiện hiện tại, kết quả quá khứ:** (Ít phổ biến hơn)
+=   - Mệnh đề IF: Loại 2 (Quá khứ đơn - V2/Ved)
+=   - Mệnh đề chính: Loại 3 (would/could/might + have + V3/Ved)
+=   (Diễn tả nếu một tình trạng hiện tại khác đi, thì một việc trong quá khứ đã có thể khác)
+
+>>Cấu trúc (Dạng 1 - phổ biến):
+>>If + S + had + V3/Ved, S + would/could/might + V (nguyên thể) (now/today...)
+>>Cấu trúc (Dạng 2 - ít phổ biến):
+>>If + S + V (quá khứ đơn), S + would/could/might + have + V3/Ved (then/yesterday...)
+
+?>- Dạng 1 (Điều kiện quá khứ → Kết quả hiện tại):
+?>  If I **had taken** your advice, I **would be** richer now. (Thực tế: Quá khứ tôi không nghe lời khuyên, hiện tại tôi không giàu hơn)
+?>  If he **hadn't missed** the flight, he **would be** here with us today.
+?>- Dạng 2 (Điều kiện hiện tại → Kết quả quá khứ):
+?>  If I **weren't** so busy now, I **would have gone** to the party yesterday. (Thực tế: Hiện tại tôi bận, nên hôm qua tôi không đi)
+?>  If she **spoke** English fluently, she **could have gotten** that job last year.
+@SentenceStructure Câu hỏi Wh- (Wh-Questions - Direct Questions)
+=Câu hỏi Wh- (Wh-Questions) là loại câu hỏi được sử dụng để yêu cầu thông tin cụ thể, chứ không phải là câu trả lời Yes/No.
+=Chúng bắt đầu bằng các từ để hỏi (Interrogative Words / Wh-words) như: What, Where, When, Why, Who, Whom, Whose, Which, How.
+=
+=Cấu trúc chung của câu hỏi Wh-:
+=1. **Khi từ để hỏi là Chủ ngữ (Subject) hoặc một phần của chủ ngữ:**
+=   - Trật tự từ giống như câu trần thuật.
+=   - Wh-word (Subject) + Verb + (Object/Complement...)?
+=
+=2. **Khi từ để hỏi là Tân ngữ (Object), Trạng từ (Adverbial), hoặc Bổ ngữ (Complement):**
+=   - Cần có trợ động từ (auxiliary verb: be, do, have) hoặc động từ khuyết thiếu (modal verb: can, will, should...) đứng trước chủ ngữ.
+=   - Wh-word + Auxiliary Verb/Modal Verb + Subject + Main Verb (nguyên thể, nếu có trợ động từ "do/does/did") + (Object/Complement...)?
+=
+=Các từ để hỏi (Wh-words) và thông tin chúng yêu cầu:
+=- **What:** Hỏi về sự vật, sự việc, thông tin.
+=- **Where:** Hỏi về nơi chốn, địa điểm.
+=- **When:** Hỏi về thời gian.
+=- **Why:** Hỏi về lý do, nguyên nhân (thường trả lời bằng "Because...").
+=- **Who:** Hỏi về người (làm chủ ngữ).
+=- **Whom:** Hỏi về người (làm tân ngữ - trang trọng, trong văn nói thường dùng "Who").
+=- **Whose:** Hỏi về sự sở hữu.
+=- **Which:** Hỏi về sự lựa chọn giữa một số đối tượng hạn chế.
+=- **How:** Hỏi về cách thức, phương tiện, tình trạng sức khỏe, tuổi tác, số lượng/mức độ (khi đi với tính từ/trạng từ: how old, how many, how much, how long, how often, how far).
+
+>>Cấu trúc khi Wh-word là Chủ ngữ:
+>>Wh-word (S) + V + (O/C...)?
+>>Cấu trúc khi Wh-word không phải là Chủ ngữ:
+>>Wh-word + Auxiliary/Modal + S + V (main) + (O/C...)?
+
+?>- Wh-word làm chủ ngữ:
+?>  **Who opened** the door?
+?>  **What happened** yesterday?
+?>  **Which car is** yours?
+?>- Wh-word không làm chủ ngữ (với động từ "to be"):
+?>  **What is** your name?
+?>  **Where are** you from?
+?>  **When was** she born?
+?>- Wh-word không làm chủ ngữ (với trợ động từ "do/does/did"):
+?>  **What do** you **want**?
+?>  **Where does** he **live**?
+?>  **Why did** they **leave** early?
+?>- Wh-word không làm chủ ngữ (với động từ khuyết thiếu):
+?>  **What can** I **do** for you?
+?>  **When will** the party **start**?
+?>  **How should** we **proceed**?
+?>- Câu hỏi với "How":
+?>  **How are** you?
+?>  **How old is** your brother?
+?>  **How much does** this **cost**?
+?>  **How often do** you **go** to the gym?
+?>- Câu hỏi với "Whose":
+?>  **Whose book is** this?
+?>- Câu hỏi với "Whom" (trang trọng, làm tân ngữ):
+?>  **Whom did** you **meet**? (Thân mật hơn: Who did you meet?)

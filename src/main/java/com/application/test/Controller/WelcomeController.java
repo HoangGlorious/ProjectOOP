@@ -25,18 +25,27 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.function.Consumer;
+
 import com.application.test.Model.DictionaryEntry;
 
 public class WelcomeController implements Initializable {
 
-    @FXML private StackPane mainPane;
-    @FXML private TextField welcomeSearchTextField;
-    @FXML private Button welcomeSearchButton;
-    @FXML private ListView<String> suggestionListView;
-    @FXML private Label welcomeLabel;
-    @FXML private ImageView backgroundImageView;
-    @FXML private ImageView icon1;
-    @FXML private ComboBox<String> sourceComboBox;
+    @FXML
+    private StackPane mainPane;
+    @FXML
+    private TextField welcomeSearchTextField;
+    @FXML
+    private Button welcomeSearchButton;
+    @FXML
+    private ListView<String> suggestionListView;
+    @FXML
+    private Label welcomeLabel;
+    @FXML
+    private ImageView backgroundImageView;
+    @FXML
+    private ImageView icon1;
+    @FXML
+    private ComboBox<String> sourceComboBox;
 
     // Callbacks để báo hiệu cho DictionaryApplication
     private Consumer<String> onSearchInitiated; // Callback khi người dùng tìm kiếm từ tồn tại
@@ -45,6 +54,7 @@ public class WelcomeController implements Initializable {
     private Runnable onGoToGame;
     private Runnable onGoToThesaurus;
     private Runnable onGoToSentenceTranslation;
+    private Runnable onGoToGrammar;
 
     public void setOnGoToGame(Runnable onGoToGame) {
         this.onGoToGame = onGoToGame;
@@ -54,7 +64,13 @@ public class WelcomeController implements Initializable {
         this.onGoToThesaurus = onGoToThesaurus;
     }
 
-    public void setOnGoToSentenceTranslation(Runnable onGoToSentenceTranslation) { this.onGoToSentenceTranslation = onGoToSentenceTranslation; }
+    public void setOnGoToSentenceTranslation(Runnable onGoToSentenceTranslation) {
+        this.onGoToSentenceTranslation = onGoToSentenceTranslation;
+    }
+
+    public void setOnGoToGrammar(Runnable onGoToGrammar) {
+        this.onGoToGrammar = onGoToGrammar;
+    }
 
     public void setOnSearchInitiated(Consumer<String> onSearchInitiated) {
         this.onSearchInitiated = onSearchInitiated;
@@ -133,6 +149,7 @@ public class WelcomeController implements Initializable {
             {
                 getStyleClass().add("WcomboBoxCell");
             }
+
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -160,6 +177,7 @@ public class WelcomeController implements Initializable {
 
     /**
      * Hiển thị danh sách gợi ý dựa trên tiền tố trong search text field.
+     *
      * @param prefix Tiền tố để tìm gợi ý.
      */
     private void showSuggestions(String prefix) {
@@ -198,10 +216,12 @@ public class WelcomeController implements Initializable {
     @FXML
     protected void handleWelcomeSearchAction(ActionEvent event) {
         String searchTerm = welcomeSearchTextField.getText().trim();
-        if (dictionaryManagement == null) { return ; }
+        if (dictionaryManagement == null) {
+            return;
+        }
         if (searchTerm.isEmpty()) {
             showNotFoundAlert();
-            return ;
+            return;
         }
 
         // *** Lấy nguồn từ điển đang hoạt động và lookup trên nguồn đó ***
@@ -210,7 +230,9 @@ public class WelcomeController implements Initializable {
 
         if (foundEntry.isPresent()) {
             // Báo hiệu cho DictionaryApplication để chuyển sang màn hình từ điển và hiển thị từ này
-            if (onSearchInitiated != null) { onSearchInitiated.accept(searchTerm); }
+            if (onSearchInitiated != null) {
+                onSearchInitiated.accept(searchTerm);
+            }
         } else {
             // Hiển thị thông báo không tìm thấy và hỏi thêm từ
             showNotFoundAlertWithAddOption(searchTerm); // Hàm này gọi onAddWordInitiated
@@ -304,8 +326,17 @@ public class WelcomeController implements Initializable {
 
     @FXML
     protected void handleGrammar(ActionEvent event) {
-        System.out.println("Grammar clicked.");
-        // TODO: Nếu có màn hình ngữ pháp riêng, gọi callback khác hoặc load Stage/Scene mới
+        System.out.println("Grammar clicked. Signaling to go to Grammar screen.");
+        if (onGoToGrammar != null) {
+            try {
+                onGoToGrammar.run();
+            } catch (RuntimeException e) {
+                System.err.println("Error executing go to Grammar callback: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Callback onGoToGrammar chưa được thiết lập!");
+        }
     }
 
     @FXML

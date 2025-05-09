@@ -35,6 +35,8 @@ public class DictionaryApplication extends Application {
     private Scene dailyWordleScene;
     private WordleMenuController wordleMenuControllerInstance;
     private DailyWordleController dailyWordleControllerInstance;
+    private Scene grammarScene;
+    private GrammarController grammarControllerInstance;
     public GeneralManagement getDictionaryManagement() {
         return dictionaryManagement;
     }
@@ -63,7 +65,7 @@ public class DictionaryApplication extends Application {
         welcomeController.setOnGoToGame(this::showGameMenu);
         welcomeController.setOnGoToThesaurus(this::showThesaurusView);
         welcomeController.setOnGoToSentenceTranslation(this::showSenTranView);
-
+        welcomeController.setOnGoToGrammar(this::showGrammarView);
 
         this.welcomeScene = new Scene(welcomeRoot);
         stage.setScene(welcomeScene);
@@ -326,7 +328,41 @@ public class DictionaryApplication extends Application {
 
         } catch (IOException e) { System.err.println("Lỗi khi load màn hình thesaurus menu: " + e.getMessage()); e.printStackTrace(); /* ... */ }
     }
-
+    private void showGrammarView() {
+        try {
+            if (this.grammarScene == null) {
+                URL grammarFxmlUrl = getClass().getResource("/com/application/test/view/grammar_view.fxml");
+                if (grammarFxmlUrl == null) {
+                    System.err.println("Lỗi: Không tìm thấy file grammar_view.fxml trong classpath!");
+                    showWelcomeView();
+                    return;
+                }
+                FXMLLoader grammarLoader = new FXMLLoader(grammarFxmlUrl);
+                Parent grammarRoot = grammarLoader.load();
+                this.grammarControllerInstance = grammarLoader.getController();
+                grammarControllerInstance.setOnGoBackToWelcome(unused -> showWelcomeView());
+                this.grammarScene = new Scene(grammarRoot);
+                URL cssUrl = getClass().getResource("/com/application/test/CSS/grammar.css");
+                if (cssUrl != null) {
+                    this.grammarScene.getStylesheets().add(cssUrl.toExternalForm());
+                } else {
+                    System.err.println("Lỗi: Không tìm thấy file grammar.css tại /com/application/test/CSS/grammar.css");
+                }
+            }
+            if (welcomeControllerInstance != null) {
+                welcomeControllerInstance.resetView();
+            }
+            if (dictionaryControllerInstance != null) {
+                dictionaryControllerInstance.resetScene();
+            }
+            primaryStage.setScene(this.grammarScene);
+            primaryStage.setTitle("📘 Grammar");
+            System.out.println("Đã chuyển sang màn hình Grammar.");
+        } catch (IOException e) {
+            System.err.println("Lỗi khi load màn hình Grammar: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
     private void showSenTranView() {
         try {
             if (this.senTranScene == null) {
