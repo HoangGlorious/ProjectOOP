@@ -1,12 +1,11 @@
 package com.application.test.Controller;
 
-import com.application.test.Model.DictionaryEntry;
-import com.application.test.Model.GeneralManagement;
-import com.application.test.Model.DictionarySource;
+import com.application.test.Model.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
+import java.awt.geom.GeneralPath;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -25,18 +25,32 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.function.Consumer;
+
 import com.application.test.Model.DictionaryEntry;
 
 public class WelcomeController implements Initializable {
 
-    @FXML private StackPane mainPane;
-    @FXML private TextField welcomeSearchTextField;
-    @FXML private Button welcomeSearchButton;
-    @FXML private ListView<String> suggestionListView;
-    @FXML private Label welcomeLabel;
-    @FXML private ImageView backgroundImageView;
-    @FXML private ImageView icon1;
-    @FXML private ComboBox<String> sourceComboBox;
+    @FXML
+    private StackPane mainPane;
+    @FXML
+    private TextField welcomeSearchTextField;
+    @FXML
+    private Button welcomeSearchButton;
+    @FXML
+    private ListView<String> suggestionListView;
+    @FXML
+    private Label welcomeLabel;
+    @FXML
+    private ImageView backgroundImageView;
+    @FXML
+    private ImageView icon1;
+    @FXML
+    private ComboBox<String> sourceComboBox;
+    @FXML
+    private Hyperlink WordOfTheDay;
+
+
+    private WordOfTheDay wotd;
 
     // Callbacks để báo hiệu cho DictionaryApplication
     private Consumer<String> onSearchInitiated; // Callback khi người dùng tìm kiếm từ tồn tại
@@ -45,6 +59,7 @@ public class WelcomeController implements Initializable {
     private Runnable onGoToGame;
     private Runnable onGoToThesaurus;
     private Runnable onGoToSentenceTranslation;
+
 
     public void setOnGoToGame(Runnable onGoToGame) {
         this.onGoToGame = onGoToGame;
@@ -88,6 +103,7 @@ public class WelcomeController implements Initializable {
             }
         });
         suggestionListView.setFocusTraversable(false);
+
 
     }
 
@@ -133,6 +149,7 @@ public class WelcomeController implements Initializable {
             {
                 getStyleClass().add("WcomboBoxCell");
             }
+
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -160,6 +177,7 @@ public class WelcomeController implements Initializable {
 
     /**
      * Hiển thị danh sách gợi ý dựa trên tiền tố trong search text field.
+     *
      * @param prefix Tiền tố để tìm gợi ý.
      */
     private void showSuggestions(String prefix) {
@@ -198,10 +216,12 @@ public class WelcomeController implements Initializable {
     @FXML
     protected void handleWelcomeSearchAction(ActionEvent event) {
         String searchTerm = welcomeSearchTextField.getText().trim();
-        if (dictionaryManagement == null) { return ; }
+        if (dictionaryManagement == null) {
+            return;
+        }
         if (searchTerm.isEmpty()) {
             showNotFoundAlert();
-            return ;
+            return;
         }
 
         // *** Lấy nguồn từ điển đang hoạt động và lookup trên nguồn đó ***
@@ -210,7 +230,9 @@ public class WelcomeController implements Initializable {
 
         if (foundEntry.isPresent()) {
             // Báo hiệu cho DictionaryApplication để chuyển sang màn hình từ điển và hiển thị từ này
-            if (onSearchInitiated != null) { onSearchInitiated.accept(searchTerm); }
+            if (onSearchInitiated != null) {
+                onSearchInitiated.accept(searchTerm);
+            }
         } else {
             // Hiển thị thông báo không tìm thấy và hỏi thêm từ
             showNotFoundAlertWithAddOption(searchTerm); // Hàm này gọi onAddWordInitiated
@@ -265,6 +287,37 @@ public class WelcomeController implements Initializable {
             // Người dùng chọn "Đóng" hoặc đóng alert, không làm gì thêm
             System.out.println("Người dùng không muốn thêm từ.");
         }
+    }
+
+    // Hàm set WOTD
+    public void setWotd(WordOfTheDay wotd) {
+        this.wotd = wotd;
+        updateWOTDDisplay();
+    }
+
+
+    //Hàm cập nhật trưng bày WordOfTheDay
+    private void updateWOTDDisplay() {
+        Platform.runLater(() -> {
+            try {
+                // Cập nhật WordOfTheDay hyperlink
+                String todayWord = wotd.getTodayWord();
+                if (todayWord != null && !todayWord.isEmpty()) {
+                    WordOfTheDay.setText(todayWord);
+
+                    // Set hành động đưa đến entry từ điển khi click vào hyperlink
+                    WordOfTheDay.setOnAction(e -> {
+                        welcomeSearchTextField.setText(todayWord);
+                        handleWelcomeSearchAction(e);
+                    });
+                } else {
+                    WordOfTheDay.setVisible(false);
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to update WOTD: " + e.getMessage());
+                WordOfTheDay.setVisible(false);
+            }
+        });
     }
 
 
