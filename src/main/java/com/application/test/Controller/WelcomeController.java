@@ -296,7 +296,8 @@ public class WelcomeController implements Initializable {
     }
 
 
-    //Hàm cập nhật trưng bày WordOfTheDay
+    // Hàm cập nhật trưng bày WordOfTheDay
+    // WordOfTheDay được trưng bày dưới dạng hyperlink thực hiện hoạt động tra cứu từ điển khi nhấn vào WOTD
     private void updateWOTDDisplay() {
         Platform.runLater(() -> {
             try {
@@ -311,6 +312,7 @@ public class WelcomeController implements Initializable {
                         handleWelcomeSearchAction(e);
                     });
                 } else {
+                    // Nếu không có từ để hiển thị, ẩn hyperlink
                     WordOfTheDay.setVisible(false);
                 }
             } catch (Exception e) {
