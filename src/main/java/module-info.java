@@ -14,6 +14,8 @@ module com.example.btl {
     requires javafx.media;
     requires java.net.http;
     requires com.google.gson;
+    requires okhttp3;
+    requires org.json;
 
     opens com.application.test to javafx.fxml;
     exports com.application.test;
