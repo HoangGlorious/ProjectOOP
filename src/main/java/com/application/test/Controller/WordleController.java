@@ -2,6 +2,8 @@ package com.application.test.Controller;
 
 import com.application.test.DictionaryApplication;
 import com.application.test.Model.WordleGame;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,11 +17,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -279,20 +285,37 @@ public class WordleController {
             if (videoUrl == null) {
                 System.err.println("Video resource not found: " + videoPath);
                 showAlert("Lỗi", "Không thể tìm thấy file video: " + videoPath);
-                return; // Không gọi restoreGameScene, vì không thay đổi scene
+                return;
             }
             System.out.println("Video resource found at: " + videoUrl.toExternalForm());
 
-            // Tải tài nguyên video
+            // Tải video
             Media media = new Media(videoUrl.toExternalForm());
             MediaPlayer mediaPlayer = new MediaPlayer(media);
             MediaView mediaView = new MediaView(mediaPlayer);
-
-            // Tạo giao diện cho cutscene
-            VBox cutsceneLayout = new VBox(10);
-            cutsceneLayout.setAlignment(Pos.CENTER);
-            mediaView.setFitWidth(800); // Điều chỉnh kích thước video
+            mediaView.setFitWidth(800);
             mediaView.setFitHeight(600);
+
+            // Tạo label hiển thị kết quả
+            Label resultLabel = new Label(isWin ? "🎉 YOU WIN! 🎉" : "💀 YOU LOSE! 💀");
+            resultLabel.setFont(new Font("Arial Black", 48));
+            resultLabel.setTextFill(isWin ? Color.LIMEGREEN : Color.CRIMSON);
+            resultLabel.setStyle("-fx-effect: dropshadow(gaussian, black, 5, 0, 0, 0);");
+
+            // Tạo animation cho label (fade in / fade out)
+            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.8), resultLabel);
+            fadeTransition.setFromValue(1.0);
+            fadeTransition.setToValue(0.3);
+            fadeTransition.setCycleCount(Animation.INDEFINITE);
+            fadeTransition.setAutoReverse(true);
+            fadeTransition.play();
+
+            // Tạo StackPane chứa video và label (label overlay lên video)
+            StackPane stackPane = new StackPane();
+            stackPane.getChildren().addAll(mediaView, resultLabel);
+            StackPane.setAlignment(resultLabel, Pos.TOP_CENTER); // canh label lên top center
+
+            // Tạo nút Bỏ qua
             Button skipButton = new Button("Bỏ qua");
 
             // Lấy Stage hiện tại
@@ -302,19 +325,23 @@ public class WordleController {
                 showAlert("Lỗi", "Không thể truy cập cửa sổ chính!");
                 return;
             }
-            Scene originalScene = guessInput.getScene(); // Lưu scene gốc
+            Scene originalScene = guessInput.getScene();
             if (originalScene == null) {
                 System.err.println("Original scene is null in playCutscene!");
                 showAlert("Lỗi", "Không thể lưu scene trò chơi!");
                 return;
             }
 
-            // Thiết lập hành động cho nút Bỏ qua
+            // Hành động cho nút Bỏ qua
             skipButton.setOnAction(e -> {
                 mediaPlayer.stop();
                 restoreGameScene(stage, originalScene);
             });
-            cutsceneLayout.getChildren().addAll(mediaView, skipButton);
+
+            // Tạo VBox chứa StackPane và nút Bỏ qua
+            VBox cutsceneLayout = new VBox(10);
+            cutsceneLayout.setAlignment(Pos.CENTER);
+            cutsceneLayout.getChildren().addAll(stackPane, skipButton);
 
             // Tạo scene cho cutscene
             Scene cutsceneScene = new Scene(cutsceneLayout, 1200, 640);
@@ -324,7 +351,7 @@ public class WordleController {
             // Tự động phát video
             mediaPlayer.setAutoPlay(true);
 
-            // Khi video kết thúc, khôi phục scene trò chơi
+            // Khi video kết thúc, khôi phục lại scene trò chơi
             mediaPlayer.setOnEndOfMedia(() -> {
                 mediaPlayer.stop();
                 restoreGameScene(stage, originalScene);
@@ -338,13 +365,12 @@ public class WordleController {
             });
 
             System.out.println("Cutscene started: " + videoPath);
+
         } catch (Exception e) {
-//            System.err.println("Error loading cutscene: " + e.getMessage());
-//            e.printStackTrace();
             showAlert("Thông báo", "Bạn đã hoàn thành wordle hôm nay rồi ");
-            // Đây là tính năng
         }
     }
+
 
     private void restoreGameScene(Stage stage, Scene originalScene) {
         if (stage == null || originalScene == null) {
