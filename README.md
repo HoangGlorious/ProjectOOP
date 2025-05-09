@@ -46,5 +46,10 @@ Câc chức năng chính của LingualTemple như sau:
   ![UML Diagram](src/main/resources/com/application/test/images/main.png)
 
 
-## Demo Video
+## Demo
 - Video hướng dẫn sử dụng ở (updating, theo dõi kênh @ASEANcoin and his random videos trên YouTube để biết thêm chi tiết)
+
+## Phát triển trong tương lai
+- Cải thiện hơn nữa giao diện người dùng cho thân thiện, đẹp mắt hơn.
+- Bổ sung thêm nhiều game để đa dạng hóa trải nghiệm người dùng.
+- Tích hợp các mô hình AI.
