@@ -339,10 +339,10 @@ public class WordleController {
 
             System.out.println("Cutscene started: " + videoPath);
         } catch (Exception e) {
-            System.err.println("Error loading cutscene: " + e.getMessage());
-            e.printStackTrace();
-            showAlert("Lỗi", "Không thể tải cutscene: " + e.getMessage());
-            // Không gọi restoreGameScene nếu chưa thay đổi scene
+//            System.err.println("Error loading cutscene: " + e.getMessage());
+//            e.printStackTrace();
+            showAlert("Thông báo", "Bạn đã hoàn thành wordle hôm nay rồi ");
+            // Đây là tính năng
         }
     }
 

@@ -54,11 +54,9 @@ added
 adder
 addle
 adept
-adhoc
 adieu
 adios
 adits
-adlib
 adman
 admit
 admix
@@ -84,7 +82,6 @@ afaul
 affix
 afire
 aflat
-afont
 afoot
 afore
 afoul
@@ -423,7 +420,6 @@ balsa
 balun
 bamed
 banal
-bandb
 bands
 bandy
 baned
@@ -619,7 +615,6 @@ blink
 blins
 blips
 bliss
-blitt
 blitz
 bloat
 blobs
@@ -739,7 +734,6 @@ boxes
 boxom
 boyos
 bozos
-bphil
 braai
 brace
 bract
@@ -1763,7 +1757,6 @@ druse
 dryad
 dryer
 dryly
-dscan
 duals
 dubed
 ducal
@@ -1841,7 +1834,6 @@ eaves
 ebbed
 ebony
 echos
-ecore
 ecrus
 ectad
 ectal
@@ -1951,7 +1943,6 @@ erred
 error
 eruct
 erupt
-escan
 esker
 espys
 essay
@@ -1964,7 +1955,6 @@ ethic
 ethos
 ethyl
 etnas
-etseq
 ettle
 etude
 etuis
@@ -1980,7 +1970,6 @@ every
 evict
 evils
 evoke
-ewave
 ewers
 exact
 exalt
@@ -2083,7 +2072,6 @@ feaze
 fecal
 feces
 fecks
-fedup
 feeds
 feels
 feets
@@ -2514,8 +2502,6 @@ geoid
 germs
 gesso
 gests
-getat
-getby
 geted
 geums
 ghats
@@ -2616,7 +2602,6 @@ goded
 godly
 goers
 gofer
-gofor
 going
 golds
 golfs
@@ -2635,14 +2620,12 @@ gonof
 goods
 goody
 gooey
-gooff
 goofs
 goofy
 gooks
 goons
 goony
 goose
-goout
 goral
 gored
 gores
@@ -2792,7 +2775,6 @@ hadjs
 hadst
 haems
 hafts
-hahas
 hahed
 haiku
 hails
@@ -3108,7 +3090,6 @@ ictus
 ideal
 ideas
 idems
-idest
 idiom
 idiot
 idled
@@ -3694,7 +3675,6 @@ liter
 lithe
 litho
 litre
-litup
 lived
 liven
 liver
@@ -3734,7 +3714,6 @@ loggy
 logic
 login
 logit
-logon
 logos
 lohan
 loins
@@ -4300,7 +4279,6 @@ nodus
 noels
 noged
 noggy
-nogos
 nohow
 noils
 noise
@@ -4310,7 +4288,6 @@ nomen
 nonce
 nones
 nooks
-noone
 noons
 noose
 nopal
@@ -4400,7 +4377,6 @@ ogler
 ogles
 ogres
 ohmic
-ohyes
 oikos
 oiled
 oiler
@@ -4426,8 +4402,6 @@ omers
 omits
 oncer
 onces
-ondit
-oneps
 oners
 onion
 onlay
@@ -4441,8 +4415,6 @@ oozed
 oozes
 opahs
 opals
-opart
-opcit
 opecs
 opeed
 opens
@@ -4564,8 +4536,6 @@ palsy
 palus
 pampa
 panda
-pando
-pandp
 paned
 panel
 panes
@@ -5142,7 +5112,6 @@ ramps
 ramus
 rance
 ranch
-randd
 rands
 randy
 ranee
@@ -5432,17 +5401,13 @@ rumen
 rummy
 rumor
 rumps
-runat
-runby
 runed
 runes
 rungs
 runic
 runny
-runon
 runts
 runty
-runup
 ruond
 rupee
 rural
@@ -6863,7 +6828,6 @@ twyer
 tying
 tykes
 typed
-typei
 typer
 types
 typic
