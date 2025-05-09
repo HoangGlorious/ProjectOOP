@@ -49,7 +49,6 @@ public class WelcomeController implements Initializable {
     @FXML
     private Hyperlink WordOfTheDay;
 
-
     private WordOfTheDay wotd;
 
     // Callbacks để báo hiệu cho DictionaryApplication
@@ -59,6 +58,7 @@ public class WelcomeController implements Initializable {
     private Runnable onGoToGame;
     private Runnable onGoToThesaurus;
     private Runnable onGoToSentenceTranslation;
+    private Runnable onGoToGrammar;
 
 
     public void setOnGoToGame(Runnable onGoToGame) {
@@ -69,7 +69,13 @@ public class WelcomeController implements Initializable {
         this.onGoToThesaurus = onGoToThesaurus;
     }
 
-    public void setOnGoToSentenceTranslation(Runnable onGoToSentenceTranslation) { this.onGoToSentenceTranslation = onGoToSentenceTranslation; }
+    public void setOnGoToSentenceTranslation(Runnable onGoToSentenceTranslation) {
+        this.onGoToSentenceTranslation = onGoToSentenceTranslation;
+    }
+
+    public void setOnGoToGrammar(Runnable onGoToGrammar) {
+        this.onGoToGrammar = onGoToGrammar;
+    }
 
     public void setOnSearchInitiated(Consumer<String> onSearchInitiated) {
         this.onSearchInitiated = onSearchInitiated;
@@ -359,8 +365,17 @@ public class WelcomeController implements Initializable {
 
     @FXML
     protected void handleGrammar(ActionEvent event) {
-        System.out.println("Grammar clicked.");
-        // TODO: Nếu có màn hình ngữ pháp riêng, gọi callback khác hoặc load Stage/Scene mới
+        System.out.println("Grammar clicked. Signaling to go to Grammar screen.");
+        if (onGoToGrammar != null) {
+            try {
+                onGoToGrammar.run();
+            } catch (RuntimeException e) {
+                System.err.println("Error executing go to Grammar callback: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Callback onGoToGrammar chưa được thiết lập!");
+        }
     }
 
     @FXML

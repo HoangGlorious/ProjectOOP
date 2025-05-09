@@ -199,7 +199,6 @@ public class DailyWordleController extends WordleController implements Initializ
                 }
             });
             Scene scene = new Scene(root, 1200, 640);
-            scene.getStylesheets().add(getClass().getResource("/com/application/test/CSS/wordle.css").toExternalForm());
             primaryStage.setScene(scene);
             System.out.println("Switched to Classic Wordle mode (wordle_view.fxml).");
         } catch (Exception e) {
