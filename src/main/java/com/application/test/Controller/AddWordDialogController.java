@@ -19,7 +19,8 @@ import java.util.regex.Pattern;
 
 
 public class AddWordDialogController implements Initializable, SenseContainerController {
-    private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
+    private static final Pattern INVALID_CHARACTERS_PATTERN =
+            Pattern.compile("[^\\p{IsLatin}\\d\\s-]", Pattern.UNICODE_CHARACTER_CLASS);
     @FXML private TextField headwordField;
     @FXML private TextField pronunciationField;
     @FXML private VBox sensesContainer; // Container để chứa các UI cho từng Sense

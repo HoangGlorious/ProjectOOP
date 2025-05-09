@@ -35,9 +35,11 @@ public class DictionaryApplication extends Application {
     private Scene dailyWordleScene;
     private WordleMenuController wordleMenuControllerInstance;
     private DailyWordleController dailyWordleControllerInstance;
+
     public GeneralManagement getDictionaryManagement() {
         return dictionaryManagement;
     }
+
     @Override
     public void start(Stage stage) throws IOException {
         this.primaryStage = stage;
@@ -50,7 +52,10 @@ public class DictionaryApplication extends Application {
 
         // --- Load màn hình Welcome ---
         URL welcomeFxmlUrl = getClass().getResource("/com/application/test/view/welcome.fxml"); // Kiểm tra lại đường dẫn
-        if (welcomeFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file welcome.fxml trong classpath!"); System.exit(1); }
+        if (welcomeFxmlUrl == null) {
+            System.err.println("Lỗi: Không tìm thấy file welcome.fxml trong classpath!");
+            System.exit(1);
+        }
         FXMLLoader welcomeLoader = new FXMLLoader(welcomeFxmlUrl);
         Parent welcomeRoot = welcomeLoader.load();
 
@@ -109,41 +114,44 @@ public class DictionaryApplication extends Application {
     private void showDictionaryView() {
         try {
             if (this.dictionaryScene == null) {
-                FXMLLoader dictionaryLoader = new FXMLLoader(getClass().getResource("/com/application/test/view/dictionary_view.fxml"));
-                Parent dictionaryRoot = dictionaryLoader.load();
-                if (this.pendingActionWord != null && !this.pendingActionWord.isEmpty()) {
-                    this.dictionaryControllerInstance = dictionaryLoader.getController();
-                    dictionaryControllerInstance.setDictionaryManagement(this.dictionaryManagement);
-                    dictionaryControllerInstance.setOnGoBackToWelcome(this::showWelcomeView);
+                URL dictionaryFmlUrl = getClass().getResource("/com/application/test/view/dictionary_view.fxml");
+                if (dictionaryFmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file dictionary_view.fxml trong classpath!"); System.exit(1); }
+                FXMLLoader dictionaryLoader = new FXMLLoader(dictionaryFmlUrl);
 
-                    // *** Store the pending search term in the controller instance itself ***
-                    // This transfers the data to the controller
-                    dictionaryControllerInstance.setInitialSearchTerm(this.pendingActionWord);
+                // Load FXML first, THEN get the controller
+                Parent dictionaryRoot = dictionaryLoader.load(); // @FXML injection happens during load()
+                this.dictionaryControllerInstance = dictionaryLoader.getController(); // Get the controller AFTER loading
 
-                    this.dictionaryScene = new Scene(dictionaryRoot);
-                }
-
-                this.pendingActionWord = null;
-                this.pendingAddAction = false;
-
-
-                primaryStage.setScene(this.dictionaryScene); // Set the Dictionary scene
-                primaryStage.setTitle("📚 Dictionary Lookup");
-                System.out.println("Đã chuyển sang màn hình từ điển.");
-
-
-            } else {
-                this.pendingActionWord = null;
-                this.pendingAddAction = false;
-
-                primaryStage.setScene(this.dictionaryScene); // Set the Dictionary scene
-                primaryStage.setTitle("📚 Dictionary Lookup");
-                System.out.println("Đã chuyển sang màn hình từ điển.");
+                // Set properties on the controller instance
+                dictionaryControllerInstance.setDictionaryManagement(this.dictionaryManagement);
+                dictionaryControllerInstance.setOnGoBackToWelcome(this::showWelcomeView);
+                this.dictionaryScene = new Scene(dictionaryRoot);
             }
 
+            this.pendingAddAction = false; // Reset pending add flag in Application
 
-        } catch (IOException e) { System.err.println("Lỗi khi load màn hình từ điển: " + e.getMessage()); e.printStackTrace(); /* ... */ }
+
+            primaryStage.setScene(this.dictionaryScene); // Set the Dictionary scene
+            primaryStage.setTitle("📚 Dictionary Lookup");
+            System.out.println("Đã chuyển sang màn hình từ điển.");
+
+            if (dictionaryControllerInstance != null) {
+                System.out.println("DictionaryApplication: Calling triggerInitialState on DictionaryController.");
+                dictionaryControllerInstance.triggerInitialState(this.pendingActionWord); // Pass the pending term
+            } else {
+                System.err.println("Error: DictionaryController instance is null after loading!");
+            }
+
+            // *** Reset pendingActionWord AFTER it's used by the controller ***
+            this.pendingActionWord = null; // Reset pending word in Application
+
+
+        } catch (IOException e) {
+            System.err.println("Lỗi khi load màn hình từ điển: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
     private void showGameMenu() {
         try {
             if (this.gameMenuScene == null) {
@@ -237,7 +245,10 @@ public class DictionaryApplication extends Application {
                 title = "Wordle Game";
                 if (this.wordleScene == null) {
                     URL gameFxmlUrl = getClass().getResource(fxmlFile);
-                    if (gameFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy " + fxmlFile + "!"); return; }
+                    if (gameFxmlUrl == null) {
+                        System.err.println("Lỗi: Không tìm thấy " + fxmlFile + "!");
+                        return;
+                    }
                     FXMLLoader loader = new FXMLLoader(gameFxmlUrl);
                     Parent root = loader.load();
                     this.wordleControllerInstance = loader.getController();
@@ -251,7 +262,10 @@ public class DictionaryApplication extends Application {
                 title = "Daily Wordle Game";
                 if (this.dailyWordleScene == null) {
                     URL gameFxmlUrl = getClass().getResource(fxmlFile);
-                    if (gameFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy " + fxmlFile + "!"); return; }
+                    if (gameFxmlUrl == null) {
+                        System.err.println("Lỗi: Không tìm thấy " + fxmlFile + "!");
+                        return;
+                    }
                     FXMLLoader loader = new FXMLLoader(gameFxmlUrl);
                     Parent root = loader.load();
                     this.dailyWordleControllerInstance = loader.getController();
@@ -305,7 +319,10 @@ public class DictionaryApplication extends Application {
         try {
             if (this.thesaurusScene == null) {
                 URL thesaurusFxmlUrl = getClass().getResource("/com/application/test/view/thesaurus.fxml"); // <-- File FXML Game Menu
-                if (thesaurusFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file thesaurus.fxml trong classpath!"); System.exit(1); }
+                if (thesaurusFxmlUrl == null) {
+                    System.err.println("Lỗi: Không tìm thấy file thesaurus.fxml trong classpath!");
+                    System.exit(1);
+                }
                 FXMLLoader thesaurusLoader = new FXMLLoader(thesaurusFxmlUrl);
                 Parent thesaurusRoot = thesaurusLoader.load();
                 this.thesaurusControllerInstance = thesaurusLoader.getController();
@@ -316,22 +333,32 @@ public class DictionaryApplication extends Application {
                 thesaurusControllerInstance.resetScene();
             }
 
-            if (welcomeControllerInstance != null) { welcomeControllerInstance.resetView(); } // Reset Welcome view
-            if (dictionaryControllerInstance != null) { dictionaryControllerInstance.resetScene(); } // Reset Dictionary view
+            if (welcomeControllerInstance != null) {
+                welcomeControllerInstance.resetView();
+            } // Reset Welcome view
+            if (dictionaryControllerInstance != null) {
+                dictionaryControllerInstance.resetScene();
+            } // Reset Dictionary view
 
 
             primaryStage.setScene(this.thesaurusScene);
             primaryStage.setTitle("Thesaurus");
             System.out.println("Đã chuyển sang màn hình Thesaurus (Menu).");
 
-        } catch (IOException e) { System.err.println("Lỗi khi load màn hình thesaurus menu: " + e.getMessage()); e.printStackTrace(); /* ... */ }
+        } catch (IOException e) {
+            System.err.println("Lỗi khi load màn hình thesaurus menu: " + e.getMessage());
+            e.printStackTrace(); /* ... */
+        }
     }
 
     private void showSenTranView() {
         try {
             if (this.senTranScene == null) {
                 URL senTranFxmlUrl = getClass().getResource("/com/application/test/view/sentence_translate.fxml");
-                if (senTranFxmlUrl == null) { System.err.println("Lỗi: Không tìm thấy file sentence_translate.fxml trong classpath!"); System.exit(1); }
+                if (senTranFxmlUrl == null) {
+                    System.err.println("Lỗi: Không tìm thấy file sentence_translate.fxml trong classpath!");
+                    System.exit(1);
+                }
                 FXMLLoader senLoader = new FXMLLoader(senTranFxmlUrl);
                 Parent senRoot = senLoader.load();
                 this.senTransControllerInstance = senLoader.getController();
@@ -342,15 +369,22 @@ public class DictionaryApplication extends Application {
                 senTransControllerInstance.resetScene();
             }
 
-            if (welcomeControllerInstance != null) { welcomeControllerInstance.resetView(); } // Reset Welcome view
-            if (dictionaryControllerInstance != null) { dictionaryControllerInstance.resetScene(); } // Reset Dictionary view
+            if (welcomeControllerInstance != null) {
+                welcomeControllerInstance.resetView();
+            } // Reset Welcome view
+            if (dictionaryControllerInstance != null) {
+                dictionaryControllerInstance.resetScene();
+            } // Reset Dictionary view
 
 
             primaryStage.setScene(this.senTranScene);
             primaryStage.setTitle("Sentence Translator");
             System.out.println("Đã chuyển sang màn hình SenTran.");
 
-        } catch (IOException e) { System.err.println("Lỗi khi load màn hình SenTran menu: " + e.getMessage()); e.printStackTrace(); /* ... */ }
+        } catch (IOException e) {
+            System.err.println("Lỗi khi load màn hình SenTran menu: " + e.getMessage());
+            e.printStackTrace(); /* ... */
+        }
     }
 
     /**
