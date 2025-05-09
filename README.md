@@ -7,17 +7,17 @@
  - [UML Diagram](#biểu-đồ-uml)
  - [How to use](#demo)
  - [Future Updates](#phát-triển-trong-tương-lai)
-
+ - [Installation](#cách-cài-đặt)
  ## Những người phát triển app:
 
 Dev team UETèo bao gồm:
-- Nguyễn Bảo Duy (aseancoin1967)            #24022312
-- Trịnh Tuấn Hải (TrinhTuanHai)    #24022318
-- Hoàng Huy Hoàng (HoangGlorious)  #24022336
+- Nguyễn Bảo Duy (aseancoin1967)    24022312
+- Trịnh Tuấn Hải (TrinhTuanHai)   24022318
+- Hoàng Huy Hoàng (HoangGlorious)   24022336
 
  ## Giới thiệu chung
 
-- LingualTemple là ngôi đền để bạn trau dồi những kến thức cơ bản về tiếng Anh.
+- LingualTemple là ngôi đền để bạn trau dồi những kiến thức cơ bản về tiếng Anh.
 - Ở đây, bạn có thể tra cứu từ vựng, học ngữ pháp, thậm chí là trau dồi thêm nguồn từ đồng và trái nghĩa
 để phục vụ cho việc học IELTS của bạn (hoặc bạn có thể tra Cambridge nếu muốn chắc chắn).
 - Ứng dụng này được Develop bằng ngôn ngữ Java mà chúng ta rất thích (thử cãi trước mặt anh Tuyên xem), và 
@@ -42,8 +42,21 @@ Câc chức năng chính của LingualTemple như sau:
  ## Biểu đồ UML
 
 - Biểu đồ UML của app như sau:
-![UML Diagram](com/application/test/images/UMLDiagram.png)
+  ![UML Diagram](src/main/resources/com/application/test/images/UMLDiagram.png)
+
 
 
  ## Demo
 - Vid hướng dẫn sử dụng ở 
+
+ ## Phát triển trong tương lai
+
+- Thêm nhiều từ và từ điển hơn.
+- Thêm game thứ 2.
+- Phát triển thêm các chức năng khác.
+
+ ## Cách cài đặt
+
+- Clone project từ repo về.u
+- Mở trong Intellij.
+- Tìm đến DictionaryApplication.java và run (hoặc tạo configuration).
