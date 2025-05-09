@@ -1,6 +1,7 @@
 package com.application.test.Controller;
 
 import com.application.test.Model.SentenceTranslation;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -34,6 +35,7 @@ public class SenTransController {
 
     @FXML
     private void handleSenTranslation() {
+        // Lấy câu cần dịch từ phần nhập câu, trả về thông báo nếu chưa nhập câu
         String sentence = sentenceInput.getText().trim();
         if (sentence.isEmpty()) {
             translationArea.setText("Please enter a sentence");
@@ -41,10 +43,12 @@ public class SenTransController {
         }
 
         try {
+            // Lấy thông tin từ ComboBox để quyết định dịch từ ngôn ngữ nào sang ngôn ngữ nào
             String languageSource = langSource.getValue();
             String sourceLang = languageSource.equals("Eng-Vie") ? "en" : "vi";
             String targetLang = languageSource.equals("Eng-Vie") ? "vi" : "en";
 
+            // Dịch câu và in kết quả ra transtationArea, cập nhật status Label
             String translatedSen = senTrans.senTranslate(sentence, sourceLang, targetLang);
             translationArea.setText(translatedSen);
             status.setText("Translation successful!");

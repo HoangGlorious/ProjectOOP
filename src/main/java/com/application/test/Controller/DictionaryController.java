@@ -82,15 +82,9 @@ public class DictionaryController implements Initializable {
     private Consumer<String> onSearchInitiated;
     private Consumer<String> onAddWordInitiated;
     private static final Pattern INVALID_CHARACTERS_PATTERN = Pattern.compile("[^a-zA-Z0-9\\s-]");
-    private String initialSearchTerm;
 
     public void setOnGoBackToWelcome(Runnable onGoBackToWelcome) {
         this.onGoBackToWelcome = onGoBackToWelcome;
-    }
-
-    public void setInitialSearchTerm(String initialSearchTerm) {
-        this.initialSearchTerm = initialSearchTerm;
-        System.out.println("Initial search term set to: '" + initialSearchTerm + "' in DictionaryController.");
     }
 
     public void setDictionaryManagement(GeneralManagement dictionaryManagement) {
@@ -206,19 +200,6 @@ public class DictionaryController implements Initializable {
         } else {
             System.err.println("SplitPane hoặc ListView chưa sẵn sàng!");
         }
-
-        Platform.runLater(() -> {
-            if (initialSearchTerm != null && dictionarySearchTextField != null) { // Kiểm tra initialSearchTerm và TextField
-                System.out.println("Processing initial search term: '" + initialSearchTerm + "' in Platform.runLater.");
-                dictionarySearchTextField.setText(initialSearchTerm); // <-- Đặt text field (sẽ trigger listener)
-
-                performSearch(initialSearchTerm);
-            } else {
-                // Nếu initialSearchTerm là null hoặc trống, hiển thị toàn bộ từ điển ban đầu
-                System.out.println("No initial search term or it's empty. Loading all data.");
-                loadAndDisplayInitialData();
-            }
-        });
     }
 
     private void initializeSourceComboBox() {
@@ -240,7 +221,7 @@ public class DictionaryController implements Initializable {
                     System.out.println("Nguồn đã chuyển sang: " + newValue);
                     // *** Nạp lại dữ liệu vào ListView chính khi chuyển nguồn ***
                     // Xóa nội dung search field và hiển thị toàn bộ từ điển của nguồn mới
-                    setInitialSearchTerm(""); // Đặt text rỗng, hàm này sẽ gọi loadAndDisplayInitialData()
+                    triggerInitialState(""); // Đặt text rỗng, hàm này sẽ gọi loadAndDisplayInitialData()
                 }
             }
         });
@@ -320,6 +301,24 @@ public class DictionaryController implements Initializable {
 
             // Tùy chọn: Đặt chiều rộng tối đa cho ListView gợi ý nếu không muốn nó quá rộng
             // suggestionListView.setMaxWidth(boundsInAnchorPane.getWidth());
+        }
+    }
+
+    /**
+     * Method to set the initial state of the Dictionary view.
+     * Called by DictionaryApplication AFTER the scene is set on the stage.
+     * @param initialTerm The search term from the previous screen, or empty/null for full list.
+     */
+    public void triggerInitialState(String initialTerm) {
+        if (initialTerm != null && !initialTerm.trim().isEmpty()) {
+            System.out.println("Triggering initial search for: '" + initialTerm + "'");
+            // Perform exact search for the initial term
+            dictionarySearchTextField.setText(initialTerm); // Set the text field
+            performSearch(initialTerm.trim()); // Trigger the exact search logic
+        } else {
+            // If initial term is null or empty, load and display the full list initially
+            System.out.println("Triggering initial full data load.");
+            loadAndDisplayInitialData(); // Load all data in background
         }
     }
 
