@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// Lớp kết quả tìm kiếm thesaurus bao gồm
+// word (từ đang tra)
+// danh sách từ đồng nghĩa synonyms
+// danh sách từ trái nghĩa antonyms
+// thông báo lỗi nếu có
 public class ThesaurusResult {
     private String word;
     private List<String> synonyms = new ArrayList<>();
@@ -26,6 +31,7 @@ public class ThesaurusResult {
         this.word = word;
     }
 
+    // Getter và setter của danh sách từ đồng nghĩa và trái nghĩa lọc các từ bị trùng
     public List<String> getSynonyms() {
         return synonyms.stream().distinct().collect(Collectors.toList());
     }
@@ -34,6 +40,7 @@ public class ThesaurusResult {
         return antonyms.stream().distinct().collect(Collectors.toList());
     }
 
+    // Các lỗi đã gặp trong quá trình test: Danh sách synonyms hoặc antonyms là null, lỗi xử lý Json, sai format,...
     public String getError() {
         return error;
     }
