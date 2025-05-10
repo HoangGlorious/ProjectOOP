@@ -8,14 +8,15 @@
  - [How to use](#demo)
  - [Future Updates](#phát-triển-trong-tương-lai)
  - [Installation](#cách-cài-đặt)
- ## Những người phát triển app:
+ - [Notes](#ghi-chú)
+ ## 👷‍♂️Những người phát triển app:
 
 Dev team UETèo bao gồm:
-- Nguyễn Bảo Duy (aseancoin1967)    24022312
-- Trịnh Tuấn Hải (TrinhTuanHai)   24022318
-- Hoàng Huy Hoàng (HoangGlorious)   24022336
+- 😁Nguyễn Bảo Duy (aseancoin1967)    24022312
+- 💀Trịnh Tuấn Hải (TrinhTuanHai)   24022318
+- 😈Hoàng Huy Hoàng (HoangGlorious)   24022336
 
- ## Giới thiệu chung
+ ## ℹ️ Giới thiệu chung 
 
 - LingualTemple là ngôi đền để bạn trau dồi những kiến thức cơ bản về tiếng Anh.
 - Ở đây, bạn có thể tra cứu từ vựng, học ngữ pháp, thậm chí là trau dồi thêm nguồn từ đồng và trái nghĩa
@@ -23,11 +24,12 @@ Dev team UETèo bao gồm:
 - Ứng dụng này được Develop bằng ngôn ngữ Java mà chúng ta rất thích (thử cãi trước mặt anh Tuyên xem), và 
 giao diện thì được xây bằng JavaFX.
 - Từ điển này còn có tích hợp game Wordle cho những bạn cảm thấy việc vừa học vừa chơi là phong cách của mình.
- ## Chức năng chính
+- ![AppScreenshot1](src/main/resources/com/application/test/images/AppScreenshot1.png)
+ ## 🌟Chức năng chính
 
 Câc chức năng chính của LingualTemple như sau:
 
-- Tìm từ có đề xuất: Mỗi khi các bạn nhập vào thanh tìm kiếm, sẽ có danh sách Recommmendation hiện ra để giúp việc tìm kiếm thuận tiện hơn.
+- Tìm từ có đề xuất: Mỗi khi các bạn nhập vào thanh tìm kiếm, sẽ có danh sách Recommendation hiện ra để giúp việc tìm kiếm thuận tiện hơn.
 - Thêm từ: Bạn có thể thêm những từ mà bạn muốn vào từ điển, với đầy đủ những đặc tính của từ như từ loại, định nghĩa và 1 số ví dụ.
 - Sửa từ: Bạn có thể sửa những từ mà bạn cảm thấy chưa đúng, hay thêm 1 định nghĩa khác cho các từ đã tồn tại trong từ điển.
 - Xóa từ: Bạn có thể xóa 1 từ khỏi từ điển (nếu muốn, bọn mình cũng không biết ai lại thù oán 1 từ gì đấy đến mức muốn xóa nó đi).
@@ -48,14 +50,19 @@ Câc chức năng chính của LingualTemple như sau:
  ## Demo
 - Vid hướng dẫn sử dụng ở https://youtu.be/2fYFR6KXUco
 
- ## Phát triển trong tương lai
+ ## 🚀Phát triển trong tương lai
 
 - Thêm nhiều từ và từ điển hơn.
 - Thêm game thứ 2.
 - Phát triển thêm các chức năng khác.
 
- ## Cách cài đặt
+ ## ⚙️Cách cài đặt
 
 - Clone project từ repo về.u
 - Mở trong Intellij.
 - Tìm đến DictionaryApplication.java và run (hoặc tạo configuration).
+
+
+## 📝Ghi chú
+- Dự án có tham khảo cách xây dựng, thiết kế và chuyển scene từ AI.
+
