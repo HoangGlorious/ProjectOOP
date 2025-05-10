@@ -65,4 +65,5 @@ Câc chức năng chính của LingualTemple như sau:
 
 ## 📝Ghi chú
 - Dự án có tham khảo cách thiết kế và chuyển scene từ AI và Google.
+- File từ điển gốc của dự án được lấy từ https://github.com/yenthanh132/avdict-database-sqlite-converter.
 
