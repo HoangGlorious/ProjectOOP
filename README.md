@@ -1,4 +1,4 @@
-# LingualTemple (Ứng dụng học tiếng Anh)
+# 📖LingualTemple (Ứng dụng học tiếng Anh)
 
  ## Entries:
  - [Developers](#những-người-phát-triển-app)
@@ -47,8 +47,8 @@ Câc chức năng chính của LingualTemple như sau:
 
 
 
- ## Demo
-- Vid hướng dẫn sử dụng ở https://youtu.be/2fYFR6KXUco
+ ## ▶️Demo
+- Video hướng dẫn sử dụng ở https://youtu.be/2fYFR6KXUco
 
  ## 🚀Phát triển trong tương lai
 
@@ -58,11 +58,11 @@ Câc chức năng chính của LingualTemple như sau:
 
  ## ⚙️Cách cài đặt
 
-- Clone project từ repo về.u
-- Mở trong Intellij.
-- Tìm đến DictionaryApplication.java và run (hoặc tạo configuration).
+- Clone project từ repo về máy.
+- Mở trong IntelliJ.
+- Tìm đến file DictionaryApplication.java và run (hoặc tạo configuration).
 
 
 ## 📝Ghi chú
-- Dự án có tham khảo cách xây dựng, thiết kế và chuyển scene từ AI.
+- Dự án có tham khảo cách thiết kế và chuyển scene từ AI và Google.
 
