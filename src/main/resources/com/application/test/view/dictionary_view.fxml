@@ -24,7 +24,7 @@
                     <Insets bottom="15" left="15" right="15" top="15" />
                 </padding>
                 <Button fx:id="backButton1" onAction="#handleBackButtonAction" styleClass="dnav-button" text="🔙 Back" />
-                <Label styleClass="logo" text="📚 My Dictionary" />
+                <Label styleClass="logo" text="LingualTemple" />
                 <Region HBox.hgrow="ALWAYS" />
                 <ComboBox fx:id="sourceComboBox" promptText="Chọn nguồn" styleClass="WcomboBox" />
                 <VBox fx:id="searchContainer" alignment="TOP_LEFT" spacing="0" HBox.hgrow="ALWAYS">
